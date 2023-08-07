@@ -14,14 +14,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   separateEditorSaveFiles: 1
   saveFileName: EscapeRoom
-  saveTimeDisplay: 0
+  saveTimeDisplay: 1
   customSaveFormat: MMMM dd, yyyy
   takeSaveScreenshots: 0
-  saveScreenshots: 0
+  saveScreenshots: 2
   screenshotResolutionFactor: 1
   useProfiles: 0
   maxSaves: 5
-  orderSavesByUpdateTime: 0
+  orderSavesByUpdateTime: 1
   reloadSceneWhenLoading: 0
   saveWithThreading: 0
   saveAssetReferencesWithAddressables: 0
@@ -34,7 +34,7 @@ MonoBehaviour:
     autosaveLabelID: -1
   referenceScenesInSave: 0
   sceneAttributes: []
-  actionListOnStart: {fileID: 0}
+  actionListOnStart: {fileID: 11400000, guid: ed2cca998f77198478daa3b6e2d5cb98, type: 2}
   blackOutWhenSkipping: 0
   savePlayerReferencesWithAddressables: 0
   playerSwitching: 1
@@ -165,7 +165,7 @@ MonoBehaviour:
   landscapeModeOnly: 1
   cameraPerspective: 2
   cacheCameraMain: 0
-  linearColorTextures: 1
+  linearColorTextures: 0
   movingTurning: 3
   hotspotDetection: 0
   closeInteractionMenusIfPlayerLeavesVicinity: 0

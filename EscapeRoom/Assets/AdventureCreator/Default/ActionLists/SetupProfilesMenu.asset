@@ -47,20 +47,25 @@ MonoBehaviour:
   comment: 
   willWait: 0
   endAction: 2
-  skipAction: 3
+  skipAction: -99
   skipActionActual: {fileID: 11492018}
   linkedCutscene: {fileID: 0}
   linkedAsset: {fileID: 0}
-  endings: []
+  endings:
+  - resultAction: 2
+    skipAction: 3
+    skipActionActual: {fileID: 11492018}
+    linkedCutscene: {fileID: 0}
+    linkedAsset: {fileID: 0}
   isEnabled: 1
   isAssetFile: 1
   isBreakPoint: 0
   nodeRect:
     serializedVersion: 2
-    x: 364
-    y: 202
+    x: 14
+    y: 224
     width: 300
-    height: 140
+    height: 152
   overrideColor: {r: 1, g: 1, b: 1, a: 1}
   showOutputSockets: 1
   parentActionListInEditor: {fileID: 0}
@@ -95,20 +100,25 @@ MonoBehaviour:
   comment: 
   willWait: 0
   endAction: 1
-  skipAction: 3
+  skipAction: -99
   skipActionActual: {fileID: 11492018}
   linkedCutscene: {fileID: 0}
   linkedAsset: {fileID: 0}
-  endings: []
+  endings:
+  - resultAction: 1
+    skipAction: 3
+    skipActionActual: {fileID: 11492018}
+    linkedCutscene: {fileID: 0}
+    linkedAsset: {fileID: 0}
   isEnabled: 1
   isAssetFile: 1
   isBreakPoint: 0
   nodeRect:
     serializedVersion: 2
     x: 364
-    y: 578
+    y: 636
     width: 300
-    height: 140
+    height: 132
   overrideColor: {r: 1, g: 1, b: 1, a: 1}
   showOutputSockets: 1
   parentActionListInEditor: {fileID: 0}
@@ -147,7 +157,17 @@ MonoBehaviour:
   skipActionActual: {fileID: 0}
   linkedCutscene: {fileID: 0}
   linkedAsset: {fileID: 0}
-  endings: []
+  endings:
+  - resultAction: 0
+    skipAction: -1
+    skipActionActual: {fileID: 0}
+    linkedCutscene: {fileID: 0}
+    linkedAsset: {fileID: 0}
+  - resultAction: 2
+    skipAction: 2
+    skipActionActual: {fileID: 11478202}
+    linkedCutscene: {fileID: 0}
+    linkedAsset: {fileID: 0}
   isEnabled: 1
   isAssetFile: 1
   isBreakPoint: 0
@@ -156,12 +176,12 @@ MonoBehaviour:
     x: 14
     y: 14
     width: 300
-    height: 158
+    height: 180
   overrideColor: {r: 1, g: 1, b: 1, a: 1}
   showOutputSockets: 1
   parentActionListInEditor: {fileID: 0}
   resultActionTrue: 0
-  skipActionTrue: -1
+  skipActionTrue: -99
   skipActionTrueActual: {fileID: 0}
   linkedCutsceneTrue: {fileID: 0}
   linkedAssetTrue: {fileID: 0}
@@ -198,20 +218,25 @@ MonoBehaviour:
   comment: 
   willWait: 0
   endAction: 1
-  skipAction: 3
+  skipAction: -99
   skipActionActual: {fileID: 0}
   linkedCutscene: {fileID: 0}
   linkedAsset: {fileID: 0}
-  endings: []
+  endings:
+  - resultAction: 1
+    skipAction: 3
+    skipActionActual: {fileID: 0}
+    linkedCutscene: {fileID: 0}
+    linkedAsset: {fileID: 0}
   isEnabled: 1
   isAssetFile: 1
   isBreakPoint: 0
   nodeRect:
     serializedVersion: 2
-    x: 714
-    y: 578
+    x: 14
+    y: 636
     width: 300
-    height: 140
+    height: 132
   overrideColor: {r: 1, g: 1, b: 1, a: 1}
   showOutputSockets: 1
   parentActionListInEditor: {fileID: 0}
@@ -246,20 +271,25 @@ MonoBehaviour:
   comment: 
   willWait: 0
   endAction: 1
-  skipAction: -1
+  skipAction: -99
   skipActionActual: {fileID: 0}
   linkedCutscene: {fileID: 0}
   linkedAsset: {fileID: 0}
-  endings: []
+  endings:
+  - resultAction: 1
+    skipAction: -1
+    skipActionActual: {fileID: 0}
+    linkedCutscene: {fileID: 0}
+    linkedAsset: {fileID: 0}
   isEnabled: 1
   isAssetFile: 1
   isBreakPoint: 0
   nodeRect:
     serializedVersion: 2
-    x: 14
-    y: 202
+    x: 364
+    y: 224
     width: 300
-    height: 122
+    height: 132
   overrideColor: {r: 1, g: 1, b: 1, a: 1}
   showOutputSockets: 1
   parentActionListInEditor: {fileID: 0}
@@ -298,21 +328,31 @@ MonoBehaviour:
   skipActionActual: {fileID: 0}
   linkedCutscene: {fileID: 0}
   linkedAsset: {fileID: 0}
-  endings: []
+  endings:
+  - resultAction: 2
+    skipAction: 5
+    skipActionActual: {fileID: 11471494}
+    linkedCutscene: {fileID: 0}
+    linkedAsset: {fileID: 0}
+  - resultAction: 2
+    skipAction: 4
+    skipActionActual: {fileID: 11460422}
+    linkedCutscene: {fileID: 0}
+    linkedAsset: {fileID: 0}
   isEnabled: 1
   isAssetFile: 1
   isBreakPoint: 0
   nodeRect:
     serializedVersion: 2
-    x: 364
-    y: 372
+    x: 14
+    y: 406
     width: 300
-    height: 176
+    height: 200
   overrideColor: {r: 1, g: 1, b: 1, a: 1}
   showOutputSockets: 1
   parentActionListInEditor: {fileID: 0}
   resultActionTrue: 2
-  skipActionTrue: 5
+  skipActionTrue: -99
   skipActionTrueActual: {fileID: 11471494}
   linkedCutsceneTrue: {fileID: 0}
   linkedAssetTrue: {fileID: 0}
