@@ -18,7 +18,7 @@ MonoBehaviour:
   cursorDisplay: 0
   allowMainCursor: 1
   lockSystemCursor: 1
-  keepCursorWithinScreen: 1
+  keepCursorWithinScreen: 0
   confineSystemCursor: 0
   allowWalkCursor: 0
   syncWalkCursorWithInteraction: 0
@@ -27,7 +27,7 @@ MonoBehaviour:
   walkPrefix:
     label: Walk to
     lineID: -1
-  addHotspotPrefix: 0
+  addHotspotPrefix: 1
   allowInteractionCursor: 0
   allowInteractionCursorForInventory: 0
   cycleCursors: 0
@@ -51,12 +51,12 @@ MonoBehaviour:
     frameSpeeds: []
     alwaysAnimate: 0
   pointerIcon:
-    texture: {fileID: 2800000, guid: 5c83780962ed843c0928648679746938, type: 3}
+    texture: {fileID: 2800000, guid: 375e15bb660f94560bcb21da905c8eb3, type: 3}
     isAnimated: 0
     numFrames: 1
     numRows: 1
     numCols: 1
-    size: 0.02
+    size: 0.08
     animSpeed: 4
     endAnimOnLastFrame: 0
     skipFirstFrameWhenLooping: 0
@@ -179,4 +179,4 @@ MonoBehaviour:
   lookUseCursorAction: 0
   lookCursor_ID: 2
   hideCursorWhenDraggingMoveables: 1
-  forceCursorInEditor: 1
+  forceCursorInEditor: 0

@@ -32,7 +32,7 @@ MonoBehaviour:
     importLabelID: -1
     defaultAutosaveLabel: Autosave
     autosaveLabelID: -1
-  referenceScenesInSave: 0
+  referenceScenesInSave: 1
   sceneAttributes: []
   actionListOnStart: {fileID: 11400000, guid: ed2cca998f77198478daa3b6e2d5cb98, type: 2}
   blackOutWhenSkipping: 0
@@ -52,12 +52,12 @@ MonoBehaviour:
   players: []
   movementMethod: 1
   inputMethod: 0
-  simulatedCursorMoveSpeed: 4
-  interactionMethod: 0
+  simulatedCursorMoveSpeed: 2
+  interactionMethod: 2
   selectInteractions: 0
   autoHideInteractionIcons: 1
-  cancelInteractions: 0
-  seeInteractions: 0
+  cancelInteractions: 3
+  seeInteractions: 2
   closeInteractionMenuIfTapHotspot: 1
   stopPlayerOnClickHotspot: 0
   cycleInventoryCursors: 1
@@ -67,8 +67,8 @@ MonoBehaviour:
   allowDefaultinteractions: 0
   alwaysCloseInteractionMenus: 1
   whenReselectHotspot: 0
-  lockCursorOnStart: 0
-  hideLockedCursor: 0
+  lockCursorOnStart: 1
+  hideLockedCursor: 1
   disableFreeAimWhenDragging: 0
   disableFreeAimWhenDraggingPickUp: 0
   runConversationsWithKeys: 0
@@ -102,7 +102,7 @@ MonoBehaviour:
   selectInvWithIconID: 0
   giveInvWithUnhandled: 0
   giveInvWithIconID: 0
-  autoDisableUnhandledHotspots: 0
+  autoDisableUnhandledHotspots: 1
   clickPrefab: {fileID: 0}
   clickMarkerPosition: 0
   walkableClickRange: 0.5
@@ -112,7 +112,7 @@ MonoBehaviour:
   magnitudeAffectsDirect: 0
   directTurnsInstantly: 0
   stopTurningWhenReleaseInput: 0
-  disableMovementWhenInterationMenusAreOpen: 0
+  disableMovementWhenInterationMenusAreOpen: 1
   directMovementType: 0
   limitDirectMovement: 0
   cameraLockSnapAngleThreshold: 5
@@ -167,7 +167,7 @@ MonoBehaviour:
   cacheCameraMain: 0
   linearColorTextures: 0
   movingTurning: 3
-  hotspotDetection: 0
+  hotspotDetection: 2
   closeInteractionMenusIfPlayerLeavesVicinity: 0
   placeDistantHotspotsOnSeparateLayer: 1
   hotspotsInVicinity: 0
@@ -231,10 +231,13 @@ MonoBehaviour:
   autoEndOtherMusicWhenPlayed: 1
   musicPrefabOverride: {fileID: 0}
   ambiencePrefabOverride: {fileID: 0}
-  volumeControl: 0
-  musicMixerGroup: {fileID: 0}
-  sfxMixerGroup: {fileID: 0}
-  speechMixerGroup: {fileID: 0}
+  volumeControl: 1
+  musicMixerGroup: {fileID: -319120046316229051, guid: 6b8e38972fa924e2ba7326ab5ad56433,
+    type: 2}
+  sfxMixerGroup: {fileID: -6234938976133733039, guid: 6b8e38972fa924e2ba7326ab5ad56433,
+    type: 2}
+  speechMixerGroup: {fileID: -8251399961440296003, guid: 6b8e38972fa924e2ba7326ab5ad56433,
+    type: 2}
   musicAttentuationParameter: musicVolume
   sfxAttentuationParameter: sfxVolume
   speechAttentuationParameter: speechVolume
