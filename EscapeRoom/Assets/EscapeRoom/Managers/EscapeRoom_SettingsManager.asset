@@ -67,8 +67,8 @@ MonoBehaviour:
   allowDefaultinteractions: 0
   alwaysCloseInteractionMenus: 1
   whenReselectHotspot: 0
-  lockCursorOnStart: 1
-  hideLockedCursor: 1
+  lockCursorOnStart: 0
+  hideLockedCursor: 0
   disableFreeAimWhenDragging: 0
   disableFreeAimWhenDraggingPickUp: 0
   runConversationsWithKeys: 0
@@ -167,10 +167,10 @@ MonoBehaviour:
   cacheCameraMain: 0
   linearColorTextures: 0
   movingTurning: 3
-  hotspotDetection: 2
+  hotspotDetection: 1
   closeInteractionMenusIfPlayerLeavesVicinity: 0
   placeDistantHotspotsOnSeparateLayer: 1
-  hotspotsInVicinity: 0
+  hotspotsInVicinity: 2
   highlightAllHotspotsInVicinity: 1
   hotspotIconDisplay: 0
   hotspotIcon: 0
