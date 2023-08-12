@@ -1000,7 +1000,7 @@ namespace AC
 			// Active path
 			Halt ();
 			ForceIdle ();
-
+			
 			if (!string.IsNullOrEmpty (playerData.playerPathData) && ownPath)
 			{
 				Paths savedPath = ownPath;
@@ -1103,7 +1103,7 @@ namespace AC
 			}
 
 			_spriteDirectionData.LoadData (playerData.spriteDirectionData);
-
+			
 			// Remember scripts
 			if (!IsLocalPlayer ())
 			{
@@ -1123,9 +1123,7 @@ namespace AC
 		}
 
 
-		/**
-		 * Hides the player's SkinnedMeshRenderers, if any exist
-		 */
+		/** Hides the player's SkinnedMeshRenderers, if any exist */
 		public virtual void Hide ()
 		{
 			foreach (SkinnedMeshRenderer skinnedMeshRenderer in skinnedMeshRenderers)
@@ -1154,8 +1152,7 @@ namespace AC
 			}
 
 			KickStarter.dialog.EndSpeechByCharacter (this);
-			ReleaseHeldObjects ();
-
+			
 			Renderer[] playerObRenderers = gameObject.GetComponentsInChildren<Renderer> ();
 			foreach (Renderer renderer in playerObRenderers)
 			{

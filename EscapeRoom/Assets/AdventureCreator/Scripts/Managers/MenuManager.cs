@@ -1454,6 +1454,9 @@ namespace AC
 				Event.current.Use ();
 				EditorUtility.SetDirty (this);
 			}
+
+			DeactivateAllMenus ();
+			ActivateMenu (menu);
 		}
 
 
@@ -1491,6 +1494,12 @@ namespace AC
 
 				Event.current.Use ();
 				EditorUtility.SetDirty (this);
+			}
+
+			if (dragIndex >= 0)
+			{
+				DeactivateAllElements (elementDrag.menu);
+				ActivateElement (elementDrag.menu.elements[dragIndex]);
 			}
 		}
 

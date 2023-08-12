@@ -61,6 +61,8 @@ namespace AC
 		private const float propertiesBoxWidth = 360f;
 		private const float scrollbarSelectedSizeFactor = 2.5f;
 
+		private bool viewingAllToggle;
+
 
 		[MenuItem ("Adventure Creator/Editors/ActionList Editor", false, 1)]
 		private static void Init ()
@@ -1085,7 +1087,34 @@ namespace AC
 			GUI.Label (new Rect (30, 2, 50, 20), labelText, CustomStyles.LabelToolbar);
 			if ((isAsset && windowData.targetAsset != null) || (!isAsset && windowData.target != null))
 			{
-				if (GUI.Button (new Rect (position.width - 202, 3, 100, 20), "Ping object", EditorStyles.miniButtonLeft))
+				string viewLabel = viewingAllToggle ? "Reset view" : "View all";
+				if (GUI.Button (new Rect (position.width - 302, 3, 100, 20), viewLabel, EditorStyles.miniButtonLeft))
+				{
+					if (viewingAllToggle)
+					{
+						ScrollPosition = Vector2.zero;
+						Zoom = 1f;
+					}
+					else
+					{
+						Vector2 maxCorner = Actions[0].NodeRect.position;
+						for (int i = 1; i < Actions.Count; i++)
+						{
+							if (Actions[i] == null) continue;
+							maxCorner.x = Mathf.Max (maxCorner.x, Actions[i].NodeRect.x + Actions[i].NodeRect.width + 30f);
+							maxCorner.y = Mathf.Max (maxCorner.y, Actions[i].NodeRect.y + Actions[i].NodeRect.height + 130f);
+						}
+
+						ScrollPosition = Vector2.zero;
+
+						Vector2 relativeScale = new Vector2 (maxCorner.x / CanvasWidth, maxCorner.y / CanvasHeight);
+						float largestScale = Mathf.Max (relativeScale.x, relativeScale.y);
+						Zoom = 1f / largestScale;
+					}
+					viewingAllToggle = !viewingAllToggle;
+				}
+
+				if (GUI.Button (new Rect (position.width - 202, 3, 100, 20), "Ping object", EditorStyles.miniButtonMid))
 				{
 					if (windowData.targetAsset != null)
 					{
@@ -2952,6 +2981,7 @@ namespace AC
 			{
 				ScrollPosition = Vector2.zero;
 				Zoom = 1f;
+				viewingAllToggle = false;
 			}
 			else if (objString == "ViewAll")
 			{
@@ -2968,6 +2998,7 @@ namespace AC
 				Vector2 relativeScale = new Vector2 (maxCorner.x / CanvasWidth, maxCorner.y / CanvasHeight);
 				float largestScale = Mathf.Max (relativeScale.x, relativeScale.y);
 				Zoom = 1f / largestScale;
+				viewingAllToggle = true;
 			}
 			else if (objString.StartsWith ("ViewSelected"))
 			{

@@ -70,6 +70,7 @@ namespace AC
 
 		private float visualAmount;
 		private string fullText;
+		private float timeSinceStepChange;
 
 
 		public override void Declare ()
@@ -395,6 +396,14 @@ namespace AC
 				return 0;
 			}
 			return base.GetSlotIndex (gameObject);
+		}
+
+
+		public override void OverrideLabel (string newLabel, int _lineID = -1)
+		{
+			label = newLabel;
+			lineID = _lineID;
+			ClearCache ();
 		}
 
 
@@ -759,6 +768,15 @@ namespace AC
 			Vector2 increaseDirection = (sliderOrientation == SliderOrientation.Horizontal) ? Vector2.right : Vector2.up;
 			Vector2 decreaseDirection = (sliderOrientation == SliderOrientation.Horizontal) ? Vector2.left : Vector2.down;
 
+			float amount = Time.unscaledDeltaTime;
+			if (numberOfSteps > 0)
+			{
+				amount = 1f / (float) numberOfSteps;
+				float time = Time.unscaledTime;
+				if (time - timeSinceStepChange < (1.5f * amount)) return false;
+				timeSinceStepChange = time;
+			}
+
 			if (direction == increaseDirection)
 			{
 				if (clickSound)
@@ -766,7 +784,7 @@ namespace AC
 					KickStarter.sceneSettings.PlayDefaultSound (clickSound, false, true);
 				}
 
-				visualAmount += 0.02f; 
+				visualAmount += amount; 
 				UpdateValue ();	
 				return true;
 			}
@@ -777,7 +795,7 @@ namespace AC
 					KickStarter.sceneSettings.PlayDefaultSound (clickSound, false, true);
 				}
 
-				visualAmount -= 0.02f;
+				visualAmount -= amount;
 				UpdateValue ();
 				return true;
 			}

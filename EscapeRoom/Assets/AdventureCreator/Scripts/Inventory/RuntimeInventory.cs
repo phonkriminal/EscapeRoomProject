@@ -1294,12 +1294,11 @@ namespace AC
 						}
 
 						item.Upgrade ();
-
-						if (!item.carryOnStartNotDefault && playerID == -1)
+						if (!item.carryOnStartNotDefault && (playerID == -1 || (KickStarter.settingsManager.playerSwitching == PlayerSwitching.Allow && playerID == KickStarter.settingsManager.GetDefaultPlayerID ())))
 						{
 							playerStartItems.Add (item);
 						}
-						else if (playerID >= 0 && item.carryOnStartIDs.Contains (playerID))
+						else if (playerID >= 0 && item.carryOnStartNotDefault && item.carryOnStartIDs.Contains (playerID))
 						{
 							playerStartItems.Add (item);
 						}

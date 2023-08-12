@@ -24,7 +24,7 @@ namespace AC
 	{
 
 		protected bool inPreInteractionCutscene = false;
-		protected string interactionLabel;
+		protected HotspotLabelData hotspotLabelData = new HotspotLabelData ();
 
 		protected Hotspot hotspotMovingTo;
 		protected Hotspot hotspot;
@@ -63,6 +63,8 @@ namespace AC
 		/** Updates the interaction handler. This is called every frame by StateHandler. */
 		public void UpdateInteraction ()
 		{
+			MouseState mouseState = KickStarter.playerInput.GetMouseState ();
+
 			if (KickStarter.stateHandler.IsInGameplay ())	
 			{
 				if (KickStarter.playerInput.GetDragState () == DragState.Moveable)
@@ -72,7 +74,7 @@ namespace AC
 					return;
 				}
 				
-				if (KickStarter.settingsManager.interactionMethod != AC_InteractionMethod.CustomScript && KickStarter.playerInput.GetMouseState () == MouseState.RightClick && InvInstance.IsValid (KickStarter.runtimeInventory.SelectedInstance) && !KickStarter.playerMenus.IsMouseOverMenu ())
+				if (KickStarter.settingsManager.interactionMethod != AC_InteractionMethod.CustomScript && mouseState == MouseState.RightClick && InvInstance.IsValid (KickStarter.runtimeInventory.SelectedInstance) && !KickStarter.playerMenus.IsMouseOverMenu ())
 				{
 					if (KickStarter.settingsManager.SelectInteractionMethod () == SelectInteractions.CyclingCursorAndClickingHotspot && KickStarter.settingsManager.cycleInventoryCursors)
 					{
@@ -130,7 +132,7 @@ namespace AC
 					return;
 				}
 
-				HandleInteractionMenu ();
+				HandleInteractionMenu (mouseState);
 				
 				if (KickStarter.settingsManager.playerFacesHotspots && KickStarter.player)
 				{
@@ -155,7 +157,7 @@ namespace AC
 			{
 				if (KickStarter.settingsManager.interactionMethod == AC_InteractionMethod.ChooseHotspotThenInteraction && KickStarter.settingsManager.selectInteractions != SelectInteractions.CyclingCursorAndClickingHotspot && KickStarter.playerMenus.IsPausingInteractionMenuOn ())
 				{
-					HandleInteractionMenu ();
+					HandleInteractionMenu (mouseState);
 				}
 			}
 
@@ -166,11 +168,11 @@ namespace AC
 		/** Updates the internal 'Hotspot label' according to what, if any, Hotspot is currently selected, and the currently-selected icon or inventory item. */
 		public void UpdateInteractionLabel ()
 		{
-			interactionLabel = GetInteractionLabel (Options.GetLanguage ());
+			UpdateInteractionLabel (Options.GetLanguage ());
 		}
 
 
-		protected void HandleInteractionMenu ()
+		protected void HandleInteractionMenu (MouseState mouseState)
 		{
 			if (KickStarter.settingsManager.interactionMethod == AC_InteractionMethod.CustomScript)
 			{
@@ -178,12 +180,12 @@ namespace AC
 				return;
 			}
 
-			if (KickStarter.playerInput.GetMouseState () == MouseState.LetGo && !KickStarter.playerMenus.IsMouseOverInteractionMenu () && KickStarter.settingsManager.ReleaseClickInteractions ())
+			if (mouseState == MouseState.LetGo && !KickStarter.playerMenus.IsMouseOverInteractionMenu () && KickStarter.settingsManager.ReleaseClickInteractions ())
 			{
 				KickStarter.playerMenus.CloseInteractionMenus ();
 			}
 
-			if (KickStarter.playerInput.GetMouseState () == MouseState.LetGo && !KickStarter.playerMenus.IsMouseOverInteractionMenu () && KickStarter.settingsManager.ReleaseClickInteractions ())
+			if (mouseState == MouseState.LetGo && !KickStarter.playerMenus.IsMouseOverInteractionMenu () && KickStarter.settingsManager.ReleaseClickInteractions ())
 			{
 				KickStarter.playerMenus.CloseInteractionMenus ();
 			}
@@ -195,16 +197,16 @@ namespace AC
 				{
 					if (KickStarter.settingsManager.SelectInteractionMethod () == SelectInteractions.CyclingCursorAndClickingHotspot)
 					{
-						ContextSensitiveClick ();
+						ContextSensitiveClick (mouseState);
 					}
 					else if (!KickStarter.playerMenus.IsMouseOverInteractionMenu ())
 					{
-						ChooseHotspotThenInteractionClick ();
+						ChooseHotspotThenInteractionClick (mouseState);
 					}
 				}
 				else
 				{
-					ContextSensitiveClick ();
+					ContextSensitiveClick (mouseState);
 				}
 			}
 			else 
@@ -411,35 +413,35 @@ namespace AC
 		}
 		
 		
-		protected bool CanDoDoubleTap ()
+		protected bool RequireTwoTaps ()
 		{
 			if (InvInstance.IsValid (KickStarter.runtimeInventory.SelectedInstance) && KickStarter.settingsManager.InventoryDragDrop)
 				return false;
 			
-			if (KickStarter.settingsManager.inputMethod == InputMethod.TouchScreen && KickStarter.settingsManager.doubleTapHotspots)
+			if (KickStarter.settingsManager.inputMethod == InputMethod.TouchScreen && KickStarter.settingsManager.touchScreenHotspotInput == TouchScreenHotspotInput.TouchTwice)
 				return true;
 			
 			return false;
 		}
 		
 		
-		protected void ChooseHotspotThenInteractionClick ()
+		protected void ChooseHotspotThenInteractionClick (MouseState mouseState)
 		{
-			if (CanDoDoubleTap ())
+			if (RequireTwoTaps ())
 			{
-				if (KickStarter.playerInput.GetMouseState () == MouseState.SingleClick)
+				if (mouseState == MouseState.SingleClick)
 				{
-					ChooseHotspotThenInteractionClick_Process (true);
+					ChooseHotspotThenInteractionClick_Process (mouseState, true);
 				}
 			}
 			else
 			{
-				ChooseHotspotThenInteractionClick_Process (false);
+				ChooseHotspotThenInteractionClick_Process (mouseState, false);
 			}
 		}
 		
 		
-		protected void ChooseHotspotThenInteractionClick_Process (bool doubleTap)
+		protected void ChooseHotspotThenInteractionClick_Process (MouseState mouseState, bool doubleTap)
 		{
 			Hotspot newHotspot = CheckForHotspots ();
 			if (hotspot && newHotspot == null)
@@ -450,7 +452,7 @@ namespace AC
 			{
 				if (newHotspot.IsSingleInteraction ())
 				{
-					ContextSensitiveClick ();
+					ContextSensitiveClick (mouseState);
 					return;
 				}
 
@@ -467,7 +469,7 @@ namespace AC
 						
 					if (KickStarter.settingsManager.cancelInteractions != CancelInteractions.ViaScriptOnly)
 					{
-						if (KickStarter.playerInput.GetMouseState () == MouseState.SingleClick || !KickStarter.settingsManager.CanClickOffInteractionMenu ())
+						if (mouseState == MouseState.SingleClick || !KickStarter.settingsManager.CanClickOffInteractionMenu ())
 						{
 							if (KickStarter.settingsManager.inputMethod == InputMethod.TouchScreen)
 							{
@@ -490,11 +492,11 @@ namespace AC
 
 				if (hotspot)
 				{
-					if (KickStarter.playerInput.GetMouseState () == MouseState.SingleClick ||
+					if (mouseState == MouseState.SingleClick ||
 						(KickStarter.settingsManager.InventoryDragDrop && IsDroppingInventory ()) ||
 						(KickStarter.settingsManager.MouseOverForInteractionMenu () && !InvInstance.IsValid (KickStarter.runtimeInventory.HoverInstance) && !InvInstance.IsValid (KickStarter.runtimeInventory.SelectedInstance) && clickedNew && !IsDroppingInventory ()))
 					{
-						if (!InvInstance.IsValid (KickStarter.runtimeInventory.HoverInstance) && KickStarter.playerInput.GetMouseState () == MouseState.SingleClick && 
+						if (!InvInstance.IsValid (KickStarter.runtimeInventory.HoverInstance) && mouseState == MouseState.SingleClick && 
 							KickStarter.settingsManager.MouseOverForInteractionMenu () && !InvInstance.IsValid (KickStarter.runtimeInventory.SelectedInstance) && KickStarter.settingsManager.SelectInteractionMethod () == SelectInteractions.ClickingMenu &&
 							KickStarter.settingsManager.cancelInteractions != CancelInteractions.ClickOffMenu &&
 							!(InvInstance.IsValid (KickStarter.runtimeInventory.SelectedInstance) && !KickStarter.settingsManager.cycleInventoryCursors))
@@ -509,7 +511,7 @@ namespace AC
 							} 
 							else
 							{
-								HandleInteraction ();
+								HandleInteraction (mouseState);
 							}
 						}
 						else if (KickStarter.playerMenus)
@@ -524,7 +526,7 @@ namespace AC
 
 							if (KickStarter.playerMenus.IsInteractionMenuOn () && KickStarter.settingsManager.SelectInteractionMethod () == SelectInteractions.CyclingMenuAndClickingHotspot)
 							{
-								if (KickStarter.playerInput.GetMouseState () == MouseState.SingleClick)
+								if (mouseState == MouseState.SingleClick)
 								{
 									ClickHotspotToInteract (hotspot);
 									return;
@@ -553,7 +555,7 @@ namespace AC
 							}
 						}
 					}
-					else if (KickStarter.playerInput.GetMouseState () == MouseState.RightClick)
+					else if (mouseState == MouseState.RightClick)
 					{
 						hotspot.Deselect ();
 					}
@@ -574,7 +576,7 @@ namespace AC
 		}
 
 
-		protected void ContextSensitiveClick ()
+		protected void ContextSensitiveClick (MouseState mouseState)
 		{
 			if (hotspot != null &&
 				IsInvokingDefaultInteraction () &&
@@ -584,24 +586,24 @@ namespace AC
 				return;
 			}
 
-			if (CanDoDoubleTap ())
+			if (RequireTwoTaps ())
 			{
 				// Detect Hotspots only on mouse click
-				if (KickStarter.playerInput.GetMouseState () == MouseState.SingleClick ||
-					KickStarter.playerInput.GetMouseState () == MouseState.DoubleClick)
+				if (mouseState == MouseState.SingleClick ||
+					mouseState == MouseState.DoubleClick)
 				{
 					// Check Hotspots only when click/tap
-					ContextSensitiveClick_Process (true, CheckForHotspots ());
+					ContextSensitiveClick_Process (mouseState, true, CheckForHotspots ());
 				}
-				else if (KickStarter.playerInput.GetMouseState () == MouseState.RightClick)
+				else if (mouseState == MouseState.RightClick)
 				{
-					HandleInteraction ();
+					HandleInteraction (mouseState);
 				}
 			}
 			else
 			{
 				// Always detect Hotspots
-				ContextSensitiveClick_Process (false, CheckForHotspots ());
+				ContextSensitiveClick_Process (mouseState, false, CheckForHotspots ());
 
 				if (!KickStarter.playerMenus.IsMouseOverMenu () && hotspot)
 				{
@@ -609,19 +611,28 @@ namespace AC
 												(KickStarter.settingsManager.interactionMethod == AC_InteractionMethod.ContextSensitive ||
 												(KickStarter.settingsManager.interactionMethod == AC_InteractionMethod.ChooseHotspotThenInteraction && hotspot.IsSingleInteraction ())));
 
-					if ((KickStarter.playerInput.GetMouseState () == MouseState.SingleClick && !requireDoubleClick) || KickStarter.playerInput.GetMouseState () == MouseState.DoubleClick || KickStarter.playerInput.GetMouseState () == MouseState.RightClick || IsDroppingInventory ())
+					if (KickStarter.settingsManager.inputMethod == InputMethod.TouchScreen && KickStarter.settingsManager.touchScreenHotspotInput == TouchScreenHotspotInput.TouchUp)
+					{
+						if (KickStarter.runtimeInventory.SelectedItem == null)
+						{
+							if (mouseState == MouseState.SingleClick) mouseState = MouseState.Normal;
+							else if (mouseState == MouseState.LetGo) mouseState = MouseState.SingleClick;
+						}
+					}
+
+					if ((mouseState == MouseState.SingleClick && !requireDoubleClick) || mouseState == MouseState.DoubleClick || mouseState == MouseState.RightClick || IsDroppingInventory ())
 					{
 						if (KickStarter.settingsManager.SelectInteractionMethod () == SelectInteractions.CyclingCursorAndClickingHotspot &&
 							(!InvInstance.IsValid (KickStarter.runtimeInventory.SelectedInstance) || (InvInstance.IsValid (KickStarter.runtimeInventory.SelectedInstance) && KickStarter.settingsManager.cycleInventoryCursors)))
 						{
-							if (KickStarter.playerInput.GetMouseState () != MouseState.RightClick)
+							if (mouseState != MouseState.RightClick)
 							{
 								ClickHotspotToInteract (hotspot);
 							}
 						}
 						else
 						{
-							HandleInteraction ();
+							HandleInteraction (mouseState);
 						}
 					}
 				}
@@ -648,7 +659,7 @@ namespace AC
 		}
 
 		
-		protected void ContextSensitiveClick_Process (bool doubleTap, Hotspot newHotspot)
+		protected void ContextSensitiveClick_Process (MouseState mouseState, bool doubleTap, Hotspot newHotspot)
 		{
 			if (hotspot && newHotspot == null)
 			{
@@ -672,7 +683,7 @@ namespace AC
 				else if (hotspot && doubleTap)
 				{
 					// Still work if not clicking on the active Hotspot
-					HandleInteraction ();
+					HandleInteraction (mouseState);
 				}
 			}
 		}
@@ -728,7 +739,7 @@ namespace AC
 		}
 		
 		
-		protected void HandleInteraction ()
+		protected void HandleInteraction (MouseState mouseState)
 		{
 			if (hotspot)
 			{
@@ -736,11 +747,11 @@ namespace AC
 				{
 					case AC_InteractionMethod.ContextSensitive:
 						{
-							if (KickStarter.playerInput.GetMouseState() == MouseState.SingleClick || KickStarter.playerInput.GetMouseState() == MouseState.DoubleClick)
+							if (mouseState == MouseState.SingleClick || mouseState == MouseState.DoubleClick)
 							{
 								if (!InvInstance.IsValid (KickStarter.runtimeInventory.SelectedInstance) && KickStarter.cursorManager.lookUseCursorAction == LookUseCursorAction.RightClickCyclesModes)
 								{
-									if (KickStarter.playerCursor.ContextCycleExamine && hotspot.HasContextLook())
+									if (KickStarter.playerCursor.ContextCycleExamine && hotspot.HasContextLook ())
 									{
 										// Perform "Look" interaction
 										ClickButton (InteractionType.Examine, -1);
@@ -753,7 +764,7 @@ namespace AC
 									return;
 								}
 
-								if (!InvInstance.IsValid (KickStarter.runtimeInventory.SelectedInstance) && hotspot.HasContextUse())
+								if (!InvInstance.IsValid (KickStarter.runtimeInventory.SelectedInstance) && hotspot.HasContextUse ())
 								{
 									// Perform "Use" interaction
 									ClickButton (InteractionType.Use, -1);
@@ -763,7 +774,7 @@ namespace AC
 									// Perform "Use Inventory" interaction
 									ClickButton (InteractionType.Inventory, -1, KickStarter.runtimeInventory.SelectedInstance);
 								}
-								else if (hotspot.HasContextLook() && KickStarter.cursorManager.leftClickExamine)
+								else if (hotspot.HasContextLook () && KickStarter.cursorManager.leftClickExamine)
 								{
 									// Perform "Look" interaction
 									ClickButton (InteractionType.Examine, -1);
@@ -777,9 +788,9 @@ namespace AC
 								}
 
 							}
-							else if (KickStarter.playerInput.GetMouseState() == MouseState.RightClick)
+							else if (mouseState == MouseState.RightClick)
 							{
-								if (!InvInstance.IsValid (KickStarter.runtimeInventory.SelectedInstance) && hotspot.HasContextLook() && KickStarter.cursorManager.lookUseCursorAction != LookUseCursorAction.RightClickCyclesModes)
+								if (!InvInstance.IsValid (KickStarter.runtimeInventory.SelectedInstance) && hotspot.HasContextLook () && KickStarter.cursorManager.lookUseCursorAction != LookUseCursorAction.RightClickCyclesModes)
 								{
 									// Perform "Look" interaction
 									ClickButton (InteractionType.Examine, -1);
@@ -796,7 +807,7 @@ namespace AC
 
 					case AC_InteractionMethod.ChooseInteractionThenHotspot:
 						{
-							if (KickStarter.playerInput.GetMouseState() == MouseState.SingleClick)
+							if (mouseState == MouseState.SingleClick)
 							{
 								if (!InvInstance.IsValid (KickStarter.runtimeInventory.SelectedInstance) && hotspot.provideUseInteraction)
 								{
@@ -811,7 +822,7 @@ namespace AC
 									}
 									else if (KickStarter.playerCursor.GetSelectedCursor() >= 0)
 									{
-										ClickButton (InteractionType.Use, KickStarter.cursorManager.cursorIcons[KickStarter.playerCursor.GetSelectedCursor()].id, null, GetActiveHotspot());
+										ClickButton (InteractionType.Use, KickStarter.cursorManager.cursorIcons[KickStarter.playerCursor.GetSelectedCursor ()].id, null, GetActiveHotspot());
 									}
 									else
 									{
@@ -835,7 +846,7 @@ namespace AC
 									ClickButton (InteractionType.Inventory, -1, invInstance);
 								}
 							}
-							else if (KickStarter.settingsManager.InventoryDragDrop && IsDroppingInventory())
+							else if (KickStarter.settingsManager.InventoryDragDrop && IsDroppingInventory ())
 							{
 								// Perform "Use Inventory" interaction (Drag n' drop mode)
 								ClickButton (InteractionType.Inventory, -1, KickStarter.runtimeInventory.SelectedInstance);
@@ -847,22 +858,22 @@ namespace AC
 						{
 							if (InvInstance.IsValid (KickStarter.runtimeInventory.SelectedInstance) && KickStarter.settingsManager.CanSelectItems (false))
 							{
-								if (KickStarter.playerInput.GetMouseState() == MouseState.SingleClick || KickStarter.playerInput.GetMouseState() == MouseState.DoubleClick)
+								if (mouseState == MouseState.SingleClick || mouseState == MouseState.DoubleClick)
 								{
 									// Perform "Use Inventory" interaction
 									ClickButton (InteractionType.Inventory, -1, KickStarter.runtimeInventory.SelectedInstance);
 									return;
 								}
-								else if (KickStarter.settingsManager.InventoryDragDrop && IsDroppingInventory())
+								else if (KickStarter.settingsManager.InventoryDragDrop && IsDroppingInventory ())
 								{
 									// Perform "Use Inventory" interaction
 									ClickButton (InteractionType.Inventory, -1, KickStarter.runtimeInventory.SelectedInstance);
 
-									KickStarter.runtimeInventory.SetNull();
+									KickStarter.runtimeInventory.SetNull ();
 									return;
 								}
 							}
-							else if (!InvInstance.IsValid (KickStarter.runtimeInventory.SelectedInstance) && hotspot.IsSingleInteraction())
+							else if (!InvInstance.IsValid (KickStarter.runtimeInventory.SelectedInstance) && hotspot.IsSingleInteraction ())
 							{
 								// Perform "Use" interaction
 								ClickButton (InteractionType.Use, -1);
@@ -2172,21 +2183,25 @@ namespace AC
 		}
 
 
-		protected string GetInteractionLabel (int _language)
+		protected void UpdateInteractionLabel (int _language)
 		{
 			if (KickStarter.stateHandler.gameState == GameState.DialogOptions && !KickStarter.settingsManager.allowInventoryInteractionsDuringConversations && !KickStarter.settingsManager.allowGameplayDuringConversations)
 			{
-				return string.Empty;
+				hotspotLabelData.ClearString ();
+				return;
 			}
 
 			if (KickStarter.stateHandler.IsInCutscene ())
 			{
-				return string.Empty;
+				hotspotLabelData.ClearString ();
+				return;
 			}
 
 			if (hotspot)
 			{
-				return hotspot.GetFullLabel (_language);
+				string label = hotspot.GetFullLabel (_language);
+				hotspotLabelData.SetData (hotspot, KickStarter.runtimeInventory.SelectedInstance, label);
+				return;
 			}
 			else
 			{
@@ -2196,14 +2211,17 @@ namespace AC
 				{
 					if (KickStarter.cursorManager.onlyShowInventoryLabelOverHotspots)
 					{
-						return string.Empty;
+						hotspotLabelData.ClearString ();
+						return;
 					}
 
 					switch (KickStarter.cursorManager.inventoryHandling)
 					{
 						case InventoryHandling.ChangeHotspotLabel:
 						case InventoryHandling.ChangeCursorAndHotspotLabel:
-							return KickStarter.runtimeInventory.SelectedInstance.GetHotspotPrefixLabel (_language, true);
+							string label = KickStarter.runtimeInventory.SelectedInstance.GetHotspotPrefixLabel (_language, true);
+							hotspotLabelData.SetData (KickStarter.runtimeInventory.SelectedInstance, label);
+							return;
 
 						default:
 							break;
@@ -2217,18 +2235,34 @@ namespace AC
 						int cursorID = KickStarter.playerCursor.GetSelectedCursorID ();
 						if (cursorID >= 0 && !KickStarter.cursorManager.onlyShowCursorLabelOverHotspots)
 						{
-							return KickStarter.cursorManager.GetLabelFromID (cursorID, _language);
+							string label = KickStarter.cursorManager.GetLabelFromID (cursorID, _language);
+							hotspotLabelData.SetData (label);
+							return;
 						}
 					}
 
 					if (KickStarter.playerCursor.IsInWalkMode () && KickStarter.cursorManager.addWalkPrefix)
 					{
 						// 'Walk to'
-						return KickStarter.runtimeLanguages.GetTranslation (KickStarter.cursorManager.walkPrefix.label, KickStarter.cursorManager.walkPrefix.lineID, _language, KickStarter.cursorManager.walkPrefix.GetTranslationType (0));
+						string label = KickStarter.runtimeLanguages.GetTranslation (KickStarter.cursorManager.walkPrefix.label, KickStarter.cursorManager.walkPrefix.lineID, _language, KickStarter.cursorManager.walkPrefix.GetTranslationType (0));
+						hotspotLabelData.SetData (label);
+						return;
 					}
 				}
 			}
-			return string.Empty;
+
+			hotspotLabelData.ClearString ();
+			return;
+		}
+
+
+		/** The HotspotLabelData class set from either the active Hotspot, or the selected Inventory item */
+		public HotspotLabelData HotspotLabelData
+		{
+			get
+			{
+				return hotspotLabelData;
+			}
 		}
 
 
@@ -2255,7 +2289,7 @@ namespace AC
 		{
 			get
 			{
-				return interactionLabel;
+				return hotspotLabelData.HotspotLabel;
 			}
 		}
 

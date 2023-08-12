@@ -23,7 +23,7 @@ namespace AC
 	public class ActionEndGame : Action
 	{
 		
-		public enum AC_EndGameType { QuitGame, LoadAutosave, ResetScene, RestartGame };
+		public enum AC_EndGameType { QuitGame, LoadAutosave, ResetScene, RestartGame, ResetData };
 		public AC_EndGameType endGameType;
 		public ChooseSceneBy chooseSceneBy = ChooseSceneBy.Number;
 		public int sceneNumber;
@@ -78,6 +78,10 @@ namespace AC
 
 				case AC_EndGameType.ResetScene:
 					KickStarter.sceneChanger.ResetCurrentScene ();
+					break;
+
+				case AC_EndGameType.ResetData:
+					KickStarter.ResetData ();
 					break;
 
 				default:

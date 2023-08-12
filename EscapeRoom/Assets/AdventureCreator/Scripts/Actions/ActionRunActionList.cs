@@ -610,6 +610,28 @@ namespace AC
 		}
 
 
+		public static int ShowObjectiveSelectorGUI (string label, List<Objective> objectives, int ID, string tooltip = "")
+		{
+			int obNumber = -1;
+
+			List<string> labelList = new List<string> ();
+			labelList.Add (" (None)");
+			foreach (Objective objective in objectives)
+			{
+				labelList.Add (objective.Title);
+			}
+
+			obNumber = GetObNumber (objectives, ID) + 1;
+			obNumber = CustomGUILayout.Popup (label, obNumber, labelList.ToArray (), string.Empty, tooltip) - 1;
+
+			if (obNumber >= 0)
+			{
+				return objectives[obNumber].ID;
+			}
+			return -1;
+		}
+
+
 		private static int GetVarNumber (List<GVar> vars, int ID)
 		{
 			int i = 0;
@@ -646,6 +668,21 @@ namespace AC
 			foreach (Document document in documents)
 			{
 				if (document.ID == ID)
+				{
+					return i;
+				}
+				i++;
+			}
+			return -1;
+		}
+		
+
+		private static int GetObNumber (List<Objective> objectives, int ID)
+		{
+			int i = 0;
+			foreach (Objective objective in objectives)
+			{
+				if (objective.ID == ID)
 				{
 					return i;
 				}

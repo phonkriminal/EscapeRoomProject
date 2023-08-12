@@ -12,7 +12,6 @@
  */
 
 using UnityEngine;
-using System.Collections;
 using System.Collections.Generic;
 
 namespace AC
@@ -276,13 +275,13 @@ namespace AC
 			}
 
 			ButtonDialog buttonDialog = options[i];
-			if (!gameObject.activeInHierarchy || interactionSource == AC.InteractionSource.CustomScript)
+			if (interactionSource == InteractionSource.CustomScript)
 			{
 				RunOption (buttonDialog);
 			}
 			else
 			{
-				StartCoroutine (RunOptionCo (buttonDialog));
+				KickStarter.playerInput.StartCoroutine (KickStarter.playerInput.DelayConversation (this, () => RunOption (buttonDialog)));
 			}
 
 			KickStarter.playerInput.activeConversation = null;
@@ -309,7 +308,7 @@ namespace AC
 			}
 			else
 			{
-				StartCoroutine (RunOptionCo (buttonDialog));
+				KickStarter.playerInput.StartCoroutine (KickStarter.playerInput.DelayConversation (this, () => RunOption (buttonDialog)));
 			}
 
 			KickStarter.playerInput.activeConversation = null;
@@ -748,7 +747,7 @@ namespace AC
 			}
 			else
 			{
-				ACDebug.Log ("No DialogueOption object found on Conversation '" + gameObject.name + "'", this);
+				ACDebug.Log ("No DialogueOption object found on Conversation '" + gameObject.name + "' option " + _option.ID, this);
 				KickStarter.eventManager.Call_OnEndConversation (this);
 
 				if (endConversation)
@@ -777,26 +776,6 @@ namespace AC
 		}
 		
 		
-		protected IEnumerator RunOptionCo (ButtonDialog buttonDialog)
-		{
-			KickStarter.playerInput.PendingOptionConversation = this;
-
-			float timeElapsed = 0f;
-			while (timeElapsed < KickStarter.dialog.conversationDelay)
-			{
-				timeElapsed += Time.deltaTime;
-				yield return new WaitForEndOfFrame ();
-			}
-
-			RunOption (buttonDialog);
-
-			if (KickStarter.playerInput.PendingOptionConversation == this)
-			{
-				KickStarter.playerInput.PendingOptionConversation = null;
-			}
-		}
-		
-
 		protected int ConvertSlotToOption (int slot, bool force = false)
 		{
 			int foundSlots = 0;
@@ -858,10 +837,12 @@ namespace AC
 			{
 				if (onFinishActiveList.actionListAsset)
 				{
+					KickStarter.actionListManager.ResetSkippableData ();
 					onFinishActiveList.actionList = AdvGame.RunActionListAsset (onFinishActiveList.actionListAsset, onFinishActiveList.startIndex, true);
 				}
 				else if (onFinishActiveList.actionList)
 				{
+					KickStarter.actionListManager.ResetSkippableData ();
 					onFinishActiveList.actionList.Interact (onFinishActiveList.startIndex, true);
 				}
 			}
@@ -870,7 +851,7 @@ namespace AC
 		}
 
 
-		protected void OnFinishLoading ()
+		protected void OnFinishLoading (int saveID)
 		{
 			onFinishActiveList = null;
 			overrideActiveList = null;

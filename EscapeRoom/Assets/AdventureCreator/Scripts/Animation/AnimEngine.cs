@@ -102,11 +102,6 @@ namespace AC
 			ActionCharAnimRun (action);
 		}
 		
-		public virtual bool ActionCharHoldPossible ()
-		{
-			return false;
-		}
-
 		public virtual void ActionSpeechGUI (ActionSpeech action, Char speaker)
 		{
 			#if UNITY_EDITOR

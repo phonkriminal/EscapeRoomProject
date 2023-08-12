@@ -206,6 +206,8 @@ namespace AC
 
 			foreach (Remember remember in playerSaveScripts)
 			{
+				if (!(remember is RememberSceneItem) && remember.GetComponent<RememberSceneItem> ()) continue;
+
 				if (remember.constantID != 0)
 				{
 					if (remember.retainInPrefab)
@@ -268,6 +270,8 @@ namespace AC
 			HashSet<Remember> persistentSaveScripts = KickStarter.stateHandler.ConstantIDManager.GetPersistentButNotPlayerComponents <Remember>();
 			foreach (Remember remember in persistentSaveScripts)
 			{
+				if (!(remember is RememberSceneItem) && remember.GetComponent<RememberSceneItem> ()) continue;
+
 				if (remember.constantID != 0)
 				{
 					if (remember.retainInPrefab)
@@ -425,12 +429,14 @@ namespace AC
 				localVariables.localVars = SaveSystem.UnloadVariablesData (levelData.localVariablesData, true, localVariables.localVars);
 			}
 
+			UnloadSceneItemSpawnData (levelData.allSceneItemSpawnData, scene);
+
 			var unloadTransformDataCoroutine = UnloadTransformData (levelData.allTransformData, scene, levelData.allScriptData);
 			while (unloadTransformDataCoroutine.MoveNext ())
 			{
 				yield return unloadTransformDataCoroutine.Current;
 			}
-
+			
 			KickStarter.stateHandler.IgnoreNavMeshCollisions ();
 			
 			var unloadScriptDataCoroutine = UnloadScriptData (levelData.allScriptData, scene);
@@ -449,6 +455,7 @@ namespace AC
 			LocalVariables localVariables = (subScene == null) ? KickStarter.localVariables : subScene.LocalVariables;
 
 			List<TransformData> thisLevelTransforms = PopulateTransformData (scene);
+			List<SceneItemSpawnData> thisLevelSceneItems = PopulateSceneItemSpawnData (scene);
 			List<ScriptData> thisLevelScripts = PopulateScriptData (scene);
 
 			SingleLevelData thisLevelData = new SingleLevelData ();
@@ -490,6 +497,7 @@ namespace AC
 				thisLevelData.localVariablesData = SaveSystem.CreateVariablesData (localVariables.localVars, false, VariableLocation.Local);
 			}
 			thisLevelData.allTransformData = thisLevelTransforms;
+			thisLevelData.allSceneItemSpawnData = thisLevelSceneItems;
 			thisLevelData.allScriptData = thisLevelScripts;
 
 			if (allLevelData == null) allLevelData = new List<SingleLevelData>();
@@ -600,8 +608,31 @@ namespace AC
 		}
 
 
+		private List<SceneItemSpawnData> PopulateSceneItemSpawnData (Scene scene)
+		{
+			List<SceneItemSpawnData> allSceneItemSpawnData = new List<SceneItemSpawnData> ();
+			HashSet<RememberSceneItem> sceneItems = ConstantID.GetComponents<RememberSceneItem> (scene);
+
+			foreach (RememberSceneItem sceneItem in sceneItems)
+			{
+				if (sceneItem.constantID != 0)
+				{
+					allSceneItemSpawnData.Add (sceneItem.SaveSpawnData ());
+				}
+				else
+				{
+					ACDebug.LogWarning ("GameObject " + sceneItem.name + " was not saved because its ConstantID has not been set!", sceneItem);
+				}
+			}
+
+			return allSceneItemSpawnData;
+		}
+
+
 		private IEnumerator UnloadTransformData (List<TransformData> allTransformData, Scene scene, List<ScriptData> allScriptData)
 		{
+			allTransformData.Sort (delegate (TransformData a, TransformData b) { return a.loadOrder.CompareTo (b.loadOrder); });
+
 			// Delete any objects (if told to)
 			HashSet<RememberTransform> currentTransforms = ConstantID.GetComponents <RememberTransform> (scene);
 			foreach (RememberTransform transformOb in currentTransforms)
@@ -739,8 +770,59 @@ namespace AC
 		}
 
 
+		private void UnloadSceneItemSpawnData (List<SceneItemSpawnData> allSceneItemSpawnData, Scene scene)
+		{
+			// Delete any objects (if told to)
+			{
+				HashSet<RememberSceneItem> currentSceneItems = ConstantID.GetComponents<RememberSceneItem> (scene);
+				foreach (RememberSceneItem rememberSceneItem in currentSceneItems)
+				{
+					// Was object not saved?
+					bool found = false;
+					foreach (SceneItemSpawnData sceneItemSpawnData in allSceneItemSpawnData)
+					{
+						if (sceneItemSpawnData.objectID == rememberSceneItem.constantID)
+						{
+							found = true;
+							break;
+						}
+					}
+
+					if (!found)
+					{
+						// Can't find: delete
+						KickStarter.sceneChanger.ScheduleForDeletion (rememberSceneItem.gameObject);
+					}
+				}
+			}
+
+			foreach (SceneItemSpawnData sceneItemSpawnData in allSceneItemSpawnData)
+			{
+				RememberSceneItem saveObject = ConstantID.GetComponent<RememberSceneItem> (sceneItemSpawnData.objectID, scene);
+
+				if (saveObject == null)
+				{
+					InvItem invItem = KickStarter.inventoryManager.GetItem (sceneItemSpawnData.itemID);
+					if (invItem == null) continue;
+					if (invItem.linkedPrefab == null) continue;
+
+					GameObject spawnedPrefab = Instantiate (invItem.linkedPrefab);
+					spawnedPrefab.name = invItem.linkedPrefab.name;
+					saveObject = spawnedPrefab.GetComponent<RememberSceneItem> ();
+				}
+
+				if (saveObject)
+				{
+					saveObject.LoadSpawnData (sceneItemSpawnData);
+				}
+			}
+		}
+
+
 		private IEnumerator UnloadScriptData (List<ScriptData> allScriptData, Scene scene)
 		{
+			List<RememberDataPairing> dataPairingList = new List<RememberDataPairing> ();
+
 			HashSet<Remember> saveObjects = ConstantID.GetComponents <Remember> (scene);
 			foreach (ScriptData _scriptData in allScriptData)
 			{
@@ -752,17 +834,42 @@ namespace AC
 
 						if (saveObject.constantID == _scriptData.objectID)
 						{
-							var loadDataCoroutine = saveObject.LoadDataCo (_scriptData.data);
-							while (loadDataCoroutine.MoveNext ())
-							{
-								yield return loadDataCoroutine.Current;
-							}
+							RememberDataPairing rememberDataPairing = new RememberDataPairing (saveObject, _scriptData);
+							dataPairingList.Add (rememberDataPairing);
 						}
 					}
 				}
 			}
 
-			AssetLoader.UnloadAssets ();
+			dataPairingList.Sort (delegate (RememberDataPairing a, RememberDataPairing b) { return a.Remember.LoadOrder.CompareTo (b.Remember.LoadOrder); });
+			foreach (RememberDataPairing dataPairing in dataPairingList)
+			{
+				var loadDataCoroutine = dataPairing.Remember.LoadDataCo (dataPairing.ScriptData.data);
+				while (loadDataCoroutine.MoveNext ())
+				{
+					yield return loadDataCoroutine.Current;
+				}
+			}
+
+			if (KickStarter.settingsManager.autoCallUnloadUnusedAssets)
+			{
+				AssetLoader.UnloadAssets ();
+			}
+		}
+
+
+		public class RememberDataPairing
+		{
+
+			public readonly Remember Remember;
+			public readonly ScriptData ScriptData;
+
+			public RememberDataPairing (Remember remember, ScriptData scriptData)
+			{
+				Remember = remember;
+				ScriptData = scriptData;
+			}
+
 		}
 
 
@@ -774,6 +881,7 @@ namespace AC
 			foreach (Remember _script in scripts)
 			{
 				if (!_script.isActiveAndEnabled) continue;
+				if (!(_script is RememberSceneItem) && _script.GetComponent<RememberSceneItem> ()) continue;
 
 				if (_script.constantID != 0)
 				{
@@ -802,6 +910,8 @@ namespace AC
 		public List<ScriptData> allScriptData;
 		/** A List of all data recorded by the scene's RememberTransform scripts */
 		public List<TransformData> allTransformData;
+		/** A List of all SceneItems as recoreded by the scene's RememberSceneItem scripts */
+		public List<SceneItemSpawnData> allSceneItemSpawnData;
 		/** The scene number this data is for */
 		public int sceneNumber;
 		/** The scene name this data is for */
@@ -921,6 +1031,15 @@ namespace AC
 				foreach (TransformData transformData in allTransformData)
 				{
 					CustomGUILayout.MultiLineLabelGUI ("   " + transformData.GetType ().ToString () + ":", EditorJsonUtility.ToJson (transformData, true));
+				}
+			}
+
+			if (allSceneItemSpawnData != null && allSceneItemSpawnData.Count > 0)
+			{
+				EditorGUILayout.LabelField ("SceneItem data:");
+				foreach (SceneItemSpawnData sceneItemSpawnData in allSceneItemSpawnData)
+				{
+					CustomGUILayout.MultiLineLabelGUI ("   " + sceneItemSpawnData.objectID, sceneItemSpawnData.itemID.ToString ());
 				}
 			}
 

@@ -52,7 +52,7 @@ namespace AC
 
 			ExportWizardWindow window = (ExportWizardWindow) GetWindow (typeof (ExportWizardWindow));
 			window.titleContent.text = "Text export wizard";
-			window.position = new Rect (300, 200, 350, 500);
+			window.position = new Rect (300, 200, 350, 550);
 			window._Init (_speechManager, _sceneNames, forLanguage);
 			window.minSize = new Vector2 (300, 180);
 		}
@@ -91,6 +91,8 @@ namespace AC
 			EditorGUILayout.Space ();
 
 			EditorGUILayout.LabelField ("Export", CustomStyles.subHeader);
+
+			exportData.maxXMLRows = EditorGUILayout.IntField ("Sheet row limit (SML only):", exportData.maxXMLRows);
 			if (exportData.exportColumns.Count == 0)
 			{
 				GUI.enabled = false;
@@ -207,6 +209,15 @@ namespace AC
 						exportData.tagFilter = -1;
 						EditorGUILayout.HelpBox ("No tags defined - they can be created by clicking 'Edit speech tags' in the Speech Manager.", MessageType.Info);
 					}
+				}
+			}
+
+			for (int i = 0; i < exportData.exportColumns.Count; i++)
+			{ 
+				if (exportData.exportColumns[i].GetLanguageIndex () > 0)
+				{
+					exportData.excludeLinesWithTranslations = EditorGUILayout.Toggle ("No lines with translations?", exportData.excludeLinesWithTranslations);
+					break;
 				}
 			}
 
@@ -337,6 +348,16 @@ namespace AC
 				return;
 			}
 
+			List<int> exportedTranslations = new List<int> ();
+			foreach (ExportColumn exportColumn in exportData.exportColumns)
+			{
+				int languageIndex = exportColumn.GetLanguageIndex ();
+				if (languageIndex > 0 && !exportedTranslations.Contains (languageIndex))
+				{
+					exportedTranslations.Add (languageIndex);
+				}
+			}
+
 			List<SpeechLine> exportLines = new List<SpeechLine>();
 			foreach (SpeechLine line in speechManager.lines)
 			{
@@ -352,6 +373,7 @@ namespace AC
 						continue;
 					}
 				}
+
 				if (exportData.filterByScene)
 				{
 					if (sceneNames != null && sceneNames.Length > exportData.sceneFilter)
@@ -370,6 +392,7 @@ namespace AC
 						}
 					}
 				}
+
 				if (exportData.filterByText)
 				{
 					if (!line.Matches (exportData.textFilter, exportData.filterSpeechLine))
@@ -377,12 +400,29 @@ namespace AC
 						continue;
 					}
 				}
+
 				if (exportData.filterByTag)
 				{
 					if (exportData.tagFilter == -1
 						|| (exportData.tagFilter < speechManager.speechTags.Count && line.tagID == speechManager.speechTags[exportData.tagFilter].ID))
 					{}
 					else
+					{
+						continue;
+					}
+				}
+
+				if (exportData.excludeLinesWithTranslations)
+				{
+					bool anyNotEmpty = false;
+					foreach (int translationIndex in exportedTranslations)
+					{
+						if (!string.IsNullOrEmpty (line.GetTranslation (string.Empty, translationIndex)))
+						{
+							anyNotEmpty = true;
+						}
+					}
+					if (!anyNotEmpty)
 					{
 						continue;
 					}
@@ -451,7 +491,7 @@ namespace AC
 					break;
 
 				case ExportFormat.XML:
-					fileContents = SMLReader.CreateXMLGrid (output);
+					fileContents = SMLReader.CreateXMLGrid (output, exportData.maxXMLRows);
 					break;
 			}
 
@@ -535,6 +575,16 @@ namespace AC
 					return ("Original text");
 				}
 				return columnType.ToString ();
+			}
+
+
+			public int GetLanguageIndex ()
+			{
+				if (columnType == ColumnType.DisplayText)
+				{
+					return language;
+				}
+				return -1;
 			}
 
 
@@ -689,6 +739,7 @@ namespace AC
 			public bool filterByScene = false;
 			public bool filterByText = false;
 			public bool filterByTag = false;
+			public bool excludeLinesWithTranslations = false;
 			public string textFilter;
 			public FilterSpeechLine filterSpeechLine = FilterSpeechLine.Text;
 			public AC_TextTypeFlags textTypeFilters = (AC_TextTypeFlags) ~0;
@@ -696,7 +747,7 @@ namespace AC
 			public int sceneFilter;
 			public bool doRowSorting = false;
 			public RowSorting rowSorting = RowSorting.ByID;
-
+			public int maxXMLRows = 250;
 
 
 			public ExportWizardData ()

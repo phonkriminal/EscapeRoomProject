@@ -10,6 +10,7 @@
  */
 
 using UnityEngine;
+using System;
 
 namespace AC
 {
@@ -97,11 +98,24 @@ namespace AC
 			return AdvGame.PrepareStringForSaving (label);
 		}
 
+
+		/**
+		 * <summary>Gets the time the save file was last updated, as a DateTime variable</summary>
+		 * <returns>The last-updated DateTime variable</returns>
+		 */
+		public DateTime GetUpdatedTime ()
+		{
+			int newTime = 200000000 - updatedTime;
+			TimeSpan ts = new TimeSpan (0, 0, newTime);
+			DateTime old = new DateTime (2015, 1, 1);
+			return old.Add (ts);
+		}
+
 		#endregion
 
 
 		#region GetSet
-		
+
 		/** If True, then the file is considered to be an AutoSave */
 		public bool IsAutoSave
 		{

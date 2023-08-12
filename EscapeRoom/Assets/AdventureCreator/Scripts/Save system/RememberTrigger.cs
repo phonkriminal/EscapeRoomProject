@@ -11,6 +11,9 @@
  */
 
 using UnityEngine;
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 
 namespace AC
 {
@@ -25,7 +28,8 @@ namespace AC
 
 		/** Whether the Trigger should be enabled or not when the game begins */
 		public AC_OnOff startState = AC_OnOff.On;
-
+		[SerializeField] private AC_Trigger triggerToSave = null;
+		
 		#endregion
 
 
@@ -33,19 +37,15 @@ namespace AC
 
 		protected override void OnInitialiseScene ()
 		{
-			if (isActiveAndEnabled)
+			if (isActiveAndEnabled && Trigger)
 			{
-				AC_Trigger trigger = GetComponent<AC_Trigger>();
-				if (trigger)
-				{ 
-					if (startState == AC_OnOff.On)
-					{
-						trigger.TurnOn ();
-					}
-					else
-					{
-						trigger.TurnOff ();
-					}
+				if (startState == AC_OnOff.On)
+				{
+					Trigger.TurnOn ();
+				}
+				else
+				{
+					Trigger.TurnOff ();
 				}
 			}
 		}
@@ -57,18 +57,20 @@ namespace AC
 
 		public override string SaveData ()
 		{
+			if (Trigger == null) return string.Empty;
+
 			TriggerData triggerData = new TriggerData ();
 			triggerData.objectID = constantID;
 			triggerData.savePrevented = savePrevented;
 
-			Collider _collider = GetComponent <Collider>();
+			Collider _collider = Trigger.GetComponent <Collider>();
 			if (_collider)
 			{
 				triggerData.isOn = _collider.enabled;
 			}
 			else
 			{
-				Collider2D _collider2D = GetComponent <Collider2D>();
+				Collider2D _collider2D = Trigger.GetComponent <Collider2D>();
 				if (_collider2D)
 				{
 					triggerData.isOn = _collider2D.enabled;
@@ -85,6 +87,8 @@ namespace AC
 
 		public override void LoadData (string stringData)
 		{
+			if (Trigger == null) return;
+
 			TriggerData data = Serializer.LoadScriptData <TriggerData> (stringData);
 			if (data == null)
 			{
@@ -92,18 +96,51 @@ namespace AC
 			}
 			SavePrevented = data.savePrevented; if (savePrevented) return;
 
-			Collider _collider = GetComponent <Collider>();
+			Collider _collider = Trigger.GetComponent<Collider>();
 			if (_collider)
 			{
 				_collider.enabled = data.isOn;
 			}
 			else 
 			{
-				Collider2D _collider2D = GetComponent <Collider2D>();
+				Collider2D _collider2D = Trigger.GetComponent<Collider2D>();
 				if (_collider2D)
 				{
 					_collider2D.enabled = data.isOn;
 				}
+			}
+		}
+
+
+		#if UNITY_EDITOR
+
+		public void ShowGUI ()
+		{
+			if (triggerToSave == null) triggerToSave = GetComponent<AC_Trigger> ();
+
+			CustomGUILayout.BeginVertical ();
+			EditorGUILayout.LabelField ("Trigger", EditorStyles.boldLabel);
+			triggerToSave = (AC_Trigger) CustomGUILayout.ObjectField<AC_Trigger> ("Trigger:", triggerToSave, true);
+			startState = (AC_OnOff) CustomGUILayout.EnumPopup ("Trigger state on start:", startState, "", "The enabled state of the Trigger when the game begins");
+			CustomGUILayout.EndVertical ();
+		}
+
+		#endif
+
+		#endregion
+
+
+		#region GetSet
+
+		private AC_Trigger Trigger
+		{
+			get
+			{
+				if (triggerToSave == null || !Application.isPlaying)
+				{
+					triggerToSave = GetComponent<AC_Trigger> ();
+				}
+				return triggerToSave;
 			}
 		}
 

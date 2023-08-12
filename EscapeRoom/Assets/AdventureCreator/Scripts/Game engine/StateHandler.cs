@@ -101,6 +101,8 @@ namespace AC
 			Time.timeScale = 1f;
 			DontDestroyOnLoad (this);
 
+			KickStarter.playerMenus.CreateEventSystem ();
+
 			KickStarter.sceneChanger.OnInitPersistentEngine ();
 			KickStarter.runtimeInventory.OnInitPersistentEngine ();
 

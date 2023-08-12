@@ -144,29 +144,9 @@ namespace AC
 				}
 			}
 
-			UpdateLimitCategory ();
 			PopulateList ();
 
 			base.Copy (_element);
-		}
-
-
-		private void UpdateLimitCategory ()
-		{
-			if (Application.isPlaying && AdvGame.GetReferences ().inventoryManager && AdvGame.GetReferences ().inventoryManager.bins != null)
-			{
-				foreach (InvBin invBin in KickStarter.inventoryManager.bins)
-				{
-					if (categoryIDs.Contains (invBin.id))
-					{
-						// Fine!
-					}
-					else
-					{
-						categoryIDs.Remove (invBin.id);
-					}
-				}
-			}
 		}
 
 
@@ -342,6 +322,8 @@ namespace AC
 					{
 						for (int i = 0; i < bins.Count; i++)
 						{
+							if (!bins[i].forItems) continue;
+
 							bool include = (categoryIDs.Contains (bins[i].id)) ? true : false;
 							include = EditorGUILayout.ToggleLeft (" " + i.ToString () + ": " + bins[i].label, include);
 
@@ -413,10 +395,14 @@ namespace AC
 		{
 			if (uiSlots != null && _slot < uiSlots.Length && !uiSlots[_slot].CanOverrideHotspotLabel) return string.Empty;
 
-			InvItem invItem = GetItem (_slot);
-			if (invItem != null)
+			InvInstance invInstance = GetInstance (_slot);
+			if (!InvInstance.IsValid (invInstance))
 			{
-				return invItem.GetLabel (_language);
+				if (_language == Options.GetLanguage ())
+				{
+					return invInstance.ItemLabel;
+				}
+				return invInstance.InvItem.GetLabel (_language);
 			}
 
 			return string.Empty;
@@ -428,10 +414,17 @@ namespace AC
 			string fullText = string.Empty;
 			if (displayType == ConversationDisplayType.TextOnly || displayType == ConversationDisplayType.IconAndText)
 			{
-				InvItem invItem = GetItem (_slot);
-				if (invItem != null)
+				InvInstance invInstance = GetInstance (_slot);
+				if (InvInstance.IsValid (invInstance))
 				{
-					fullText = invItem.GetLabel (languageNumber);
+					if (languageNumber == Options.GetLanguage ())
+					{
+						fullText = invInstance.ItemLabel;
+					}
+					else
+					{
+						fullText = invInstance.InvItem.GetLabel (languageNumber);
+					}
 				}
 
 				string countText = GetCount (_slot);
@@ -557,7 +550,7 @@ namespace AC
 
 		private void DrawText (GUIStyle _style, int _slot, float zoom)
 		{
-			if (_slot >= labels.Length) return;
+			if (labels == null || _slot >= labels.Length) return;
 			if (textEffects != TextEffects.None)
 			{
 				AdvGame.DrawTextEffect (ZoomRect (GetSlotRectRelative (_slot), zoom), labels[_slot], _style, effectColour, _style.normal.textColor, outlineSize, textEffects);
@@ -619,7 +612,12 @@ namespace AC
 					}
 					else
 					{
-						if (limitToCategory && categoryIDs.Count > 0 && !categoryIDs.Contains (KickStarter.runtimeInventory.SelectedInstance.InvItem.binID))
+						int binID = KickStarter.runtimeInventory.SelectedInstance.InvItem.binID;
+						if (limitToCategory && categoryIDs.Count > 0 && !categoryIDs.Contains (binID))
+						{
+							return false;
+						}
+						if (limitToCategory && binID >= 0 && !KickStarter.inventoryManager.IsInItemsCategory (binID))
 						{
 							return false;
 						}
@@ -791,6 +789,11 @@ namespace AC
 					activeRecipe = null;
 					return;
 				}
+				else if (limitToCategory && invItem.binID >= 0 && !KickStarter.inventoryManager.IsInItemsCategory (invItem.binID))
+				{
+					activeRecipe = null;
+					return;
+				}
 
 				if (activeRecipe.actionListOnCreate && !KickStarter.actionListAssetManager.IsListRunning (activeRecipe.actionListOnCreate))
 				{
@@ -840,13 +843,16 @@ namespace AC
 
 		public override string GetLabel (int i, int languageNumber)
 		{
-			InvItem invItem = GetItem (i);
-			if (invItem == null)
+			InvInstance invInstance = GetInstance (i);
+			if (InvInstance.IsValid (invInstance))
 			{
-				return string.Empty;
+				if (languageNumber == Options.GetLanguage ())
+				{
+					return invInstance.ItemLabel;
+				}
+				return invInstance.InvItem.GetLabel (languageNumber);
 			}
-
-			return invItem.GetLabel (languageNumber);
+			return string.Empty;
 		}
 
 

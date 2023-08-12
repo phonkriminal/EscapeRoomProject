@@ -998,6 +998,18 @@ namespace AC
 		#endregion
 
 
+		#region StaticFunctions
+
+		public static void CreateSkippedSpeech (Char _speaker, string _message, int lineID)
+		{
+			Speech speech = new Speech (_speaker, _message);
+			speech.log.lineID = lineID;
+			KickStarter.eventManager.Call_OnSkipSpeech (speech, false);
+		}
+
+		#endregion
+
+
 		#region ProtectedFunctions
 
 		protected void ExtendTime ()

@@ -24,9 +24,6 @@ namespace AC
 	public class AnimEngine_SpritesUnityComplex : AnimEngine
 	{
 
-		private bool enteredCorrectState;
-
-
 		public override void Declare (AC.Char _character)
 		{
 			character = _character;
@@ -34,7 +31,6 @@ namespace AC
 			isSpriteBased = true;
 			_character.frameFlipping = AC_2DFrameFlipping.None;
 			updateHeadAlways = true;
-			enteredCorrectState = false;
 		}
 
 
@@ -142,6 +138,12 @@ namespace AC
 				character.rotateSprite3D = (RotateSprite3D) EditorGUILayout.EnumPopup ("Rotate sprite to:", character.rotateSprite3D);
 			}
 
+			CustomGUILayout.EndVertical ();
+			CustomGUILayout.BeginVertical ();
+			EditorGUILayout.LabelField ("Bone transforms", EditorStyles.boldLabel);
+
+			character.leftHandBone = (Transform) CustomGUILayout.ObjectField<Transform> ("Left hand:", character.leftHandBone, true, "", "The 'Left hand bone' transform");
+			character.rightHandBone = (Transform) CustomGUILayout.ObjectField<Transform> ("Right hand:", character.rightHandBone, true, "", "The 'Right hand bone' transform");
 			CustomGUILayout.EndVertical ();
 
 			if (GUI.changed && character)
@@ -425,7 +427,7 @@ namespace AC
 				{
 					if (!string.IsNullOrEmpty (action.clip2D))
 					{
-						enteredCorrectState = false;
+						action.enteredCorrectState = false;
 						character.GetAnimator ().CrossFade (action.clip2D, action.fadeTime, action.layerInt);
 						
 						if (action.willWait)
@@ -439,11 +441,11 @@ namespace AC
 			{
 				if (action.methodMecanim == AnimMethodCharMecanim.PlayCustom)
 				{
-					if (!enteredCorrectState)
+					if (!action.enteredCorrectState)
 					{
 						if (character.GetAnimator ().GetCurrentAnimatorStateInfo (action.layerInt).shortNameHash == Animator.StringToHash (action.clip2D))
 						{
-							enteredCorrectState = true;
+							action.enteredCorrectState = true;
 						}
 						else
 						{
@@ -652,10 +654,10 @@ namespace AC
 				{
 					if (!string.IsNullOrEmpty (action.clip2D))
 					{
-						if (isSkipping)
+						if (!isSkipping)
 						{
 							action.runtimeAnimator.CrossFade (action.clip2D, action.fadeTime, action.layerInt);
-							enteredCorrectState = false;
+							action.enteredCorrectState = false;
 
 							if (action.willWait)
 							{
@@ -672,11 +674,11 @@ namespace AC
 			}
 			else
 			{
-				if (!enteredCorrectState)
+				if (!action.enteredCorrectState)
 				{
 					if (action.runtimeAnimator.GetCurrentAnimatorStateInfo (action.layerInt).shortNameHash == Animator.StringToHash (action.clip2D))
 					{
-						enteredCorrectState = true;
+						action.enteredCorrectState = true;
 					}
 					else
 					{

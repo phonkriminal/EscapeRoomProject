@@ -80,6 +80,7 @@ namespace AC
 
 		protected bool isChangingScene = false;
 		private int skipIteractions = 0; // Used to combat StackOverflow exceptions
+		private HashSet<ActionEnd> parallelSkipEndings = new HashSet<ActionEnd> ();
 
 
 		#if UNITY_EDITOR && UNITY_2019_2_OR_NEWER
@@ -404,9 +405,6 @@ namespace AC
 				else
 				{
 					// Run it
-					#if UNITY_EDITOR
-					actions[i].BreakPoint (i, this);
-					#endif
 					StartCoroutine (RunAction (actions[i]));
 
 				}
@@ -428,6 +426,15 @@ namespace AC
 					yield return null;
 				}
 			}
+
+			#if UNITY_EDITOR
+			if (action.isBreakPoint)
+			{
+				ACDebug.Log ("Break-point with (" + actions.IndexOf (action).ToString () + ")", this);
+				EditorApplication.isPaused = true;
+				yield return null;
+			}
+			#endif
 
 			action.AssignParentList (this);
 			if (useParameters)
@@ -670,6 +677,8 @@ namespace AC
 
 			foreach (ActionEnd ending in action.endings)
 			{
+				if (isSkipping && !parallelSkipEndings.Contains (ending)) parallelSkipEndings.Add (ending);
+
 				if (ending.resultAction == ResultAction.Skip)
 				{
 					int skip = ending.skipAction;
@@ -688,6 +697,7 @@ namespace AC
 
 			foreach (ActionEnd actionEnd in action.endings)
 			{
+				if (parallelSkipEndings.Contains (actionEnd)) parallelSkipEndings.Remove (actionEnd);
 				ProcessActionEnd (actionEnd, actions.IndexOf (action));
 			}
 		}
@@ -724,6 +734,11 @@ namespace AC
 		 */
 		public bool AreActionsRunning ()
 		{
+			if (isSkipping && parallelSkipEndings.Count > 0)
+			{
+				return true;
+			}
+
 			for (int i = 0; i < actions.Count; i++)
 			{
 				if (actions[i] != null && actions[i].isRunning)
@@ -752,6 +767,9 @@ namespace AC
 		{
 			isSkipping = false;
 			waitedAnyFrame = false;
+			parallelSkipEndings.Clear ();
+			skipIteractions = 0;
+
 			StopAllCoroutines ();
 
 			foreach (Action action in actions)

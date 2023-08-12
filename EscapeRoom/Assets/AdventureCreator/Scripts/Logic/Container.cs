@@ -78,16 +78,38 @@ namespace AC
 
 		#region PublicFunctions
 
-		/** Activates the Container.  If a Menu with an appearType = AppearType.OnContainer, it will be enabled and show the Container's contents. */
+		/** An alias of Open */
 		public void Interact ()
+		{
+			Open ();
+		}
+
+
+		/** Activates the Container.  If a Menu with an appearType = AppearType.OnContainer, it will be enabled and show the Container's contents. */
+		public void Open ()
 		{
 			if (gameObject.activeInHierarchy)
 			{
-				KickStarter.playerInput.activeContainer = this;
+				if (KickStarter.playerInput.activeContainer != this)
+				{
+					KickStarter.playerInput.activeContainer = this;
+					KickStarter.eventManager.Call_OnContainerOpenClose (this, true);
+				}
 			}
 			else
 			{
 				ACDebug.LogWarning ("Cannot open the Container " + this.name + " because its GameObject is disabled", this);
+			}
+		}
+
+
+		/** Closes the container */
+		public void Close ()
+		{
+			if (KickStarter.playerInput.activeContainer == this)
+			{
+				KickStarter.playerInput.activeContainer = null;
+				KickStarter.eventManager.Call_OnContainerOpenClose (this, false);
 			}
 		}
 

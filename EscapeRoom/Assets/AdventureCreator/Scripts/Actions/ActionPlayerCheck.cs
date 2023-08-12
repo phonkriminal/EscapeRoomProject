@@ -24,7 +24,7 @@ namespace AC
 	{
 		
 		public int playerID;
-		public int playerIDParameterID;
+		public int playerIDParameterID = -1;
 
 		#if UNITY_EDITOR
 		private SettingsManager settingsManager;

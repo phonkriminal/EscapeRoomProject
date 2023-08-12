@@ -592,11 +592,19 @@ namespace AC
 												{
 													if (i > 0)
 													{
-														ShowField ("Addressable " + p.ToString () + ":", GetFilename (KickStarter.settingsManager.players[p].EditorPrefab.name) + "_" + languageName, false, maxWidth, string.Empty, string.Empty, true);
+														ShowField ("Speech key " + p.ToString () + ":", KickStarter.speechManager.speechAddressablesPrefix + GetFilename (KickStarter.settingsManager.players[p].EditorPrefab.name) + "_" + languageName, false, maxWidth, string.Empty, string.Empty, true);
+														if (speechManager.UseFileBasedLipSyncing ())
+														{
+															ShowField ("Lipsync key " + p.ToString () + ":", KickStarter.speechManager.lipSyncAddressablesPrefix + GetFilename (KickStarter.settingsManager.players[p].EditorPrefab.name) + "_" + languageName, false, maxWidth, string.Empty, string.Empty, true);
+														}
 													}
 													else
 													{
-														ShowField ("Addressable " + p.ToString () + ":", GetFilename (KickStarter.settingsManager.players[p].EditorPrefab.name), false, maxWidth, string.Empty, string.Empty, true);
+														ShowField ("Speech key " + p.ToString () + ":", KickStarter.speechManager.speechAddressablesPrefix + GetFilename (KickStarter.settingsManager.players[p].EditorPrefab.name), false, maxWidth, string.Empty, string.Empty, true);
+														if (speechManager.UseFileBasedLipSyncing ())
+														{
+															ShowField ("Lipsync key " + p.ToString () + ":", KickStarter.speechManager.lipSyncAddressablesPrefix + GetFilename (KickStarter.settingsManager.players[p].EditorPrefab.name), false, maxWidth, string.Empty, string.Empty, true);
+														}
 													}
 												}
 											}
@@ -605,11 +613,19 @@ namespace AC
 										{
 											if (i > 0)
 											{
-												ShowField (" Addressable:", GetFilename () + "_" + languageName, false, maxWidth, string.Empty, string.Empty, true);
+												ShowField (" Speech key:", KickStarter.speechManager.speechAddressablesPrefix + GetFilename () + "_" + languageName, false, maxWidth, string.Empty, string.Empty, true);
+												if (speechManager.UseFileBasedLipSyncing ())
+												{
+													ShowField (" Lipsync key:", KickStarter.speechManager.lipSyncAddressablesPrefix + GetFilename () + "_" + languageName, false, maxWidth, string.Empty, string.Empty, true);
+												}
 											}
 											else
 											{
-												ShowField (" Addressable:", GetFilename (), false, maxWidth, string.Empty, string.Empty, true);
+												ShowField (" Speech key:", KickStarter.speechManager.speechAddressablesPrefix + GetFilename (), false, maxWidth, string.Empty, string.Empty, true);
+												if (speechManager.UseFileBasedLipSyncing ())
+												{
+													ShowField (" Lipsync key:", KickStarter.speechManager.lipSyncAddressablesPrefix + GetFilename (), false, maxWidth, string.Empty, string.Empty, true);
+												}
 											}
 										}
 									}
@@ -702,13 +718,21 @@ namespace AC
 										{
 											if (KickStarter.settingsManager.players[i].EditorPrefab)
 											{
-												ShowField ("Addressable " + i.ToString () + ":", GetFilename (KickStarter.settingsManager.players[i].EditorPrefab.name), false, maxWidth, string.Empty, string.Empty, true);
+												ShowField ("Speech key " + i.ToString () + ":", KickStarter.speechManager.speechAddressablesPrefix + GetFilename (KickStarter.settingsManager.players[i].EditorPrefab.name), false, maxWidth, string.Empty, string.Empty, true);
+												if (speechManager.UseFileBasedLipSyncing ())
+												{
+													ShowField ("Lipsync key " + i.ToString () + ":", KickStarter.speechManager.lipSyncAddressablesPrefix + GetFilename (KickStarter.settingsManager.players[i].EditorPrefab.name), false, maxWidth, string.Empty, string.Empty, true);
+												}
 											}
 										}
 									}
 									else
 									{
-										ShowField ("Addressable:", GetFilename (), false, maxWidth, string.Empty, string.Empty, true);
+										ShowField ("Speech key:", KickStarter.speechManager.speechAddressablesPrefix + GetFilename (), false, maxWidth, string.Empty, string.Empty, true);
+										if (speechManager.UseFileBasedLipSyncing ())
+										{
+											ShowField ("Lipsync key:", KickStarter.speechManager.lipSyncAddressablesPrefix + GetFilename (), false, maxWidth, string.Empty, string.Empty, true);
+										}
 									}
 								}
 								break;

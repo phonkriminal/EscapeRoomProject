@@ -286,7 +286,7 @@ namespace AC
 			if (IsHotspotInTrigger (_hotspot))
 			{
 				hotspots.Remove (_hotspot);
-				hotspots = KickStarter.eventManager.Call_OnModifyHotspotDetectorCollection (this, hotspots);
+				if (KickStarter.eventManager) hotspots = KickStarter.eventManager.Call_OnModifyHotspotDetectorCollection (this, hotspots);
 			}
 			
 			if (_hotspot.highlight)

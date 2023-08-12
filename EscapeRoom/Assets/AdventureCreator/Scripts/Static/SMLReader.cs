@@ -34,28 +34,44 @@ namespace AC.SML
 					return new string[0,0];
 				}
 
-				int w = 0;
-				
-				int numRows = result.Worksheets[w].Table.Rows.Length;
-				int numCols = result.Worksheets[w].Table.Rows[w].Cells.Length;
-				string[,] outputGrid = new string[numCols, numRows];
-
-				for (int r = 0; r < numRows; r++)
+				List<string[]> outputGrid = new List<string[]> ();
+				for (int w = 0; w < result.Worksheets.Length; w++)
 				{
-					if (w != 0 && r == 0) continue;
+					int numRows = result.Worksheets[w].Table.Rows.Length;
+					int numCols = result.Worksheets[w].Table.Rows[0].Cells.Length;
 
-					RowXml row = result.Worksheets[0].Table.Rows[r];
-					for (int c = 0; c < numCols; c++)
+					for (int r = 0; r < numRows; r++)
 					{
-						string data = row.Cells[c].Data;
-						data = data.Replace ("&lt;", "<");
-						data = data.Replace ("&gt;", ">");
+						if (r == 0 && w != 0) continue;
 
-						outputGrid[c,r] = data;
+						RowXml row = result.Worksheets[w].Table.Rows[r];
+						string[] lineArray = new string[numCols];
+
+						for (int c = 0; c < numCols; c++)
+						{
+							string data = row.Cells[c].Data;
+							data = data.Replace ("&lt;", "<");
+							data = data.Replace ("&gt;", ">");
+
+							lineArray[c] = data;
+						}
+
+						outputGrid.Add (lineArray);
 					}
 				}
 
-				return outputGrid;
+				string[,] outputGridArray = new string[outputGrid[0].Length, outputGrid.Count];
+
+				for (int r = 0; r < outputGrid.Count; r++)
+				{
+					string[] rowData = outputGrid[r];
+					for (int c = 0; c < rowData.Length; c++)
+					{
+						outputGridArray[c, r] = rowData[c];
+					}
+				}
+
+				return outputGridArray;
 			}
 			catch (Exception e)
 			{
@@ -65,14 +81,14 @@ namespace AC.SML
 		}
 
 
-		public static string CreateXMLGrid (List<string[]> contents)
+		public static string CreateXMLGrid (List<string[]> contents, int maxRows = 500)
 		{
-			List<string[]>[] contentsArray = new List<string[]>[1] { contents };
-			return CreateXMLGrid (contentsArray);
+			List<List<string[]>> contentsArray = new List<List<string[]>> { contents };
+			return CreateXMLGrid (contentsArray, maxRows);
 		}
 
 
-		public static string CreateXMLGrid (List<string[]>[] contentsArray)
+		public static string CreateXMLGrid (List<List<string[]>> contentsArray, int maxRows = 500)
 		{
 			StringBuilder sb = new StringBuilder ();
 
@@ -80,7 +96,24 @@ namespace AC.SML
 			sb.AppendLine ();
 			sb.Append (workbookHeader);
 
-			int numSheets = contentsArray.Length;
+			if (maxRows > 1)
+			{
+				for (int i = 0; i < contentsArray.Count; i++)
+				{
+					if (contentsArray[i].Count > maxRows)
+					{
+						List<string[]> newSheet = new List<string[]> ();
+						newSheet.Add (contentsArray[i][0]);
+
+						var range = contentsArray[i].GetRange (maxRows, contentsArray[i].Count - maxRows);
+						newSheet.AddRange (range);
+						contentsArray[i].RemoveRange (maxRows, contentsArray[i].Count - maxRows);
+						contentsArray.Insert (i + 1, newSheet);
+					}
+				}
+			}
+
+			int numSheets = contentsArray.Count;
 			for (int w = 0; w < numSheets; w++)
 			{
 				List<string[]> contents = contentsArray[w];

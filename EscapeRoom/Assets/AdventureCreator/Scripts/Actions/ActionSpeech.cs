@@ -199,7 +199,7 @@ namespace AC
 				{
 					if (KickStarter.speechManager.separateLines)
 					{
-						string[] textArray = messageText.Split (stringSeparators, System.StringSplitOptions.None);
+						string[] textArray = GetSpeechArray ();
 						if (textArray != null && textArray.Length > 1)
 						{
 							LogWarning ("Cannot separate multiple speech lines when 'Play in background?' is checked - will only play '" + textArray[0] + "'");
@@ -232,8 +232,7 @@ namespace AC
 						{
 							// Begin pause if more lines are present
 							splitIndex ++;
-
-							string[] textArray = messageText.Split (stringSeparators, System.StringSplitOptions.None);
+							string[] textArray = GetSpeechArray ();
 								
 							if (textArray.Length > splitIndex)
 							{
@@ -328,6 +327,18 @@ namespace AC
 				}
 			}
 
+			string _text = messageText;
+
+			int languageNumber = Options.GetLanguage ();
+			_text = KickStarter.runtimeLanguages.GetTranslation (_text, lineID, languageNumber, AC_TextType.Speech);
+
+			_text = _text.Replace ("\\n", "\n");
+
+			if (!string.IsNullOrEmpty (_text))
+			{
+				_text = AdvGame.ConvertTokens (_text, languageNumber, localVariables, ownParameters);
+				Speech.CreateSkippedSpeech (runtimeSpeaker, _text, lineID);
+			}
 			KickStarter.runtimeVariables.AddToSpeechLog (log);
 		}
 
@@ -376,7 +387,14 @@ namespace AC
 
 			if (Application.isPlaying && runtimeSpeaker == null)
 			{
-				AssignValues (parameters);
+				if (isPlayer)
+				{
+					runtimeSpeaker = AssignPlayer (playerID, parameters, parameterID);
+				}
+				else
+				{
+					runtimeSpeaker = AssignFile<Char> (parameters, parameterID, constantID, speaker);
+				}
 			}
 
 			isPlayer = EditorGUILayout.Toggle ("Player line?", isPlayer);
@@ -821,7 +839,7 @@ namespace AC
 			int _lineID = lineID;
 			if (KickStarter.speechManager.separateLines && splitIndex > 0)
 			{
-				string[] textArray = messageText.Replace ("\\n", "\n").Split (stringSeparators, System.StringSplitOptions.None);
+				string[] textArray = GetSpeechArray ();
 				if (textArray.Length > 1)
 				{
 					if (multiLineIDs != null && multiLineIDs.Length > (splitIndex-1))
@@ -852,13 +870,13 @@ namespace AC
 				}
 
 				string filename = speechLine.GetFilename (overrideName);
-						
-				Addressables.LoadAssetAsync<AudioClip>(filename).Completed += OnCompleteLoadAudio;
+				
+				Addressables.LoadAssetAsync<AudioClip> (KickStarter.speechManager.speechAddressablesPrefix + filename).Completed += OnCompleteLoadAudio;
 				isAwaitingAddressableAudio = true;
 
 				if (KickStarter.speechManager.UseFileBasedLipSyncing ())
 				{
-					Addressables.LoadAssetAsync<TextAsset>(filename).Completed += OnCompleteLoadLipsync;
+					Addressables.LoadAssetAsync<TextAsset> (KickStarter.speechManager.lipSyncAddressablesPrefix + filename).Completed += OnCompleteLoadLipsync;
 					isAwaitingAddressableLipsync = true;
 				}
 
@@ -884,7 +902,7 @@ namespace AC
 
 			if (KickStarter.speechManager.separateLines)
 			{
-				string[] textArray = messageText.Replace ("\\n", "\n").Split (stringSeparators, System.StringSplitOptions.None);
+				string[] textArray = GetSpeechArray ();
 				if (textArray.Length > 1)
 				{
 					_text = textArray [splitIndex];

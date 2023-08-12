@@ -502,7 +502,7 @@ namespace AC
 		}
 
 
-		private void OnFinishLoading ()
+		private void OnFinishLoading (int saveID)
 		{
 			SnapAngle ();
 		}

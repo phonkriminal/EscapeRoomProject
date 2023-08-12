@@ -23,15 +23,11 @@ namespace AC
 	public class AnimEngine_Mecanim : AnimEngine
 	{
 
-		private bool enteredCorrectState;
-
-
 		public override void Declare (AC.Char _character)
 		{
 			character = _character;
 			turningStyle = TurningStyle.RootMotion;
 			updateHeadAlways = (character && character.ikHeadTurning);
-			enteredCorrectState = false;
 		}
 
 
@@ -502,7 +498,7 @@ namespace AC
 
 							if (action.willWait)
 							{
-								enteredCorrectState = false;
+								action.enteredCorrectState = false;
 								action.isRunning = true;
 								return action.defaultPauseTime;
 							}
@@ -510,11 +506,11 @@ namespace AC
 					}
 					else
 					{
-						if (!enteredCorrectState)
+						if (!action.enteredCorrectState)
 						{
 							if (character.GetAnimator ().GetCurrentAnimatorStateInfo (action.layerInt).shortNameHash == Animator.StringToHash (action.clip2D))
 							{
-								enteredCorrectState = true;
+								action.enteredCorrectState = true;
 							}
 							else
 							{
@@ -537,12 +533,6 @@ namespace AC
 			}
 			
 			return 0f;
-		}
-
-
-		public override bool ActionCharHoldPossible ()
-		{
-			return true;
 		}
 
 
@@ -785,7 +775,7 @@ namespace AC
 
 							if (action.willWait)
 							{
-								enteredCorrectState = false;
+								action.enteredCorrectState = false;
 								action.isRunning = true;
 								return action.defaultPauseTime;
 							}
@@ -821,11 +811,11 @@ namespace AC
 						return 0f;
 
 					case AnimMethodMecanim.PlayCustom:
-						if (!enteredCorrectState)
+						if (!action.enteredCorrectState)
 						{
 							if (action.runtimeAnimator.GetCurrentAnimatorStateInfo (action.layerInt).shortNameHash == Animator.StringToHash (action.clip2D))
 							{
-								enteredCorrectState = true;
+								action.enteredCorrectState = true;
 							}
 							else
 							{

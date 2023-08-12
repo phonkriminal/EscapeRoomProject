@@ -61,7 +61,7 @@ namespace AC
 
 		private string fullText;
 		private MenuJournal otherJournal;
-		private Document ownDocument;
+		private DocumentInstance ownDocumentInstance;
 
 		#if UNITY_EDITOR
 		private int sideMenu;
@@ -192,6 +192,22 @@ namespace AC
 
 
 		/**
+		 * <summary>Gets the currently-viewed page.</summary>
+		 * <returns>The currently-viewed page</returms>
+		 */
+		public JournalPage GetCurrentPage ()
+		{
+			int pageIndex = showPage - 1;
+			if (pageIndex >= 0 && pageIndex < pages.Count)
+			{
+				return pages[pageIndex];
+			}
+			return null;
+		}
+
+
+
+		/**
 		 * <summary>Gets the total number of pages.</summary>
 		 * <returns>The total number of pages</returns>
 		 */
@@ -256,11 +272,11 @@ namespace AC
 
 					if (pages[i].lineID >= 0)
 					{
-						CustomGUILayout.LabelField ("Page #" + (i+1).ToString () + ", Text ID #" + pages[i].lineID + ":", apiPrefix + ".pages[" + i.ToString () + "].text");
+						CustomGUILayout.LabelField ("Page #" + (i+1).ToString () + ", Text ID #" + pages[i].lineID + ":", string.Empty, apiPrefix + ".pages[" + i.ToString () + "].text");
 					}
 					else
 					{
-						CustomGUILayout.LabelField ("Page #" + (i+1).ToString () + ":", apiPrefix + ".pages[" + i.ToString () + "].text");
+						CustomGUILayout.LabelField ("Page #" + (i+1).ToString () + ":", string.Empty, apiPrefix + ".pages[" + i.ToString () + "].text");
 					}
 
 					if (GUILayout.Button ("", CustomStyles.IconCog))
@@ -271,7 +287,8 @@ namespace AC
 					EditorGUILayout.EndHorizontal ();
 
 					pages[i].text = CustomGUILayout.TextArea (pages[i].text, GUILayout.MaxWidth (370f), apiPrefix + ".pages[" + i.ToString () + "].text");
-					GUILayout.Box ("", GUILayout.ExpandWidth (true), GUILayout.Height(1));
+					pages[i].texture = (Texture2D) CustomGUILayout.ObjectField<Texture2D> ("Texture:", pages[i].texture, false);
+					GUILayout.Box (string.Empty, GUILayout.ExpandWidth (true), GUILayout.Height(1));
 				}
 
 				if (GUILayout.Button ("Create new page", EditorStyles.miniButton))
@@ -518,11 +535,11 @@ namespace AC
 
 			if (journalType == JournalType.DisplayActiveDocument)
 			{
-				if (KickStarter.runtimeDocuments.ActiveDocument != null)
+				if (DocumentInstance.IsValid (KickStarter.runtimeDocuments.ActiveDocumentInstance))
 				{
-					ownDocument = KickStarter.runtimeDocuments.ActiveDocument;
-					pages = ownDocument.pages;
-					showPage = KickStarter.runtimeDocuments.GetLastOpenPage (ownDocument);
+					ownDocumentInstance = KickStarter.runtimeDocuments.ActiveDocumentInstance;
+					pages = ownDocumentInstance.Document.pages;
+					showPage = KickStarter.runtimeDocuments.GetLastOpenPage (ownDocumentInstance);
 				}
 			}
 		}
@@ -550,11 +567,11 @@ namespace AC
 			{
 				if (Application.isPlaying && journalType == JournalType.DisplayActiveDocument)
 				{
-					if (ownDocument != KickStarter.runtimeDocuments.ActiveDocument && KickStarter.runtimeDocuments.ActiveDocument != null)
+					if (DocumentInstance.IsValid (KickStarter.runtimeDocuments.ActiveDocumentInstance) && ownDocumentInstance != KickStarter.runtimeDocuments.ActiveDocumentInstance)
 					{
-						ownDocument = KickStarter.runtimeDocuments.ActiveDocument;
-						pages = ownDocument.pages;
-						showPage = KickStarter.runtimeDocuments.GetLastOpenPage (ownDocument);
+						ownDocumentInstance = KickStarter.runtimeDocuments.ActiveDocumentInstance;
+						pages = ownDocumentInstance.Document.pages;
+						showPage = KickStarter.runtimeDocuments.GetLastOpenPage (ownDocumentInstance);
 					}
 				}
 
@@ -675,9 +692,9 @@ namespace AC
 
 			if (journalType == JournalType.DisplayActiveDocument)
 			{
-				if (ownDocument != null)
+				if (DocumentInstance.IsValid (ownDocumentInstance))
 				{
-					KickStarter.runtimeDocuments.SetLastOpenPage (ownDocument, showPage);
+					KickStarter.runtimeDocuments.SetLastOpenPage (ownDocumentInstance, showPage);
 				}
 			}
 
@@ -969,11 +986,10 @@ namespace AC
 		public int lineID = -1;
 		/** The page text, in its original language */
 		public string text = "";
+		/** An associated image */
+		public Texture2D texture;
 
 
-		/**
-		 * The default Constructor.
-		 */
 		public JournalPage ()
 		{ }
 
@@ -982,13 +998,15 @@ namespace AC
 		{
 			lineID = journalPage.lineID;
 			text = journalPage.text;
+			texture = journalPage.texture;
 		}
 
 
-		public JournalPage (int _lineID, string _text)
+		public JournalPage (int _lineID, string _text, Texture2D _texture = null)
 		{
 			lineID = _lineID;
 			text = _text;
+			texture = _texture;
 		}
 
 	}

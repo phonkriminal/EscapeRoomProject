@@ -13,7 +13,7 @@ namespace AC
 {
 
 	public enum MouseState { Normal, SingleClick, RightClick, DoubleClick, HeldDown, LetGo };
-	public enum DragState { None, Player, Inventory, PreInventory, Menu, ScreenArrows, Moveable, _Camera };
+	public enum DragState { None, Player, Inventory, PreInventory, Menu, ScreenArrows, Moveable, _Camera, PreMoveable };
 	public enum GameState { Normal, Cutscene, DialogOptions, Paused };
 	public enum FlagsGameState { Normal = 1 << 0, Cutscene = 1 << 1, DialogOptions = 1 << 2, Paused = 1 << 3 };
 	public enum ActionListType { PauseGameplay, RunInBackground };
@@ -38,7 +38,7 @@ namespace AC
 	public enum AC_SizeType { Automatic, Manual, AbsolutePixels };
 	public enum AC_InputType { AlphaNumeric, NumbericOnly, AllowSpecialCharacters };
 	public enum AC_LabelType { Normal, Hotspot, DialogueLine, DialogueSpeaker, GlobalVariable, ActiveSaveProfile, InventoryProperty, DocumentTitle, SelectedObjective, ActiveContainer };
-	public enum AC_GraphicType { Normal, DialoguePortrait, DocumentTexture, ObjectiveTexture };
+	public enum AC_GraphicType { Normal, DialoguePortrait, DocumentTexture, ObjectiveTexture, PageTexture };
 	public enum DragElementType { EntireMenu, SingleElement };
 	public enum AC_SaveListType { Save, Load, Import };
 	public enum AC_ButtonClickType { TurnOffMenu, Crossfade, OffsetElementSlot, RunActionList, CustomScript, OffsetJournal, SimulateInput };
@@ -179,9 +179,11 @@ namespace AC
 	public enum WizardMenu { Blank, DefaultAC, DefaultUnityUI };
 	public enum QTEType { SingleKeypress, HoldKey, ButtonMash, SingleAxis, ThumbstickRotation };
 	public enum QTEState { None, Win, Lose, Running };
+	public enum QTEHoldReleaseBehaviour { Reset, Preserve, Cooldown, Fail };
+
 
 	public enum FilterSpeechLine { Type, Text, Scene, Speaker, Description, ID, All };
-	public enum ActionCategory { ActionList, Camera, Character, Container, Dialogue, Document, Engine, Hotspot, Input, Inventory, Menu, Moveable, Object, Objective, Player, Save, Scene, Sound, ThirdParty, Variable, Custom };
+	public enum ActionCategory { ActionList, Camera, Character, Container, Dialogue, Document, Engine, Hotspot, Input, Inventory, Menu, Moveable, Object, Objective, Physics, Player, Save, Scene, Sound, ThirdParty, Variable, Custom };
 	public enum VolumeControl { AudioSources, AudioMixerGroups };
 	public enum TurningStyle { Linear, Script, RootMotion };
 	public enum DoubleClickingHotspot { MakesPlayerRun, TriggersInteractionInstantly, DoesNothing, IsRequiredToUse };
@@ -195,7 +197,7 @@ namespace AC
 	public enum SelectSaveType { Autosave, SetSlotIndex, SlotIndexFromVariable, SetSaveID };
 	public enum SaveHandling { LoadGame, ContinueFromLastSave, OverwriteExistingSave, SaveNewGame };
 
-	public enum PlatformType { Desktop, TouchScreen, WebGL, Windows, Mac, Linux, iOS, Android };
+	public enum PlatformType { Desktop, TouchScreen, WebGL, Windows, Mac, Linux, iOS, Android, Editor };
 	public enum Coord { W, X, Y, Z };
 	public enum RootMotionType { None, TwoD, ThreeD };
 	public enum RotationLock { Free, Locked, Limited };
@@ -286,5 +288,6 @@ namespace AC
 	public enum IndexPrefixDisplay { None, GlobalOrder, DisplayOrder };
 
 	public enum ExportFormat { CSV, XML };
+	public enum TouchScreenHotspotInput { TouchDown, TouchTwice, TouchUp };
 
 }

@@ -12,12 +12,7 @@ namespace AC
 		public override void OnInspectorGUI()
 		{
 			RememberConversation _target = (RememberConversation) target;
-			
-			if (_target.GetComponent <Conversation>() == null)
-			{
-				EditorGUILayout.HelpBox ("This script expects a Conversation component!", MessageType.Warning);
-			}
-			
+			_target.ShowGUI ();
 			SharedGUI ();
 		}
 		

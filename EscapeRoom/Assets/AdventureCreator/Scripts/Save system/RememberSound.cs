@@ -16,24 +16,33 @@ using System.Collections;
 using UnityEngine.ResourceManagement.AsyncOperations;
 using UnityEngine.AddressableAssets;
 #endif
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 
 namespace AC
 {
 
 	/** Attach this script to Sound objects you wish to save. */
-	[RequireComponent (typeof (AudioSource))]
-	[RequireComponent (typeof (Sound))]
 	[AddComponentMenu("Adventure Creator/Save system/Remember Sound")]
 	[HelpURL("https://www.adventurecreator.org/scripting-guide/class_a_c_1_1_remember_sound.html")]
 	public class RememberSound : Remember
 	{
 
-		public bool saveClip = true;
-		private Sound sound;
+		#region Variables
 
+		public bool saveClip = true;
+		[SerializeField] private Sound soundToSave = null;
+
+		#endregion
+
+
+		#region PublicFunctions
 
 		public override string SaveData ()
 		{
+			if (Sound == null) return string.Empty;
+
 			SoundData soundData = new SoundData();
 			soundData.objectID = constantID;
 			soundData.savePrevented = savePrevented;
@@ -46,6 +55,8 @@ namespace AC
 
 		public override IEnumerator LoadDataCo (string stringData)
 		{
+			if (Sound == null) yield break;
+
 			SoundData data = Serializer.LoadScriptData <SoundData> (stringData);
 			if (data == null) yield break;
 			
@@ -80,12 +91,35 @@ namespace AC
 
 				#endif
 
-				Sound.audioSource.clip = AssetLoader.RetrieveAsset (Sound.audioSource.clip, data.clipID);
+				if (Sound.audioSource)
+				{
+					Sound.audioSource.clip = AssetLoader.RetrieveAsset (Sound.audioSource.clip, data.clipID);
+				}
 			}
 
 			Sound.LoadData (data);
 		}
 
+
+		#if UNITY_EDITOR
+
+		public void ShowGUI ()
+		{
+			if (soundToSave == null) soundToSave = GetComponent<Sound> ();
+
+			CustomGUILayout.BeginVertical ();
+			EditorGUILayout.LabelField ("Sound", EditorStyles.boldLabel);
+			soundToSave = (Sound) CustomGUILayout.ObjectField<Sound> ("Sound to save:", soundToSave, true);
+			saveClip = CustomGUILayout.ToggleLeft ("Save change in AudioClip asset?", saveClip, "If True, the currently-playing clip asset will be saved and restored.");
+			CustomGUILayout.EndVertical ();
+		}
+
+		#endif
+
+		#endregion
+
+
+		#region PrivateFunctions
 
 		#if AddressableIsPresent
 
@@ -102,21 +136,27 @@ namespace AC
 
 		#endif
 
+		#endregion
+
+
+		#region GetSet
 
 		private Sound Sound
 		{
 			get
 			{
-				if (sound == null)
+				if (soundToSave == null)
 				{
-					sound = GetComponent <Sound>();
+					soundToSave = GetComponent <Sound>();
 				}
-				return sound;
+				return soundToSave;
 			}
 		}
 
+		#endregion
+
 	}
-	
+
 
 	/** A data container used by the RememberSound script. */
 	[System.Serializable]

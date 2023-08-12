@@ -10,8 +10,9 @@
  * 
  */
 
-using UnityEngine;
+using System;
 using System.Collections.Generic;
+using UnityEngine;
 
 #if UNITY_EDITOR
 using UnityEditor;
@@ -73,7 +74,9 @@ namespace AC
 		
 		public AnimationEngine animationEngine = AnimationEngine.Legacy;
 		public string customClassName;
-		public AnimEngine animEngine;
+		private AnimEngine animEngine;
+
+		[NonSerialized] public bool enteredCorrectState;
 
 
 		public override ActionCategory Category { get { return ActionCategory.Object; }}
@@ -83,6 +86,8 @@ namespace AC
 
 		public override void AssignValues (List<ActionParameter> parameters)
 		{
+			enteredCorrectState = false;
+
 			if (animEngine == null)
 			{
 				ResetAnimationEngine ();
@@ -131,7 +136,7 @@ namespace AC
 		}
 
 
-		public void ReportWarning (string message, Object context = null)
+		public void ReportWarning (string message, UnityEngine.Object context = null)
 		{
 			LogWarning (message, context);
 		}

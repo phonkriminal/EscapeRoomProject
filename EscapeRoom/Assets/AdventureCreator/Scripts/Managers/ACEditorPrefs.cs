@@ -45,7 +45,7 @@ namespace AC
 		[SerializeField] protected string installPath = DefaultInstallPath;
 		[SerializeField] protected int autosaveActionListsInterval = 10;
 		[SerializeField] protected bool retainExportFieldData = true;
-		[SerializeField] protected bool allowDragDrop = true;
+		[SerializeField] protected bool allowDragDrop = false;
 		[SerializeField] protected string actionListAssetPath = "";
 
 
@@ -83,6 +83,9 @@ namespace AC
 				
 				if (canCreateNew)
 				{
+					settings = AssetDatabase.LoadAssetAtPath<ACEditorPrefs> (fullPath);
+					if (settings) return settings;
+
 					settings = CreateInstance<ACEditorPrefs> ();
 					settings.hierarchyIconOffset = DefaultHierarchyIconOffset;
 					settings.hotspotGizmoColor = DefaultHotspotGizmoColor;
@@ -513,7 +516,7 @@ namespace AC
 		{
 			get
 			{
-				return true;
+				return false;
 			}
 		}
 

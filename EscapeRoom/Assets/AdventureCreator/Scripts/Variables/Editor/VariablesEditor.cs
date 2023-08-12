@@ -119,6 +119,8 @@ namespace AC
 				Event.current.Use ();
 				EditorUtility.SetDirty (_target);
 			}
+
+			selectedVar = variable;
 		}
 
 

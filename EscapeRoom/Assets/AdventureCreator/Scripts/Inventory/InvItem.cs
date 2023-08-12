@@ -220,10 +220,10 @@ namespace AC
 			canBeLowerCase = assetItem.canBeLowerCase;
 
 			binID = assetItem.binID;
-			if (binID == -1 && KickStarter.inventoryManager && KickStarter.inventoryManager.bins != null && KickStarter.inventoryManager.bins.Count > 0)
+			if (binID == -1 && KickStarter.inventoryManager)
 			{
 				// Place item in first available cateogry if undefined
-				binID = KickStarter.inventoryManager.bins[0].id;
+				binID = KickStarter.inventoryManager.GetFirstItemsCategoryID ();
 			}
 
 			maxCount = assetItem.maxCount;
@@ -266,7 +266,7 @@ namespace AC
 
 		#if UNITY_EDITOR
 
-		public void ShowGUI (string apiPrefix, List<string> binList)
+		public void ShowGUI (string apiPrefix)
 		{
 			Upgrade ();
 
@@ -277,20 +277,7 @@ namespace AC
 			isPronoun = CustomGUILayout.Toggle ("Name is pronoun?", isPronoun, "!" + apiPrefix + ".canBeLowerCase", "If False, the name will be lower-cased when inside sentences.");
 			canBeLowerCase = !isPronoun;
 
-			EditorGUILayout.BeginHorizontal ();
-			EditorGUILayout.LabelField (new GUIContent ("Category:", "The category that the item belongs to"), GUILayout.Width (146f));
-			if (KickStarter.inventoryManager.bins.Count > 0)
-			{
-				int binNumber = KickStarter.inventoryManager.GetBinSlot (binID);
-				binNumber = CustomGUILayout.Popup (binNumber, binList.ToArray (), apiPrefix + ".binID");
-				binID = KickStarter.inventoryManager.bins[binNumber].id;
-			}
-			else
-			{
-				binID = -1;
-				EditorGUILayout.LabelField ("No categories defined!", EditorStyles.miniLabel, GUILayout.Width (146f));
-			}
-			EditorGUILayout.EndHorizontal ();
+			binID = KickStarter.inventoryManager.ChooseCategoryGUI ("Category:", binID, true, false, false, apiPrefix + ".binID", "The category that the item belongs to");
 
 			carryOnStart = CustomGUILayout.Toggle ("Carry on start?", carryOnStart, apiPrefix + ".carryOnStart", "If True, the Player carries the item when the game begins");
 			if (carryOnStart && AdvGame.GetReferences ().settingsManager && AdvGame.GetReferences ().settingsManager.playerSwitching == PlayerSwitching.Allow && !AdvGame.GetReferences ().settingsManager.shareInventory)
@@ -344,10 +331,6 @@ namespace AC
 			}
 
 			linkedPrefab = (GameObject) CustomGUILayout.ObjectField<GameObject> ("Linked prefab:", linkedPrefab, false, apiPrefix + ".linkedPrefab", "A GameObject that can be associated with the item, for the creation of e.g. 3D inventory items (through scripting only)");
-			if (linkedPrefab != null)
-			{
-				EditorGUILayout.HelpBox ("This reference is accessible through scripting, or via Inventory parameter in the 'Object: Add or remove' Action.", MessageType.Info);
-			}
 
 			CustomGUILayout.DrawUILine ();
 
@@ -715,7 +698,7 @@ namespace AC
 
 		private List<int> ChoosePlayerGUI (List<int> playerIDs, string api)
 		{
-			CustomGUILayout.LabelField ("Item is carried by:", api);
+			CustomGUILayout.LabelField ("Item is carried by:", string.Empty, api);
 
 			foreach (PlayerPrefab playerPrefab in KickStarter.settingsManager.players)
 			{
@@ -750,6 +733,20 @@ namespace AC
 			List<int> availableVarIDs = new List<int> ();
 			foreach (InvVar invVar in KickStarter.inventoryManager.invVars)
 			{
+				if (invVar.limitToCategories)
+				{
+					for (int i = 0; i < invVar.categoryIDs.Count; i++)
+					{
+						int categoryID = invVar.categoryIDs[i];
+						InvBin invBin = KickStarter.inventoryManager.GetCategory (categoryID);
+						if (invBin != null && !invBin.forItems)
+						{
+							invVar.categoryIDs.RemoveAt (i);
+							i--;
+						}
+					}
+				}
+
 				if (!invVar.limitToCategories || KickStarter.inventoryManager.bins.Count == 0 || invVar.categoryIDs.Contains (binID))
 				{
 					availableVarIDs.Add (invVar.id);

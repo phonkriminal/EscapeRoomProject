@@ -669,6 +669,16 @@ namespace AC
 			}
 		}
 
+
+		/**  An integer used to sort the order in which this data is loaded, relative to other Remember components in the scene */
+		public virtual int LoadOrder
+		{
+			get
+			{
+				return 0;
+			}
+		}
+
 		#endregion
 
 	}

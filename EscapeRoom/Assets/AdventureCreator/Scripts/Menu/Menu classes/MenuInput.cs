@@ -255,12 +255,7 @@ namespace AC
 		 */
 		public void SetLabel (string _label)
 		{
-			label = _label;
-
-			if (uiInput)
-			{
-				uiInput.text = _label;
-			}
+			OverrideLabel (_label);
 		}
 
 
@@ -297,6 +292,19 @@ namespace AC
 			else
 			{
 				GUI.Label (ZoomRect (relativeRect, zoom), fullText, _style);
+			}
+		}
+
+
+		public override void OverrideLabel (string newLabel, int _lineID = -1)
+		{
+			label = newLabel;
+			lineID = _lineID;
+			ClearCache ();
+
+			if (uiInput)
+			{
+				uiInput.text = label;
 			}
 		}
 

@@ -104,6 +104,10 @@ namespace AC
 		public ActionListAsset actionListOnStart;
 		/** If True, then the game will turn black whenever the user triggers the "EndCutscene" input to skip a cutscene */
 		public bool blackOutWhenSkipping = false;
+#if UNITY_2019_4_OR_NEWER
+		/** A list of ActionLists that run when common events are fired */
+		[SerializeReference] public List<EventBase> events = new List<EventBase> ();
+#endif
 
 		// Character settings
 
@@ -179,9 +183,9 @@ namespace AC
 		public bool shareInventory = false;
 		/** If True, then inventory items can be drag-dropped (i.e. used on Hotspots and other items with a single mouse button press */
 		public bool inventoryDragDrop = false;
-		#if UNITY_EDITOR
+#if UNITY_EDITOR
 		[SerializeField] private float dragDropThreshold = 0f;
-		#endif
+#endif
 		/** If True, inventory can be interacted with while a Conversation is active (overridden by allowGameplayDuringConversations) */
 		public bool allowInventoryInteractionsDuringConversations = false;
 		/** If True, then drag-dropping an inventory item on itself will trigger its Examine interaction */
@@ -320,8 +324,8 @@ namespace AC
 
 		/** If True, then the cursor is not set to the touch point, but instead is moved by dragging (if inputMethod = AC_InputMethod.TouchScreen) */
 		public bool offsetTouchCursor = false;
-		/** If True, then Hotspots are activated by double-tapping (if inputMethod = AC_InputMethod.TouchScreen) */
-		public bool doubleTapHotspots = true;
+		/** The type of touch-screen input that registers as a Hotspot 'click' */
+		public TouchScreenHotspotInput touchScreenHotspotInput = TouchScreenHotspotInput.TouchTwice;
 		/** How First Person movement should work when using touch-screen controls (OneTouchToMoveAndTurn, OneTouchToTurnAndTwoTouchesToMove, TouchControlsTurningOnly, CustomInput) */
 		public FirstPersonTouchScreen firstPersonTouchScreen = FirstPersonTouchScreen.OneTouchToMoveAndTurn;
 		/** How Direct movement should work when using touch-screen controls (DragBased, CustomInput) */
@@ -353,14 +357,14 @@ namespace AC
 		public bool linearColorTextures = false;
 
 		private int cameraPerspective_int;
-		#if UNITY_EDITOR
+#if UNITY_EDITOR
 		private string[] cameraPerspective_list = { "2D", "2.5D", "3D" };
-		#endif
+#endif
 
-		#if MOBILE_PLATFORM
+#if MOBILE_PLATFORM
 		/** If True, then the game's display will be limited to the device's "safe area" */
 		public bool relyOnSafeArea = true;
-		#endif
+#endif
 
 
 		/** The method of moving and turning in 2D games (Unity2D, TopDown, ScreenSpace, WorldSpace) */
@@ -526,7 +530,7 @@ namespace AC
 		public DebugWindowDisplays showActiveActionLists = DebugWindowDisplays.Never;
 
 
-		#if UNITY_EDITOR
+#if UNITY_EDITOR
 		
 		/**
 		 * Shows the GUI.
@@ -628,19 +632,19 @@ namespace AC
 					}
 					else
 					{
-						#if !(UNITY_WP8 || UNITY_WINRT)
+#if !(UNITY_WP8 || UNITY_WINRT)
 						string newSaveFileName = System.Text.RegularExpressions.Regex.Replace (saveFileName, "[^\\w\\._]", "");
 						if (saveFileName != newSaveFileName)
 						{
 							EditorGUILayout.HelpBox ("The save filename contains special characters - please remove them to prevent file-handling issues.", MessageType.Warning);
 						}
-						#endif
+#endif
 					}
 					separateEditorSaveFiles = CustomGUILayout.ToggleLeft ("Use '_Editor' prefix for Editor save files?", separateEditorSaveFiles, string.Empty, "If True, then save files and PlayerPrefs keys will not be shared between Editor and Builds.");
 				}
 
 				useProfiles = CustomGUILayout.ToggleLeft ("Enable save game profiles?", useProfiles, "AC.KickStarter.settingsManager.useProfiles", "If True, then multiple save profiles - each with its own save files and options data - can be created");
-				#if ADVANCED_SAVING
+#if ADVANCED_SAVING
 				saveTimeDisplay = (SaveTimeDisplay) CustomGUILayout.EnumPopup ("Time display:", saveTimeDisplay, "AC.KickStarter.settingsManager.saveTimeDisplay", "How the time of a save file should be displayed");
 				if (saveTimeDisplay == SaveTimeDisplay.CustomFormat)
 				{
@@ -659,19 +663,19 @@ namespace AC
 					screenshotResolutionFactor = CustomGUILayout.Slider ("Screenshot size factor:", screenshotResolutionFactor, 0.1f, 1f, "AC.KickStarter.settingsManager.screenshotResolutionFactor", "The size of save-game screenshots, relative to the game window's actual resolution");
 				}
 				orderSavesByUpdateTime = CustomGUILayout.ToggleLeft ("Order save lists by update time?", orderSavesByUpdateTime, "AC.KickStarter.settingsManager.orderSavesByUpdateTime", "If True, then save files listed in SavesList menu elements will be displayed in order of update time");
-				#else
+#else
 				EditorGUILayout.HelpBox ("Save-game screenshots are disabled for the current platform.", MessageType.Info);
 				takeSaveScreenshots = false;
-				#endif
+#endif
 
 				saveWithThreading = CustomGUILayout.ToggleLeft ("Save using separate thread?", saveWithThreading, "AC.KickStarter.settingsManager.saveWithThreading", "If True, then game-saving will be handled by a separate CPU thread.");
 				saveAssetReferencesWithAddressables = CustomGUILayout.ToggleLeft ("Save asset references with Addressables?", saveAssetReferencesWithAddressables, "AC.KickStarter.settingsManager.saveAssetReferencesWithAddressables", "If True, then references to assets made in save game files will be based on their Addressable name, and not Resources folder presence");
 
 				if (saveAssetReferencesWithAddressables)
 				{
-					#if !AddressableIsPresent
+#if !AddressableIsPresent
 					EditorGUILayout.HelpBox ("The 'AddressableIsPresent' preprocessor define must be declared in the Player Settings.", MessageType.Warning);
-					#endif
+#endif
 				}
 
 				referenceScenesInSave = (ChooseSceneBy) CustomGUILayout.EnumPopup ("Reference scenes by:", referenceScenesInSave, "AC.KickStarter.settingsManager.referenceScenesInSave", "How scenes are referenced in scene files (build index or filename)");
@@ -681,12 +685,12 @@ namespace AC
 					AssignSaveScripts ();
 				}
 
-				#if UNITY_EDITOR
+#if UNITY_EDITOR
 				if (GUILayout.Button ("Manage save-game files"))
 				{
 					SaveFileManager.Init ();
 				}
-				#endif
+#endif
 			}
 			CustomGUILayout.EndVertical ();
 		}
@@ -711,15 +715,15 @@ namespace AC
 			showCharacter = CustomGUILayout.ToggleHeader (showCharacter, "Character settings");
 			if (showCharacter)
 			{
-				#if UNITY_2019_2_OR_NEWER
+#if UNITY_2019_2_OR_NEWER
 				savePlayerReferencesWithAddressables = CustomGUILayout.ToggleLeft ("Reference Player prefabs with Addressables?", savePlayerReferencesWithAddressables, "AC.KickStarter.settingsManager.savePlayerReferencesWithAddressables", "If True, then references to Players made using Addressables");
-				#endif
+#endif
 
 				if (savePlayerReferencesWithAddressables)
 				{
-					#if !AddressableIsPresent
+#if !AddressableIsPresent
 					EditorGUILayout.HelpBox ("The 'AddressableIsPresent' preprocessor define must be declared in the Player Settings.", MessageType.Warning);
-					#endif
+#endif
 				}
 
 				playerSwitching = (PlayerSwitching) CustomGUILayout.EnumPopup ("Player switching:", playerSwitching, "AC.KickStarter.settingsManager.playerSwitching", "Whether or not the active Player can be swapped out or switched to at any time");
@@ -1267,7 +1271,8 @@ namespace AC
 							EditorGUILayout.HelpBox ("Movement can be controlled by overriding the 'Horizontal' and 'Vertical' axes, and Free-aiming can be controlled by overriding InputGetFreeAimDelegate - see 'Remapping inputs' in the Manual.", MessageType.Info);
 						}
 					}
-					doubleTapHotspots = CustomGUILayout.ToggleLeft ("Activate Hotspots with double-tap?", doubleTapHotspots, "AC.KickStarter.settingsManager.doubleTapHotspots", "If True, then Hotspots are activated by double-tapping");
+
+					touchScreenHotspotInput = (TouchScreenHotspotInput) CustomGUILayout.EnumPopup ("Hotspot input mode:", touchScreenHotspotInput, "AC.KickStarter.settingsManager.touchScreenHotspotInput", "The type of touch - screen input that registers as a Hotspot 'click'");
 					touchUpWhenPaused = CustomGUILayout.ToggleLeft ("Release touch to interact with AC Menus?", touchUpWhenPaused, "AC.KickStarter.settingsManager.touchUpWhenPaused", "If True, then menu interactions are performed by releasing a touch, rather than beginning one");
 
 					if (movementMethod != MovementMethod.FirstPerson && offsetTouchCursor)
@@ -1330,9 +1335,9 @@ namespace AC
 						wantedAspectRatio = CustomGUILayout.FloatField ("Minimum aspect ratio:", wantedAspectRatio, "AC.KickStarter.settingsManager.wantedAspectRatio", "The minimum aspect ratio, as a decimal");
 						maxAspectRatio = CustomGUILayout.FloatField ("Maximum aspect ratio:", maxAspectRatio, "AC.KickStarter.settingsManager.maxAspectRatio", "The maximum aspect ratio, as a decimal");
 					}
-					#if UNITY_IPHONE
+#if UNITY_IPHONE
 					landscapeModeOnly = CustomGUILayout.Toggle ("Landscape-mode only?", landscapeModeOnly, "AC.KickStarter.settingsManager.landscapeModeOnly", "If True, then the game can only be played in landscape mode");
-					#endif
+#endif
 
 					renderBorderCamera = CustomGUILayout.ToggleLeft ("Render border camera?", renderBorderCamera, "AC.KickStarter.settingsManager.renderBorderCamera", "If True, a second camera is used to render borders.  This helps to prevent artefacts, but increases performance.");
 				}
@@ -1341,9 +1346,9 @@ namespace AC
 
 				linearColorTextures = CustomGUILayout.ToggleLeft ("Generate textures in Linear color space?", linearColorTextures, string.Empty, "If True, then textures created for camera crossfading and overlay effects will be saved in linear color space");
 
-				#if MOBILE_PLATFORM
+#if MOBILE_PLATFORM
 				relyOnSafeArea = CustomGUILayout.ToggleLeft ("Limit display to 'safe area'?", relyOnSafeArea, "AC.KickStarter.settingsManager.relyOnSafeArea", "If True, then the game display will be limited to Unity's 'Screen.safeArea' property, which accounts for notches on mobile devices.");
-				#endif
+#endif
 			}
 			CustomGUILayout.EndVertical ();
 		}
@@ -1517,9 +1522,9 @@ namespace AC
 						loadScenesFromAddressable = CustomGUILayout.ToggleLeft ("Load scenes from Addressables?", loadScenesFromAddressable, "AC.KickStarter.settingsManager.loadScenesFromAddressable", "If True, then scene names will be considered keys for Addressable scenes assets, and loaded via the Addressable system.");
 						if (loadScenesFromAddressable)
 						{
-							#if !AddressableIsPresent
+#if !AddressableIsPresent
 							EditorGUILayout.HelpBox ("The 'AddressableIsPresent' preprocessor define must be declared in the Player Settings.", MessageType.Warning);
-							#endif
+#endif
 						}
 					}
 				
@@ -1599,7 +1604,7 @@ namespace AC
 			CustomGUILayout.EndVertical ();
 		}
 		
-		#endif
+#endif
 
 
 		/** How Interaction menus are opened, if interactionMethod = AC_InteractionMethod.ChooseHotspotThenInteraction (ClickOnHotspot, CursorOverHotspot) */
@@ -1656,12 +1661,12 @@ namespace AC
 					string[] s = Application.dataPath.Split ('/');
 					saveFileName = s[s.Length - 2];
 				}
-				#if UNITY_EDITOR
+#if UNITY_EDITOR
 				if (separateEditorSaveFiles)
 				{
 					return saveFileName + "_Editor";
 				}
-				#endif
+#endif
 				return saveFileName;
 			}
 		}
@@ -1866,7 +1871,7 @@ namespace AC
 		
 		
 		
-		#if UNITY_EDITOR
+#if UNITY_EDITOR
 		
 		private int GetIconID (string label, int iconID, CursorManager cursorManager, string api, string tooltip)
 		{
@@ -1876,7 +1881,7 @@ namespace AC
 			return iconID;
 		}
 
-		#endif
+#endif
 		
 		
 		private int[] GetPlayerIDArray ()
@@ -1964,7 +1969,7 @@ namespace AC
 			return 0;
 		}
 
-		#if UNITY_EDITOR
+#if UNITY_EDITOR
 
 		/**
 		 * <summary>Gets the default Player prefab.</summary>
@@ -2047,7 +2052,7 @@ namespace AC
 			return playersList.ToArray ();
 		}
 
-		#endif
+#endif
 
 
 		/**
@@ -2398,7 +2403,7 @@ namespace AC
 		}
 
 
-		#if UNITY_EDITOR
+#if UNITY_EDITOR
 
 		private void AssignSaveScripts ()
 		{
@@ -2643,18 +2648,18 @@ namespace AC
 			}
 		}
 
-		#endif
+#endif
 
 
 		public Player player
 		{
 			get
 			{
-				#if UNITY_EDITOR
+#if UNITY_EDITOR
 				return PlayerPrefab.EditorPrefab;
-				#else
+#else
 				return PlayerPrefab.playerOb;
-				#endif
+#endif
 			}
 		}
 
@@ -2666,16 +2671,16 @@ namespace AC
 				if (playerPrefab == null)
 				{
 					playerPrefab = new PlayerPrefab (legacyPlayer);
-					#if UNITY_EDITOR
+#if UNITY_EDITOR
 					EditorUtility.SetDirty (this);
-					#endif
+#endif
 				}
 				else if (playerPrefab.playerOb == null && legacyPlayer)
 				{
 					playerPrefab.playerOb = legacyPlayer;
-					#if UNITY_EDITOR
+#if UNITY_EDITOR
 					EditorUtility.SetDirty (this);
-					#endif
+#endif
 				}
 				return playerPrefab;
 			}

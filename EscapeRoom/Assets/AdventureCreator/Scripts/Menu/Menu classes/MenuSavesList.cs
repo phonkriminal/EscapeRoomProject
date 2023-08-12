@@ -203,6 +203,7 @@ namespace AC
 						});
 					}
 				}
+				CreateHoverSoundHandler (uiSlot.uiButton, _menu, i);
 				i++;
 			}
 		}
@@ -923,7 +924,7 @@ namespace AC
 		}
 
 
-		private void OnCompleteLoad ()
+		private void OnCompleteLoad (int saveID)
 		{
 			ClearAllEvents ();
 			if (autoHandle)

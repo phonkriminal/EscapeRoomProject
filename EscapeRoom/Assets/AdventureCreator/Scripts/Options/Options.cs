@@ -142,14 +142,14 @@ namespace AC
 					SavePrefs (false);
 				}
 
-				if (KickStarter.speechManager && KickStarter.runtimeLanguages.Languages[optionsData.language].isDisabled)
+				if (KickStarter.speechManager && optionsData.language < KickStarter.runtimeLanguages.Languages.Count && KickStarter.runtimeLanguages.Languages[optionsData.language].isDisabled)
 				{
 					int newLanguage = KickStarter.runtimeLanguages.GetEnabledLanguageIndex (optionsData.language);
 					if (optionsData.language > 0) Debug.LogWarning ("Language #" + optionsData.language + " is disabled. Switching to #" + newLanguage);
 					optionsData.language = newLanguage;
 					SavePrefs (false);
 				}
-				if (KickStarter.speechManager && KickStarter.speechManager.separateVoiceAndTextLanguages && KickStarter.runtimeLanguages.Languages[optionsData.voiceLanguage].isDisabled)
+				if (KickStarter.speechManager && optionsData.voiceLanguage < KickStarter.runtimeLanguages.Languages.Count && KickStarter.speechManager.separateVoiceAndTextLanguages && KickStarter.runtimeLanguages.Languages[optionsData.voiceLanguage].isDisabled)
 				{
 					int newLanguage = KickStarter.runtimeLanguages.GetEnabledLanguageIndex (optionsData.voiceLanguage);
 					if (optionsData.voiceLanguage > 0) Debug.LogWarning ("Voice language #" + optionsData.voiceLanguage + " is disabled. Switching to #" + newLanguage);

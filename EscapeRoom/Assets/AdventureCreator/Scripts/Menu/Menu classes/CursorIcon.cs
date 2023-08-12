@@ -611,18 +611,16 @@ namespace AC
 		 */
 		public Texture Draw (Vector2 centre, bool canAnimate = true)
 		{
-			/*if (Texture2D == null)
-			{
-				return null;
-			}*/
-			
 			float _size = size;
 			if (KickStarter.cursorManager.cursorRendering == CursorRendering.Hardware)
 			{
-				_size = (float) ((float) texture.width / (float) ACScreen.width);
+				_size = (float) ((float) texture.width / (float) KickStarter.mainCamera.GetPlayableScreenArea (false).width);
 			}
-			Rect _rect = AdvGame.GUIBox (centre, _size);
-			
+
+			Rect playableScreenSize = KickStarter.mainCamera.GetPlayableScreenArea (true);
+			_size *= playableScreenSize.width;
+			Rect _rect = AdvGame.GUIRect (centre.x / ACScreen.width, (ACScreen.height - centre.y) / ACScreen.height, _size, _size);
+
 			_rect.x -= clickOffset.x * _rect.width;
 			_rect.y -= clickOffset.y * _rect.height;
 			

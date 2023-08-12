@@ -200,9 +200,19 @@ namespace AC
 		}
 
 
-		public static void LabelField (string label, string api = "")
+		public static void LabelField (string label, string label2 = "", string api = "")
 		{
-			EditorGUILayout.LabelField (label);
+			if (string.IsNullOrEmpty (label2))
+			{
+				EditorGUILayout.LabelField (label);
+			}
+			else
+			{
+				EditorGUIUtility.labelWidth = LabelWidth;
+				EditorGUILayout.LabelField (label, label2);
+				EditorGUIUtility.labelWidth = 0;
+			}
+
 			CreateMenu (api);
 		}
 

@@ -22,28 +22,35 @@ namespace AC
 
 	/** Attach this to Renderer components with Materials you wish to record changes in. */
 	[AddComponentMenu("Adventure Creator/Save system/Remember Material")]
-	[RequireComponent (typeof (Renderer))]
 	[HelpURL("https://www.adventurecreator.org/scripting-guide/class_a_c_1_1_remember_material.html")]
 	public class RememberMaterial : Remember
 	{
 
-		private Renderer _renderer;
+		#region Variables
 
+		[SerializeField] private Renderer rendererToSave = null;
+
+		#endregion
+
+
+		#region PublicFunctions
 
 		public override string SaveData ()
 		{
+			if (Renderer == null) return string.Empty;
+
 			MaterialData materialData = new MaterialData ();
 			materialData.objectID = constantID;
 			materialData.savePrevented = savePrevented;
 
-			List<string> materialIDs = new List<string>();
+			List<string> materialIDs = new List<string> ();
 			Material[] mats = Renderer.materials;
 
 			foreach (Material material in mats)
 			{
 				materialIDs.Add (AssetLoader.GetAssetInstanceID (material));
 			}
-			materialData._materialIDs = ArrayToString <string> (materialIDs.ToArray ());
+			materialData._materialIDs = ArrayToString<string> (materialIDs.ToArray ());
 
 			return Serializer.SaveScriptData <MaterialData> (materialData);
 		}
@@ -51,6 +58,8 @@ namespace AC
 
 		public override IEnumerator LoadDataCo (string stringData)
 		{
+			if (Renderer == null) yield break;
+
 			MaterialData data = Serializer.LoadScriptData <MaterialData> (stringData);
 			if (data == null) yield break;
 			SavePrevented = data.savePrevented; if (savePrevented) yield break;
@@ -73,6 +82,24 @@ namespace AC
 			LoadDataFromResources (data);
 		}
 
+
+		#if UNITY_EDITOR
+
+		public void ShowGUI ()
+		{
+			if (rendererToSave == null) rendererToSave = GetComponent<Renderer> ();
+
+			CustomGUILayout.BeginVertical ();
+			rendererToSave = (Renderer) CustomGUILayout.ObjectField<Renderer> ("Renderer to save:", rendererToSave, true);
+			CustomGUILayout.EndVertical ();
+		}
+
+		#endif
+
+		#endregion
+
+
+		#region PrivateFunctions
 
 		#if AddressableIsPresent
 
@@ -120,21 +147,27 @@ namespace AC
 			Renderer.materials = mats;
 		}
 
+		#endregion
+
+
+		#region GetSet
 
 		private Renderer Renderer
 		{
 			get
 			{
-				if (_renderer == null)
+				if (rendererToSave == null || !Application.isPlaying)
 				{
-					_renderer = GetComponent <Renderer>();
+					rendererToSave = GetComponent<Renderer> ();
 				}
-				return _renderer;
+				return rendererToSave;
 			}
 		}
 
+		#endregion
+
 	}
-	
+
 
 	/** A data container used by the RememberMaterial script. */
 	[System.Serializable]

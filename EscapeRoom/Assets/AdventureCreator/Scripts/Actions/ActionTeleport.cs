@@ -355,7 +355,7 @@ namespace AC
 
 			if (isPlayer)
 			{
-				snapCamera = EditorGUILayout.Toggle ("Teleport active camera too?", snapCamera);
+				snapCamera = EditorGUILayout.Toggle ("Also teleport camera?", snapCamera);
 			}
 
 			if (isPlayer || (obToMove != null && obToMove.GetComponent <Char>()))

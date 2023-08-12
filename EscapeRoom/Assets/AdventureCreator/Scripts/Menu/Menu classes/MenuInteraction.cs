@@ -172,6 +172,7 @@ namespace AC
 					{
 						CreateUIEvent (uiButton, _menu, uiPointerState);
 					}
+					CreateHoverSoundHandler (uiButton, _menu);
 				}
 			}
 			else
@@ -191,6 +192,8 @@ namespace AC
 							});
 						}
 					}
+
+					CreateHoverSoundHandler (uiSlot.uiButton, _menu, i);
 					i++;
 				}
 			}
@@ -705,9 +708,19 @@ namespace AC
 
 		public override bool IsSelectedByEventSystem (int slotIndex)
 		{
-			if (uiButton)
+			if (fixedIcon)
 			{
-				return KickStarter.playerMenus.IsEventSystemSelectingObject (uiButton.gameObject);
+				if (uiButton)
+				{
+					return KickStarter.playerMenus.IsEventSystemSelectingObject (uiButton.gameObject);
+				}
+			}
+			else
+			{
+				if (slotIndex >= 0 && slotIndex < uiSlots.Length)
+				{
+					return uiSlots[slotIndex].uiButton && KickStarter.playerMenus.IsEventSystemSelectingObject (uiSlots[slotIndex].uiButton.gameObject);
+				}
 			}
 			return false;
 		}
@@ -715,9 +728,19 @@ namespace AC
 
 		public override bool IsSelectableInteractable (int slotIndex)
 		{
-			if (uiButton)
+			if (fixedIcon)
 			{
-				return uiButton.IsInteractable ();
+				if (uiButton)
+				{
+					return uiButton.IsInteractable ();
+				}
+			}
+			else
+			{
+				if (slotIndex >= 0 && slotIndex < uiSlots.Length)
+				{
+					return uiSlots[slotIndex].uiButton && uiSlots[slotIndex].uiButton.IsInteractable ();
+				}
 			}
 			return false;
 		}
@@ -908,7 +931,7 @@ namespace AC
 					if (InvInstance.IsValid (parentMenu.TargetInvInstance))
 					{
 						string prefix = KickStarter.cursorManager.GetLabelFromID (slotIconID, _language);
-						string itemName = parentMenu.TargetInvInstance.InvItem.GetLabel (_language);
+						string itemName = (_language == Options.GetLanguage ()) ? parentMenu.TargetInvInstance.ItemLabel : parentMenu.TargetInvInstance.InvItem.GetLabel (_language);
 						if (parentMenu.TargetInvInstance.InvItem.canBeLowerCase && !string.IsNullOrEmpty (prefix))
 						{
 							itemName = itemName.ToLower ();

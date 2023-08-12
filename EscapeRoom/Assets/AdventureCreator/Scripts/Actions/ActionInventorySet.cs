@@ -71,6 +71,7 @@ namespace AC
 				removeLast = false;
 				itemRemoveMethod = ItemRemoveMethod.LastSelectedItem;
 			}
+			base.Upgrade ();
 		}
 
 

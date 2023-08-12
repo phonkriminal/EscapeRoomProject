@@ -20,6 +20,8 @@ namespace AC
 	public class SaveFileHandler_SystemFile : iSaveFileHandler
 	{
 
+		#region PublicFunctions
+
 		public virtual string GetDefaultSaveLabel (int saveID)
 		{
 			string label = (saveID == 0)
@@ -154,6 +156,29 @@ namespace AC
 		}
 
 
+		public virtual void SaveScreenshot (SaveFile saveFile)
+		{
+			#if CAN_HANDLE_SCREENSHOTS
+			if (saveFile.screenShot != null)
+			{
+				string fullFilename = GetSaveDirectory () + Path.DirectorySeparatorChar.ToString () + GetSaveFilename (saveFile.saveID, saveFile.profileID, ".jpg");
+
+				byte[] bytes = saveFile.screenShot.EncodeToJPG ();
+				File.WriteAllBytes (fullFilename, bytes);
+				ACDebug.Log ("Saved screenshot: " + fullFilename);
+			}
+			else
+			{
+				ACDebug.LogWarning ("Cannot save screenshot - SaveFile's screenshot variable is null.");
+			}
+			#endif
+		}
+
+		#endregion
+
+
+		#region ProtectedFunctions
+
 		protected virtual SaveFile GetSaveFile (int saveID, int profileID, bool isImport, int boolID, string separateProductName, string separateFilePrefix)
 		{
 			string saveDirectory = GetSaveDirectory (separateProductName);
@@ -217,9 +242,9 @@ namespace AC
 
 		protected virtual List<SaveFile> GatherSaveFiles (int profileID, bool isImport, int boolID, string separateProductName, string separateFilePrefix)
 		{
-			List<SaveFile> gatheredFiles = new List<SaveFile>();
+			List<SaveFile> gatheredFiles = new List<SaveFile> ();
 
-			for (int i = 0; i < SaveSystem.MAX_SAVES; i++)
+			for (int i = 0; i < MaxSaves; i++)
 			{
 				SaveFile saveFile = GetSaveFile (i, profileID, isImport, boolID, separateProductName, separateFilePrefix);
 				if (saveFile != null)
@@ -229,25 +254,6 @@ namespace AC
 			}
 
 			return gatheredFiles;
-		}
-
-
-		public virtual void SaveScreenshot (SaveFile saveFile)
-		{
-			#if CAN_HANDLE_SCREENSHOTS
-			if (saveFile.screenShot != null)
-			{
-				string fullFilename = GetSaveDirectory () + Path.DirectorySeparatorChar.ToString () + GetSaveFilename (saveFile.saveID, saveFile.profileID, ".jpg");
-
-				byte[] bytes = saveFile.screenShot.EncodeToJPG ();
-				File.WriteAllBytes (fullFilename, bytes);
-				ACDebug.Log ("Saved screenshot: " + fullFilename);
-			}
-			else
-			{
-				ACDebug.LogWarning ("Cannot save screenshot - SaveFile's screenshot variable is null.");
-			}
-			#endif
 		}
 
 
@@ -348,6 +354,15 @@ namespace AC
 			}
 			return (_data);
 		}
+
+		#endregion
+
+
+		#region GetSet
+
+		protected virtual int MaxSaves { get { return 50; } }
+
+		#endregion
 
 	}
 

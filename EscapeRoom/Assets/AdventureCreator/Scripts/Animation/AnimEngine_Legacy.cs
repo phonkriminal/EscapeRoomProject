@@ -620,12 +620,6 @@ namespace AC
 		}
 
 
-		public override bool ActionCharHoldPossible ()
-		{
-			return true;
-		}
-
-
 		public override void ActionSpeechGUI (ActionSpeech action, Char speaker)
 		{
 			#if UNITY_EDITOR

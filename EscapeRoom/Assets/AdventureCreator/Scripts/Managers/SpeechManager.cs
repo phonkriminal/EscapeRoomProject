@@ -94,6 +94,10 @@ namespace AC
 		public string autoSpeechFolder = "Speech";
 		/** The subdirectory within Resources that lipsync files are pulled from, if referenceSpeechFiles = ReferenceSpeechFiles.ByNamingConvention */
 		public string autoLipsyncFolder = "Lipsync";
+		/** A prefix to attach to any speech audio Addressable name */
+		public string speechAddressablesPrefix = "";
+		/** A prefix to attach to any lipsync file's Addressable name */
+		public string lipSyncAddressablesPrefix = "";
 		/** If True, then speech text will always display if no relevant audio file is found - even if Subtitles are off in the Options menu */
 		public bool forceSubtitles = true;
 		/** If True, then each translation will have its own set of speech audio files */
@@ -367,9 +371,11 @@ namespace AC
 					{
 						autoSpeechFolder = CustomGUILayout.TextField ("Speech audio directory:", autoSpeechFolder, "AC.KickStarter.speechManager.autoSpeechFolder", "The subdirectory within Resources that speech files are pulled from");
 					}
-
+					
 					if (referenceSpeechFiles == ReferenceSpeechFiles.ByAddressable)
 					{
+						speechAddressablesPrefix = CustomGUILayout.TextField ("Addressable prefix:", speechAddressablesPrefix, "AC.KickStarter.speechManager.speechAddressablesPrefix", "A prefix to attach to any speech audio Addressable name");
+
 						#if !AddressableIsPresent
 						EditorGUILayout.HelpBox ("The 'AddressableIsPresent' preprocessor define must be declared in the Player Settings.", MessageType.Warning);
 						#endif
@@ -431,6 +437,11 @@ namespace AC
 				if (referenceSpeechFiles == ReferenceSpeechFiles.ByNamingConvention && UseFileBasedLipSyncing ())
 				{
 					autoLipsyncFolder = CustomGUILayout.TextField ("Lipsync data directory:", autoLipsyncFolder, "AC.KickStarter.speechManager.autoLipsyncFolder", "The subdirectory within Resources that lipsync files are pulled from");
+				}
+
+				if (referenceSpeechFiles == ReferenceSpeechFiles.ByAddressable && UseFileBasedLipSyncing ())
+				{
+					lipSyncAddressablesPrefix = CustomGUILayout.TextField ("Addressable prefix:", lipSyncAddressablesPrefix, "AC.KickStarter.speechManager.lipSyncAddressablesPrefix", "A prefix to attach to Lipsync file Addressables");
 				}
 
 				if (lipSyncMode == LipSyncMode.FromSpeechText || lipSyncMode == LipSyncMode.ReadPamelaFile || lipSyncMode == LipSyncMode.ReadSapiFile || lipSyncMode == LipSyncMode.ReadPapagayoFile)
@@ -2167,6 +2178,33 @@ namespace AC
 								}
 							}
 						}
+
+						// Timelines
+						#if !ACIgnoreTimeline
+						PlayableDirector[] directors = FindObjectsOfType<PlayableDirector> ();
+						foreach (PlayableDirector director in directors)
+						{
+							if (director.playableAsset && director.playableAsset is TimelineAsset)
+							{
+								TimelineAsset timelineAsset = director.playableAsset as TimelineAsset;
+								IEnumerable<TrackAsset> trackAssets = timelineAsset.GetOutputTracks ();
+
+								foreach (TrackAsset trackAsset in trackAssets)
+								{
+									if (trackAsset is ITranslatable)
+									{
+										ITranslatable translatable = trackAsset as ITranslatable;
+										if (UpdateTranslatable (translatable, speechLine, updatedText))
+										{
+											succesful = true;
+											EditorUtility.SetDirty (timelineAsset);
+										}
+									}
+								}
+							}
+						}
+						#endif
+
 						break;
 					}
 				}

@@ -31,6 +31,8 @@ namespace AC
 
 		/** The rendering method of all cursors (Software, Hardware, UnityUI) */
 		public CursorRendering cursorRendering = CursorRendering.Software;
+		/** The mode to use cursorRendering = CursorRendering.Hardware */
+		public CursorMode cursorMode = CursorMode.Auto;
 		/** The cursor prefab to spawn if cursorRendering = CursorRendering.Hardware */
 		public GameObject uiCursorPrefab = null;
 		/** The rule that defines when the main cursor is shown (Always, Never, OnlyWhenPaused) */
@@ -168,6 +170,7 @@ namespace AC
 						break;
 
 					case CursorRendering.Hardware:
+						cursorMode = (CursorMode) CustomGUILayout.EnumPopup ("Hardware cursor mode:", cursorMode, "AC.KickStarter.cursorManager.cursorMode", "The CursorMode to use when setting the system cursor");
 						keepCursorWithinScreen = CustomGUILayout.ToggleLeft ("Always keep perceived cursor within screen boundary?", keepCursorWithinScreen, "AC.KickStarter.cursorManager.keepCursorWithinScreen", "If True, then the cursor will always be kept within the boundary of the game window");
 						break;
 

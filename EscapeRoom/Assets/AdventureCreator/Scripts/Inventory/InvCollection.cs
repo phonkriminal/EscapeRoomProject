@@ -852,6 +852,21 @@ namespace AC
 
 
 		/**
+		 * <summary>Gets the index that a given Inventory item instance is at in the collection</summary>
+		 * <param name = "invInstance">The Inventory item instance to get</param>
+		 * <returns>The item instance's index in the collection, or -1 if it is not present</returns>
+		 */
+		public int GetInstanceIndex (InvInstance invInstance)
+		{
+			if (InvInstance.IsValid (invInstance) && invInstances.Contains (invInstance))
+			{
+				return invInstances.IndexOf (invInstance);
+			}
+			return -1;
+		}
+
+
+		/**
 		 * <summary>Gets the amount of instances in the collection that represent a given inventory item</summary>
 		 * <param name="invID">The inventory item's ID number</param>
 		 * <param name="includeMultipleInSameSlot">If True, then the result will account for multiple amounts of the item in a single slot</param>
@@ -1419,27 +1434,34 @@ namespace AC
 							if (chunkData.Length > 2)
 							{
 								_propertyData = chunkData[2];
-								if (_propertyData.StartsWith ("#")) _propertyData.Remove (0, 1);
-								if (_propertyData.EndsWith ("#")) _propertyData.Remove (_propertyData.Length - 1, 1);
+								if (_propertyData.StartsWith ("#")) _propertyData = _propertyData.Remove (0, 1);
+								if (_propertyData.EndsWith ("#")) _propertyData = _propertyData.Remove (_propertyData.Length - 1, 1);
 							}
 
 							string _disabledInteractionData = string.Empty;
 							if (chunkData.Length > 3)
 							{
 								_disabledInteractionData = chunkData[3];
-								if (_disabledInteractionData.StartsWith ("#")) _disabledInteractionData.Remove (0, 1);
-								if (_disabledInteractionData.EndsWith ("#")) _disabledInteractionData.Remove (_disabledInteractionData.Length - 1, 1);
+								if (_disabledInteractionData.StartsWith ("#")) _disabledInteractionData = _disabledInteractionData.Remove (0, 1);
+								if (_disabledInteractionData.EndsWith ("#")) _disabledInteractionData = _disabledInteractionData.Remove (_disabledInteractionData.Length - 1, 1);
 							}
 
 							string _disabledCombineData = string.Empty;
 							if (chunkData.Length > 4)
 							{
 								_disabledCombineData = chunkData[4];
-								if (_disabledInteractionData.StartsWith ("#")) _disabledInteractionData.Remove (0, 1);
-								if (_disabledInteractionData.EndsWith ("#")) _disabledInteractionData.Remove (_disabledInteractionData.Length - 1, 1);
+								if (_disabledInteractionData.StartsWith ("#")) _disabledInteractionData = _disabledInteractionData.Remove (0, 1);
+								if (_disabledInteractionData.EndsWith ("#")) _disabledInteractionData = _disabledInteractionData.Remove (_disabledInteractionData.Length - 1, 1);
 							}
 
-							invInstances.Add (new InvInstance (_id, _count, _propertyData, _disabledInteractionData, _disabledCombineData));
+							string sceneItemRememberData = string.Empty;
+							if (chunkData.Length > 5)
+							{
+								sceneItemRememberData = AdvGame.PrepareStringForLoading (chunkData[5]);
+								if (sceneItemRememberData.EndsWith ("|")) sceneItemRememberData = sceneItemRememberData.Remove (sceneItemRememberData.Length - 1, 1);
+							}
+
+							invInstances.Add (new InvInstance (_id, _count, _propertyData, _disabledInteractionData, _disabledCombineData, sceneItemRememberData));
 						}
 						else if (_id == -1)
 						{

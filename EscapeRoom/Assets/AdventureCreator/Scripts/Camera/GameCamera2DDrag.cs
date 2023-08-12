@@ -64,10 +64,8 @@ namespace AC
 		/** The Y offset */
 		public float yOffset;
 
-		protected float deltaX;
-		protected float deltaY;
-		protected float xPos;
-		protected float yPos;
+		protected Vector2 deltaPosition;
+		protected Vector2 position;
 		protected Vector2 perspectiveOffset;
 		protected Vector3 originalPosition;
 
@@ -128,7 +126,7 @@ namespace AC
 			{
 				if (Mathf.Approximately (inputMovement.x, 0f))
 				{
-					deltaX = Mathf.Lerp (deltaX, 0f, xDeceleration * Time.deltaTime);
+					deltaPosition.x = Mathf.Lerp (deltaPosition.x, 0f, xDeceleration * Time.deltaTime);
 				}
 				else
 				{
@@ -136,44 +134,44 @@ namespace AC
 
 					if (inputMovement.x > 0f)
 					{
-						deltaX = Mathf.Lerp (deltaX, xSpeed * scaleFactor, xAcceleration * Time.deltaTime * inputMovement.x);
+						deltaPosition.x = Mathf.Lerp (deltaPosition.x, xSpeed * scaleFactor, xAcceleration * Time.deltaTime * inputMovement.x);
 					}
 					else if (inputMovement.x < 0f)
 					{
-						deltaX = Mathf.Lerp (deltaX, -xSpeed * scaleFactor, xAcceleration * Time.deltaTime * -inputMovement.x);
+						deltaPosition.x = Mathf.Lerp (deltaPosition.x, -xSpeed * scaleFactor, xAcceleration * Time.deltaTime * -inputMovement.x);
 					}
 				}
 				
 				if (xLock == RotationLock.Limited)
 				{
-					if ((invertX && deltaX > 0f) || (!invertX && deltaX < 0f))
+					if ((invertX && deltaPosition.x > 0f) || (!invertX && deltaPosition.x < 0f))
 					{
-						if (maxX - xPos < 5f)
+						if (maxX - position.x < 5f)
 						{
-							deltaX *= (maxX - xPos) / 5f;
+							deltaPosition.x *= (maxX - position.x) / 5f;
 						}
 					}
-					else if ((invertX && deltaX < 0f) || (!invertX && deltaX > 0f))
+					else if ((invertX && deltaPosition.x < 0f) || (!invertX && deltaPosition.x > 0f))
 					{
-						if (minX - xPos > -5f)
+						if (minX - position.x > -5f)
 						{
-							deltaX *= (minX - xPos) / -5f;
+							deltaPosition.x *= (minX - position.x) / -5f;
 						}
 					}
 				}
 				
 				if (invertX)
 				{
-					xPos += deltaX / 100f;
+					position.x += deltaPosition.x / 100f;
 				}
 				else
 				{
-					xPos -= deltaX / 100f;
+					position.x -= deltaPosition.x / 100f;
 				}
 				
 				if (xLock == RotationLock.Limited)
 				{
-					xPos = Mathf.Clamp (xPos, minX, maxX);
+					position.x = Mathf.Clamp (position.x, minX, maxX);
 				}
 			}
 
@@ -181,7 +179,7 @@ namespace AC
 			{
 				if (Mathf.Approximately (inputMovement.y, 0f))
 				{
-					deltaY = Mathf.Lerp (deltaY, 0f, yDeceleration * Time.deltaTime);
+					deltaPosition.y = Mathf.Lerp (deltaPosition.y, 0f, yDeceleration * Time.deltaTime);
 				}
 				else
 				{
@@ -189,54 +187,54 @@ namespace AC
 
 					if (inputMovement.y > 0f)
 					{
-						deltaY = Mathf.Lerp (deltaY, ySpeed * scaleFactor, yAcceleration * Time.deltaTime * inputMovement.y);
+						deltaPosition.y = Mathf.Lerp (deltaPosition.y, ySpeed * scaleFactor, yAcceleration * Time.deltaTime * inputMovement.y);
 					}
 					else if (inputMovement.y < 0f)
 					{
-						deltaY = Mathf.Lerp (deltaY, -ySpeed * scaleFactor, yAcceleration * Time.deltaTime * -inputMovement.y);
+						deltaPosition.y = Mathf.Lerp (deltaPosition.y, -ySpeed * scaleFactor, yAcceleration * Time.deltaTime * -inputMovement.y);
 					}
 				}
 				
 				if (yLock == RotationLock.Limited)
 				{
-					if ((invertY && deltaY > 0f) || (!invertY && deltaY < 0f))
+					if ((invertY && deltaPosition.y > 0f) || (!invertY && deltaPosition.y < 0f))
 					{
-						if (maxY - yPos < 5f)
+						if (maxY - position.y < 5f)
 						{
-							deltaY *= (maxY - yPos) / 5f;
+							deltaPosition.y *= (maxY - position.y) / 5f;
 						}
 					}
-					else if ((invertY && deltaY < 0f) || (!invertY && deltaY > 0f))
+					else if ((invertY && deltaPosition.y < 0f) || (!invertY && deltaPosition.y > 0f))
 					{
-						if (minY - yPos > -5f)
+						if (minY - position.y > -5f)
 						{
-							deltaY *= (minY - yPos) / -5f;
+							deltaPosition.y *= (minY - position.y) / -5f;
 						}
 					}
 				}
 				
 				if (invertY)
 				{
-					yPos += deltaY / 100f;
+					position.y += deltaPosition.y / 100f;
 				}
 				else
 				{
-					yPos -= deltaY / 100f;
+					position.y -= deltaPosition.y / 100f;
 				}
 				
 				if (yLock == RotationLock.Limited)
 				{
-					yPos = Mathf.Clamp (yPos, minY, maxY);
+					position.y = Mathf.Clamp (position.y, minY, maxY);
 				}
 			}
 
 			if (xLock != RotationLock.Locked)
 			{
-				perspectiveOffset.x = xPos + xOffset;
+				perspectiveOffset.x = position.x + xOffset;
 			}
 			if (yLock != RotationLock.Locked)
 			{
-				perspectiveOffset.y = yPos + yOffset;
+				perspectiveOffset.y = position.y + yOffset;
 			}
 
 			SetProjection ();
@@ -265,8 +263,7 @@ namespace AC
 		 */
 		public void SetPosition (Vector2 _position)
 		{
-			xPos = _position.x;
-			yPos = _position.y;
+			position = _position;
 		}
 
 
@@ -276,7 +273,7 @@ namespace AC
 		 */
 		public Vector2 GetPosition ()
 		{
-			return new Vector2 (xPos, yPos);
+			return position;
 		}
 
 		#endregion
@@ -414,6 +411,23 @@ namespace AC
 		protected void OnUpdatePlayableScreenArea ()
 		{
 			UpdateBackgroundConstraint ();
+		}
+
+		#endregion
+
+
+		#region GetSet
+
+		public Vector2 DeltaPosition
+		{
+			get
+			{
+				return deltaPosition;
+			}
+			set
+			{
+				deltaPosition = value;
+			}
 		}
 
 		#endregion

@@ -50,8 +50,6 @@ namespace AC
 		public const string mainDataDivider = "||";
 		public const string mainDataDivider_Replacement = "*DOUBLEPIPE*";
 
-		public const int MAX_SAVES = 50;
-		
 		private SaveData saveData = new SaveData ();
 		private SelectiveLoad activeSelectiveLoad = new SelectiveLoad ();
 
@@ -106,7 +104,7 @@ namespace AC
 					int.TryParse (chunkData[0], out _id);
 					string _label = chunkData[1];
 
-					for (int i = 0; i < Mathf.Min (MAX_SAVES, foundSaveFiles.Count); i++)
+					for (int i = 0; i < foundSaveFiles.Count; i++)
 					{
 						if (foundSaveFiles[i].saveID == _id)
 						{
@@ -593,7 +591,7 @@ namespace AC
 				}
 			}
 
-			InitAfterLoad ();
+			InitAfterLoad (saveFile.saveID);
 		}
 
 
@@ -661,22 +659,23 @@ namespace AC
 		}
 
 
-		public void InitAfterLoad ()
+		public void InitAfterLoad (int saveID = -1)
 		{
 			if (KickStarter.settingsManager.IsInLoadingScene ())
 			{
 				return;
 			}
 
-			StartCoroutine (InitAfterLoadCo ());
+			StartCoroutine (InitAfterLoadCo (saveID));
 		}
 
 
-		private IEnumerator InitAfterLoadCo ()
+		private IEnumerator InitAfterLoadCo (int saveID)
 		{
 			KickStarter.mainCamera.OnInitialiseScene ();
 			KickStarter.playerInteraction.StopMovingToHotspot ();
 			KickStarter.runtimeInventory.OnInitialiseScene ();
+			KickStarter.playerCursor.OnInitialiseScene ();
 			KickStarter.playerMenus.OnInitialiseScene ();
 			KickStarter.sceneChanger.OnInitialiseScene ();
 			KickStarter.stateHandler.OnInitialiseScene ();
@@ -719,7 +718,7 @@ namespace AC
 
 						KickStarter.playerInput.OnLoad ();
 						KickStarter.sceneSettings.OnLoad ();
-						KickStarter.eventManager.Call_OnLoad (FileAccessState.After, -1);
+						KickStarter.eventManager.Call_OnLoad (FileAccessState.After, saveID);
 					}
 					break;
 
@@ -1011,7 +1010,7 @@ namespace AC
 			// Update label
 			if (!string.IsNullOrEmpty (saveFile.label))
 			{
-				for (int i = 0; i < Mathf.Min (MAX_SAVES, foundSaveFiles.Count); i++)
+				for (int i = 0; i < foundSaveFiles.Count; i++)
 				{
 					if (foundSaveFiles[i].saveID == saveFile.saveID)
 					{

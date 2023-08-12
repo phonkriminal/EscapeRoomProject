@@ -338,17 +338,21 @@ namespace AC
 
 		/**
 		 * <summary>Gets all active Objective instances</summary>
+		 * <param name = "categoryIDs">If non-null, a list of category IDs that must include the Objective's own category ID for it to be returned</param>
 		 * <returns>All active Objective instances</returns>
 		 */
-		public ObjectiveInstance[] GetObjectives ()
+		public ObjectiveInstance[] GetObjectives (List<int> categoryIDs = null)
 		{
 			List<ObjectiveInstance> completedObjectives = new List <ObjectiveInstance>();
 			foreach (ObjectiveInstance objectiveInstance in playerObjectiveInstances)
 			{
+				if (categoryIDs != null && !categoryIDs.Contains (objectiveInstance.Objective.binID)) continue;
 				completedObjectives.Add (objectiveInstance);
 			}
+
 			foreach (ObjectiveInstance objectiveInstance in globalObjectiveInstances)
 			{
+				if (categoryIDs != null && !categoryIDs.Contains (objectiveInstance.Objective.binID)) continue;
 				completedObjectives.Add (objectiveInstance);
 			}
 			return completedObjectives.ToArray ();
@@ -358,20 +362,26 @@ namespace AC
 		/**
 		 * <summary>Gets all active Objective instances currently set to a particular type of state</summary>
 		 * <param name = "objectiveStateType">The type of state to search for</param>
+		 * <param name = "categoryIDs">If non-null, a list of category IDs that must include the Objective's own category ID for it to be returned</param>
 		 * <returns>All active Objective instances set to the type of state</returns>
 		 */
-		public ObjectiveInstance[] GetObjectives (ObjectiveStateType objectiveStateType)
+		public ObjectiveInstance[] GetObjectives (ObjectiveStateType objectiveStateType, List<int> categoryIDs = null)
 		{
 			List<ObjectiveInstance> completedObjectives = new List <ObjectiveInstance>();
 			foreach (ObjectiveInstance objectiveInstance in playerObjectiveInstances)
 			{
+				if (categoryIDs != null && !categoryIDs.Contains (objectiveInstance.Objective.binID)) continue;
+
 				if (objectiveInstance.CurrentState.stateType == objectiveStateType)
 				{
 					completedObjectives.Add (objectiveInstance);
 				}
 			}
+
 			foreach (ObjectiveInstance objectiveInstance in globalObjectiveInstances)
 			{
+				if (categoryIDs != null && !categoryIDs.Contains (objectiveInstance.Objective.binID)) continue;
+
 				if (objectiveInstance.CurrentState.stateType == objectiveStateType)
 				{
 					completedObjectives.Add (objectiveInstance);
@@ -384,20 +394,24 @@ namespace AC
 		/**
 		 * <summary>Gets all active Objective instances currently set to a particular display type of state</summary>
 		 * <param name = "objectiveDisplayType">The type of display state to search for</param>
+		 * <param name = "categoryIDs">If non-null, a list of category IDs that must include the Objective's own category ID for it to be returned</param>
 		 * <returns>All active Objective instances set to the type of display state</returns>
 		 */
-		public ObjectiveInstance[] GetObjectives (ObjectiveDisplayType objectiveDisplayType)
+		public ObjectiveInstance[] GetObjectives (ObjectiveDisplayType objectiveDisplayType, List<int> categoryIDs = null)
 		{
 			List<ObjectiveInstance> completedObjectives = new List <ObjectiveInstance>();
 			foreach (ObjectiveInstance objectiveInstance in playerObjectiveInstances)
 			{
+				if (categoryIDs != null && !categoryIDs.Contains (objectiveInstance.Objective.binID)) continue;
 				if (objectiveInstance.CurrentState.DisplayTypeMatches (objectiveDisplayType))
 				{
 					completedObjectives.Add (objectiveInstance);
 				}
 			}
+
 			foreach (ObjectiveInstance objectiveInstance in globalObjectiveInstances)
 			{
+				if (categoryIDs != null && !categoryIDs.Contains (objectiveInstance.Objective.binID)) continue;
 				if (objectiveInstance.CurrentState.DisplayTypeMatches (objectiveDisplayType))
 				{
 					completedObjectives.Add (objectiveInstance);

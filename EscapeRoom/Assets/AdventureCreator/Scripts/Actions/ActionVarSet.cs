@@ -49,6 +49,7 @@ namespace AC
 		public GameObject gameObjectValue;
 		public Object unityObjectValue;
 
+		public bool preProcessTokens = true; 
 		private string runtimeFormula;
 
 		public int lineID = -1;
@@ -90,7 +91,10 @@ namespace AC
 			floatValue = AssignFloat (parameters, setParameterID, floatValue);
 			vector3Value = AssignVector3 (parameters, setParameterID, vector3Value);
 			runtimeStringValue = AssignString (parameters, setParameterID, stringValue);
-			runtimeStringValue = AdvGame.ConvertTokens (runtimeStringValue, Options.GetLanguage (), null, parameters);
+			if (preProcessTokens)
+			{
+				runtimeStringValue = AdvGame.ConvertTokens (runtimeStringValue, Options.GetLanguage (), null, parameters);
+			}
 			formula = AssignString (parameters, setParameterID, formula);
 			slotNumber = AssignInteger (parameters, slotNumberParameterID, slotNumber);
 			runtimeGameObjectValue = AssignFile (parameters, setParameterID, 0, gameObjectValue);
@@ -120,6 +124,11 @@ namespace AC
 					}
 					runtimeVariable = AssignVariable (parameters, parameterID, runtimeVariable);
 					runtimeVariables = AssignVariablesComponent (parameters, parameterID, runtimeVariables);
+
+					if (runtimeVariables && parameterID >= 0 && GetParameterWithID (parameters, parameterID) != null && GetParameterWithID (parameters, parameterID).parameterType == ParameterType.GameObject)
+					{
+						runtimeVariable = runtimeVariables.GetVariable (variableID);
+					}
 					break;
 			}
 
@@ -378,7 +387,7 @@ namespace AC
 
 						if (setVarMethodString == SetVarMethodString.EnteredHere)
 						{
-							_value = AdvGame.ConvertTokens (runtimeStringValue, Options.GetLanguage (), localVariables);
+							_value = preProcessTokens ? AdvGame.ConvertTokens (runtimeStringValue, Options.GetLanguage (), localVariables) : runtimeStringValue;
 						}
 						else if (setVarMethodString == SetVarMethodString.SetAsMenuElementText)
 						{
@@ -418,7 +427,7 @@ namespace AC
 						}
 						else if (setVarMethodString == SetVarMethodString.CombinedWithOtherString)
 						{
-							_value = var.TextValue + AdvGame.ConvertTokens (runtimeStringValue, Options.GetLanguage (), localVariables);
+							_value = var.TextValue + (preProcessTokens ? AdvGame.ConvertTokens (runtimeStringValue, Options.GetLanguage (), localVariables) : runtimeStringValue);
 						}
 
 						var.SetStringValue (_value, lineID);
@@ -485,9 +494,14 @@ namespace AC
 			}
 			else if (location == VariableLocation.Component)
 			{
-				parameterID = Action.ChooseParameterGUI ("Variable:", parameters, parameterID, ParameterType.ComponentVariable);
+				parameterID = Action.ChooseParameterGUI ("Variable:", parameters, parameterID, new ParameterType[] { ParameterType.ComponentVariable, ParameterType.GameObject });
 				if (parameterID >= 0)
 				{
+					if (GetParameterWithID (parameters, parameterID) != null && GetParameterWithID (parameters, parameterID).parameterType == ParameterType.GameObject)
+					{
+						variableID = EditorGUILayout.IntField ("Variable ID:", variableID);
+					}
+
 					placeholderType = (VariableType) EditorGUILayout.EnumPopup ("Placeholder type:", placeholderType);
 					ShowVarGUI ((variables != null) ? variables.vars : null, parameters, ParameterType.ComponentVariable, false);
 				}
@@ -798,6 +812,8 @@ namespace AC
 						}
 						slotAccountsForOffset = EditorGUILayout.Toggle ("Slot # includes offset?", slotAccountsForOffset);
 					}
+
+					preProcessTokens = EditorGUILayout.Toggle ("Pre-process tokens?", preProcessTokens);
 					break;
 
 				case VariableType.Vector3:

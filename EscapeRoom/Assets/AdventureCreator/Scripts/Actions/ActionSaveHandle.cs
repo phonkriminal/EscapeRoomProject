@@ -232,7 +232,7 @@ namespace AC
 		}
 
 
-		protected void OnFinishLoading ()
+		protected void OnFinishLoading (int saveID)
 		{
 			OnComplete ();
 		}

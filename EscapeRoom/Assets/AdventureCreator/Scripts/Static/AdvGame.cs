@@ -1915,6 +1915,8 @@ namespace AC
 		 */
 		public static string PrepareStringForSaving (string _string)
 		{
+			if (string.IsNullOrEmpty (_string)) return string.Empty;
+
 			_string = _string.Replace (SaveSystem.pipe, "*PIPE*");
 			_string = _string.Replace (SaveSystem.colon, "*COLON*");
 			
@@ -1929,6 +1931,8 @@ namespace AC
 		 */
 		public static string PrepareStringForLoading (string _string)
 		{
+			if (string.IsNullOrEmpty (_string)) return string.Empty;
+
 			_string = _string.Replace ("*PIPE*", SaveSystem.pipe);
 			_string = _string.Replace ("*COLON*", SaveSystem.colon);
 			

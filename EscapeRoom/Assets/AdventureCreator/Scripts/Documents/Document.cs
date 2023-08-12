@@ -191,26 +191,8 @@ namespace AC
 
 			texture = (Texture2D) CustomGUILayout.ObjectField <Texture2D> ("Texture:", texture, false, apiPrefix + ".texture", "A Texture2D associated with the Document");
 			carryOnStart = CustomGUILayout.Toggle ("Carry on start?", carryOnStart, apiPrefix + ".carryOnStart", "If True, the Document will be in the Player's collection when the game begins");
-			rememberLastOpenPage = CustomGUILayout.Toggle ("Remember last-open page?", rememberLastOpenPage, ".rememberLastOpenPage", "If True, the Document will be re-opened at the same page that it was closed at");
-
-			//
-			if (bins.Count > 0)
-			{
-				EditorGUILayout.BeginHorizontal ();
-				EditorGUILayout.LabelField (new GUIContent ("Category:", "The category that the document belongs to"), GUILayout.Width (146f));
-				int binNumber = GetBinSlot (bins, binID);
-
-				List<string> binList = new List<string>();
-				foreach (InvBin bin in bins)
-				{
-					binList.Add (bin.EditorLabel);
-				}
-
-				binNumber = CustomGUILayout.Popup (binNumber, binList.ToArray(), apiPrefix + ".binID");
-				binID = bins[binNumber].id;
-				EditorGUILayout.EndHorizontal ();
-			}
-			//
+			rememberLastOpenPage = CustomGUILayout.Toggle ("Record last-open page?", rememberLastOpenPage, apiPrefix + ".rememberLastOpenPage", "If True, the Document will be re-opened at the same page that it was closed at");
+			binID = KickStarter.inventoryManager.ChooseCategoryGUI ("Category:", binID, false, true, false, apiPrefix + ".binID", "The category that the document belongs to");
 
 			EditorGUILayout.Space ();
 
@@ -285,9 +267,14 @@ namespace AC
 				showPageGUI = CustomGUILayout.ToggleHeader (showPageGUI, "Document page #" + selectedPage);
 				if (showPageGUI)
 				{
-					CustomGUILayout.LabelField ("Page text:", apiPrefix + ".pages[" + selectedPage + "].text");
+					if (pages[selectedPage].lineID > -1)
+					{
+						EditorGUILayout.LabelField ("Speech Manager ID:", pages[selectedPage].lineID.ToString ());
+					}
+					CustomGUILayout.LabelField ("Page text:", string.Empty, apiPrefix + ".pages[" + selectedPage + "].text");
 					EditorStyles.textField.wordWrap = true;
 					pages[selectedPage].text = EditorGUILayout.TextArea (pages[selectedPage].text, GUILayout.MaxWidth (windowWidth));
+					pages[selectedPage].texture = (Texture2D) CustomGUILayout.ObjectField<Texture2D> ("Texture:", pages[selectedPage].texture, false);
 				}
 				CustomGUILayout.EndVertical ();
 			}

@@ -1697,6 +1697,9 @@ namespace AC
 				Event.current.Use ();
 				EditorUtility.SetDirty (this);
 			}
+
+			selectedGlobalVar = DeactivateAllVars (vars, selectedGlobalVar);
+			selectedGlobalVar = ActivateVar (variable, selectedGlobalVar);
 		}
 
 
@@ -1724,6 +1727,9 @@ namespace AC
 				Event.current.Use ();
 				EditorUtility.SetDirty (this);
 			}
+
+			selectedLocalVar = DeactivateAllVars (KickStarter.localVariables.localVars, selectedLocalVar);
+			selectedLocalVar = ActivateVar (variable, selectedLocalVar);
 		}
 
 

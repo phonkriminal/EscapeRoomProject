@@ -203,7 +203,7 @@ namespace AC
 		public int activeDocumentID = -1;
 		/** A record of the Documents collected */
 		public string collectedDocumentData = "";
-		/** A record of the last-opened page for each viewed Document */
+		/** Deprecated */
 		public string lastOpenDocumentPagesData = "";
 		/** A record of the player's current objectives */
 		public string playerObjectivesData = "";
@@ -602,7 +602,6 @@ namespace AC
 				CustomGUILayout.MultiLineLabelGUI ("   Items:", inventoryData);
 				CustomGUILayout.MultiLineLabelGUI ("   Active Document:", activeDocumentID.ToString ());
 				CustomGUILayout.MultiLineLabelGUI ("   Collected Documents:", collectedDocumentData.ToString ());
-				CustomGUILayout.MultiLineLabelGUI ("   Last-open Document pages", lastOpenDocumentPagesData.ToString ());
 				CustomGUILayout.MultiLineLabelGUI ("   Objectives:", playerObjectivesData.ToString ());
 
 				EditorGUILayout.LabelField ("Head-turning:");

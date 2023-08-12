@@ -13,7 +13,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Serialization;
 #if UNITY_EDITOR
-using UnityEditor;	
+using UnityEditor;
 #endif
 
 namespace AC
@@ -461,6 +461,14 @@ namespace AC
 			if (uiButton && !uiButton.interactable) return string.Empty;
 
 			return GetHotspotLabel (_language);
+		}
+
+
+		public override void OverrideLabel (string newLabel, int _lineID = -1)
+		{
+			label = newLabel;
+			lineID = _lineID;
+			ClearCache ();
 		}
 
 

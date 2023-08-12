@@ -24,8 +24,8 @@ namespace AC
 	public class ActionQTE : ActionCheck
 	{
 
-		public enum QTEType { SingleKeypress, HoldKey, ButtonMash, SingleAxis, ThumbstickRotation };
 		public QTEType qteType = QTEType.SingleKeypress;
+		public QTEHoldReleaseBehaviour qteHoldReleaseBehaviour = QTEHoldReleaseBehaviour.Reset;
 
 		public int menuNameParameterID = -1;
 		public string menuName;
@@ -113,7 +113,7 @@ namespace AC
 						break;
 
 					case QTEType.HoldKey:
-						KickStarter.playerQTE.StartHoldKeyQTE (inputName, runtimeDuration, holdDuration, animator, wrongKeyFails);
+						KickStarter.playerQTE.StartHoldKeyQTE (inputName, runtimeDuration, holdDuration, qteHoldReleaseBehaviour, animator, wrongKeyFails);
 						break;
 
 					case QTEType.ButtonMash:
@@ -269,7 +269,7 @@ namespace AC
 				doCooldown = EditorGUILayout.Toggle ("Cooldown effect?", doCooldown);
 				if (doCooldown)
 				{
-					if (durationParameterID < 0)
+					if (!runIndefinitely && durationParameterID < 0)
 					{
 						cooldownTime = EditorGUILayout.Slider ("Cooldown time (s):", cooldownTime, 0f, duration);
 					}
@@ -282,7 +282,8 @@ namespace AC
 			}
 			else if (qteType == QTEType.HoldKey)
 			{
-				holdDuration = EditorGUILayout.Slider ("Required duration (s):", holdDuration, 0f, 10f);
+				holdDuration = EditorGUILayout.Slider ("Required duration (s):", holdDuration, 0f, (runIndefinitely || durationParameterID >= 0) ? 10f : duration);
+				qteHoldReleaseBehaviour = (QTEHoldReleaseBehaviour) EditorGUILayout.EnumPopup ("Release behaviour:", qteHoldReleaseBehaviour);
 			}
 
 			menuNameParameterID = Action.ChooseParameterGUI ("Menu to display (optional):", parameters, menuNameParameterID, new ParameterType[2] { ParameterType.String, ParameterType.PopUp });

@@ -1106,7 +1106,7 @@ namespace AC
 		}
 
 
-		public static ActionListAsset AssetGUI (string label, ActionListAsset actionListAsset, string defaultName = "", string api = "", string tooltip = "")
+		public static ActionListAsset AssetGUI (string label, ActionListAsset actionListAsset, string defaultName = "", string api = "", string tooltip = "", System.Action<ActionListAsset> onCreateCallback = null)
 		{
 			EditorGUILayout.BeginHorizontal ();
 			actionListAsset = (ActionListAsset) CustomGUILayout.ObjectField <ActionListAsset> (label, actionListAsset, false, api, tooltip);
@@ -1122,6 +1122,11 @@ namespace AC
 					#endif
 
 					actionListAsset = ActionListAssetMenu.CreateAsset (defaultName);
+
+					if (onCreateCallback != null && actionListAsset)
+					{
+						onCreateCallback.Invoke (actionListAsset);
+					}
 				}
 			}
 

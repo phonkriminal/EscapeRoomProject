@@ -26,7 +26,9 @@ namespace AC
 
 		protected QTEState qteState = QTEState.None;
 		protected QTEType qteType = QTEType.SingleKeypress;
-		
+
+		protected QTEHoldReleaseBehaviour qteHoldReleaseBehaviour;
+
 		protected string inputName;
 		protected Animator animator;
 		protected bool wrongKeyFails;
@@ -133,10 +135,11 @@ namespace AC
 		 * <param name = "_inputName">The name of the input button that must be held down to win</param>
 		 * <param name = "_duration">The duration, in seconds, that the QTE lasts</param>
 		 * <param name = "_holdDuration">The duration, in seconds, that the key must be held down for</param>
+		 * <param name = "_qteHoldReleaseBehaviour">What happens if the key is released</param>
 		 * <param name = "_animator">An Animator that will be manipulated if it has "Win" and "Lose" states, and a "Held" trigger</param>
 		 * <param name = "_wrongKeyFails">If True, then pressing any key other than _inputName will instantly fail the QTE</param>
 		 */
-		public void StartHoldKeyQTE (string _inputName, float _duration, float _holdDuration, Animator _animator = null, bool _wrongKeyFails = false)
+		public void StartHoldKeyQTE (string _inputName, float _duration, float _holdDuration, QTEHoldReleaseBehaviour _qteHoldReleaseBehaviour = QTEHoldReleaseBehaviour.Reset, Animator _animator = null, bool _wrongKeyFails = false)
 		{
 			if (string.IsNullOrEmpty (_inputName) && KickStarter.settingsManager.inputMethod == InputMethod.TouchScreen)
 			{
@@ -154,6 +157,7 @@ namespace AC
 			}
 
 			holdDuration = _holdDuration;
+			qteHoldReleaseBehaviour = _qteHoldReleaseBehaviour;
 			Setup (QTEType.HoldKey, _inputName, _duration, _animator, _wrongKeyFails, 0f);
 		}
 
@@ -392,6 +396,27 @@ namespace AC
 								return;
 							}
 						}
+						else if (lastPressTime > 0f)
+						{
+							switch (qteHoldReleaseBehaviour)
+							{
+								case QTEHoldReleaseBehaviour.Fail:
+									Lose ();
+									return;
+
+								case QTEHoldReleaseBehaviour.Preserve:
+									lastPressTime += Time.deltaTime;
+									break;
+
+								case QTEHoldReleaseBehaviour.Cooldown:
+									lastPressTime += Time.deltaTime * 2f;
+									if (lastPressTime >= Time.time) lastPressTime = 0f;
+									break;
+
+								default:
+									break;
+							}
+						}
 						else
 						{
 							lastPressTime = 0f;
@@ -415,6 +440,27 @@ namespace AC
 						{
 							Lose ();
 							return;
+						}
+						else if (lastPressTime > 0f)
+						{
+							switch (qteHoldReleaseBehaviour)
+							{
+								case QTEHoldReleaseBehaviour.Fail:
+									Lose ();
+									return;
+
+								case QTEHoldReleaseBehaviour.Preserve:
+									lastPressTime += Time.deltaTime;
+									break;
+
+								case QTEHoldReleaseBehaviour.Cooldown:
+									lastPressTime += Time.deltaTime * 2f;
+									if (lastPressTime >= Time.time) lastPressTime = 0f;
+									break;
+
+								default:
+									break;
+							}
 						}
 						else
 						{

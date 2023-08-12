@@ -172,6 +172,8 @@ namespace AC
 		private InvInstance forInvInstance;
 		private Hotspot forHotspot;
 
+		private HotspotLabelData hotspotLabelData = new HotspotLabelData ();
+
 		private CanvasScaler canvasScaler;
 		private CanvasGroup canvasGroup;
 		private Animator canvasAnimator;
@@ -500,7 +502,7 @@ namespace AC
 
 			if (oneMenuPerSpeech)
 			{
-				return (appearType == AppearType.WhenSpeechPlays);
+				return appearType == AppearType.WhenSpeechPlays || appearType == AppearType.OnHotspot;
 			}
 			return false;
 		}
@@ -706,6 +708,10 @@ namespace AC
 						moveWithCharacter = CustomGUILayout.Toggle ("Move with character?", moveWithCharacter, apiPrefix + ".moveWithCharacter", "If True, then the menu will update its position every frame");
 					}
 				}
+			}
+			else if (appearType == AppearType.OnHotspot)
+			{
+				oneMenuPerSpeech = CustomGUILayout.Toggle ("Duplicate for each Hotspot?", oneMenuPerSpeech, apiPrefix + ".oneMenuPerSpeech", "If True, then a new instance of the menu will be created for each Hotspot");
 			}
 
 			if (CanPause ())
@@ -2683,7 +2689,8 @@ namespace AC
 
 			if (menuSource != MenuSource.AdventureCreator || KickStarter.settingsManager.inputMethod != InputMethod.TouchScreen)
 			{
-				if (((gameState == GameState.Paused || IsBlocking ()) && KickStarter.menuManager.keyboardControlWhenPaused) ||
+				//if (((gameState == GameState.Paused || IsBlocking ()) && KickStarter.menuManager.keyboardControlWhenPaused) ||
+				if ((((gameState == GameState.Paused && appearType == AppearType.WhenSpeechPlays && showWhenPaused) || IsBlocking ()) && KickStarter.menuManager.keyboardControlWhenPaused) ||
 					(gameState == GameState.DialogOptions && appearType == AppearType.DuringConversation && KickStarter.menuManager.keyboardControlWhenDialogOptions) ||
 					(KickStarter.playerMenus.IsInCutscene && CanClickInCutscenes () && KickStarter.menuManager.keyboardControlWhenCutscene) ||
 					(IsInGameplay (gameState) && KickStarter.playerInput.canKeyboardControlMenusDuringGameplay && CanPause () && !pauseWhenEnabled))
@@ -3338,6 +3345,9 @@ namespace AC
 		}
 
 
+		public bool IsDuplicate { get { return isDuplicate; } }
+
+
 		/** An offset to apply to all reposition calls */
 		public Vector2 PositionOffset
 		{
@@ -3346,6 +3356,11 @@ namespace AC
 				positionOffset = value;
 			}
 		}
+
+
+		/** Data related to the Menu's current Hotspot label */
+		public HotspotLabelData HotspotLabelData { get { return hotspotLabelData; } }
+
 	}
 
 }

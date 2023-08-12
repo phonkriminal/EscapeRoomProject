@@ -30,6 +30,8 @@ namespace AC
 		/** If True, then the next time ActionConversation's Skip() function is called, it will be ignored */
 		[HideInInspector] public bool ignoreNextConversationSkip = false;
 
+		private List<GameObject> skippableCutsceneSpawnedObjects = new List<GameObject> ();
+
 		protected bool playCutsceneOnVarChange = false;
 		protected bool saveAfterCutscene = false;
 
@@ -74,114 +76,6 @@ namespace AC
 				StopCoroutine (endCutsceneCo);
 			}
 			endCutsceneCo = StartCoroutine (EndCutsceneCo ());
-		}
-
-
-		private IEnumerator EndCutsceneCo ()
-		{
-			if (!IsInSkippableCutscene ())
-			{
-				yield break;
-			}
-
-			if (AdvGame.GetReferences ().settingsManager.blackOutWhenSkipping)
-			{
-				KickStarter.mainCamera.ForceOverlayForFrames (400);
-			}
-
-			KickStarter.eventManager.Call_OnSkipCutscene ();
-
-			// Stop all non-looping sound
-			Sound[] sounds = FindObjectsOfType (typeof (Sound)) as Sound[];
-			foreach (Sound sound in sounds)
-			{
-				if (sound.GetComponent <AudioSource>())
-				{
-					if (sound.soundType != SoundType.Music && !sound.GetComponent <AudioSource>().loop)
-					{
-						sound.Stop ();
-					}
-				}
-			}
-
-			// Set correct Player prefab before skipping
-			if (KickStarter.settingsManager.playerSwitching == PlayerSwitching.Allow)
-			{
-				if (!noPlayerOnStartQueue && playerIDOnStartQueue >= 0)
-				{
-					if (KickStarter.player == null || KickStarter.player.ID != playerIDOnStartQueue)
-					{
-						//
-						PlayerPrefab oldPlayerPrefab = KickStarter.settingsManager.GetPlayerPrefab (playerIDOnStartQueue);
-						if (oldPlayerPrefab != null)
-						{
-							if (KickStarter.player != null)
-							{
-								KickStarter.player.Halt ();
-							}
-
-							Player oldPlayer = oldPlayerPrefab.GetSceneInstance ();
-							if (oldPlayer == null)
-							{
-								var spawnPlayerCoroutine = KickStarter.playerSpawner.SpawnPlayerCo (oldPlayerPrefab, (r) => oldPlayer = r);
-								while (spawnPlayerCoroutine.MoveNext ())
-								{
-									yield return spawnPlayerCoroutine.Current;
-								}
-							}
-							KickStarter.player = oldPlayer;
-						}
-					}
-				}
-			}
-
-			List<ActiveList> listsToSkip = new List<ActiveList>();
-			List<ActiveList> listsToReset = new List<ActiveList>();
-
-			foreach (ActiveList activeList in activeLists)
-			{
-				if (!activeList.inSkipQueue && activeList.actionList.IsSkippable ())
-				{
-					listsToReset.Add (activeList);
-				}
-				else
-				{
-					listsToSkip.Add (activeList);
-				}
-			}
-
-			foreach (ActiveList activeList in KickStarter.actionListAssetManager.ActiveLists)
-			{
-				if (!activeList.inSkipQueue && activeList.actionList.IsSkippable ())
-				{
-					listsToReset.Add (activeList);
-				}
-				else
-				{
-					listsToSkip.Add (activeList);
-				}
-			}
-
-			foreach (ActiveList listToReset in listsToReset)
-			{
-				// Kill, but do isolated, to bypass setting GameState etc
-				listToReset.Reset (true);
-			}
-
-			foreach (ActiveList listToSkip in listsToSkip)
-			{
-				listToSkip.Skip ();
-
-				while (AreAnyListsSkipping ())
-				{
-					yield return null;
-				}
-			}
-
-			if (AdvGame.GetReferences ().settingsManager.blackOutWhenSkipping)
-			{
-				KickStarter.mainCamera.ForceOverlayForFrames (0);
-			}
 		}
 
 
@@ -508,9 +402,7 @@ namespace AC
 		}
 
 
-		/**
-		 * <summary>Clears all data about the current state of "skippable" Cutscenes, allowing you to prevent previously-run Cutscenes in the same block of gameplay-blocking ActionLists. Use with caution!</summary>
-		 */
+		/** Clears all data about the current state of "skippable" Cutscenes, allowing you to prevent previously-run Cutscenes in the same block of gameplay-blocking ActionLists. Use with caution! */
 		public void ResetSkippableData ()
 		{
 			ResetSkipVars (true);
@@ -667,6 +559,19 @@ namespace AC
 			}
 		}
 
+
+		/**
+		 * <summary>Registers an object as having been spawned as a result of the current skippable cutscene.  If this cutscene is skipped by the player, the object will be deleted - as it is assumed that re-running the cutscene in 'skip' mode will bring it back again.</summary>
+		 * <param name = "_gameObject">The spawned object</param>
+		 */
+		public void RegisterCutsceneSpawnedObject (GameObject _gameObject)
+		{
+			if (IsInSkippableCutscene () && !skippableCutsceneSpawnedObjects.Contains (_gameObject))
+			{
+				skippableCutsceneSpawnedObjects.Add (_gameObject);
+			}
+		}
+
 		#endregion
 
 
@@ -789,6 +694,8 @@ namespace AC
 					activeList.inSkipQueue = false;
 				}
 
+				skippableCutsceneSpawnedObjects.Clear ();
+
 				GlobalVariables.BackupAll ();
 				KickStarter.localVariables.BackupAllValues ();
 			}
@@ -814,6 +721,125 @@ namespace AC
 			}
 			
 			return false;
+		}
+
+		#endregion
+
+
+		#region PrivateFunctions
+
+		private IEnumerator EndCutsceneCo ()
+		{
+			if (!IsInSkippableCutscene ())
+			{
+				yield break;
+			}
+
+			if (AdvGame.GetReferences ().settingsManager.blackOutWhenSkipping)
+			{
+				KickStarter.mainCamera.ForceOverlayForFrames (400);
+			}
+
+			KickStarter.eventManager.Call_OnSkipCutscene ();
+
+			// Stop all non-looping sound
+			Sound[] sounds = FindObjectsOfType (typeof (Sound)) as Sound[];
+			foreach (Sound sound in sounds)
+			{
+				if (sound.GetComponent<AudioSource> ())
+				{
+					if (sound.soundType != SoundType.Music && !sound.GetComponent<AudioSource> ().loop)
+					{
+						sound.Stop ();
+					}
+				}
+			}
+
+			// Set correct Player prefab before skipping
+			if (KickStarter.settingsManager.playerSwitching == PlayerSwitching.Allow)
+			{
+				if (!noPlayerOnStartQueue && playerIDOnStartQueue >= 0)
+				{
+					if (KickStarter.player == null || KickStarter.player.ID != playerIDOnStartQueue)
+					{
+						//
+						PlayerPrefab oldPlayerPrefab = KickStarter.settingsManager.GetPlayerPrefab (playerIDOnStartQueue);
+						if (oldPlayerPrefab != null)
+						{
+							if (KickStarter.player != null)
+							{
+								KickStarter.player.Halt ();
+							}
+
+							Player oldPlayer = oldPlayerPrefab.GetSceneInstance ();
+							if (oldPlayer == null)
+							{
+								var spawnPlayerCoroutine = KickStarter.playerSpawner.SpawnPlayerCo (oldPlayerPrefab, (r) => oldPlayer = r);
+								while (spawnPlayerCoroutine.MoveNext ())
+								{
+									yield return spawnPlayerCoroutine.Current;
+								}
+							}
+							KickStarter.player = oldPlayer;
+						}
+					}
+				}
+			}
+
+			// Delete any objects spawned since the skippable cutscene began
+			for (int i = 0; i < skippableCutsceneSpawnedObjects.Count; i++)
+			{
+				KickStarter.sceneChanger.ScheduleForDeletion (skippableCutsceneSpawnedObjects[i]);
+			}
+			skippableCutsceneSpawnedObjects.Clear ();
+
+			List<ActiveList> listsToSkip = new List<ActiveList> ();
+			List<ActiveList> listsToReset = new List<ActiveList> ();
+
+			foreach (ActiveList activeList in activeLists)
+			{
+				if (!activeList.inSkipQueue && activeList.actionList.IsSkippable ())
+				{
+					listsToReset.Add (activeList);
+				}
+				else
+				{
+					listsToSkip.Add (activeList);
+				}
+			}
+
+			foreach (ActiveList activeList in KickStarter.actionListAssetManager.ActiveLists)
+			{
+				if (!activeList.inSkipQueue && activeList.actionList.IsSkippable ())
+				{
+					listsToReset.Add (activeList);
+				}
+				else
+				{
+					listsToSkip.Add (activeList);
+				}
+			}
+
+			foreach (ActiveList listToReset in listsToReset)
+			{
+				// Kill, but do isolated, to bypass setting GameState etc
+				listToReset.Reset (true);
+			}
+
+			foreach (ActiveList listToSkip in listsToSkip)
+			{
+				listToSkip.Skip ();
+				
+				while (AreAnyListsSkipping ())
+				{
+					yield return null;
+				}
+			}
+
+			if (AdvGame.GetReferences ().settingsManager.blackOutWhenSkipping)
+			{
+				KickStarter.mainCamera.ForceOverlayForFrames (0);
+			}
 		}
 
 		#endregion

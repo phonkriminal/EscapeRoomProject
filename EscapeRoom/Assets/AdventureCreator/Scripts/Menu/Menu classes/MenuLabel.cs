@@ -436,6 +436,22 @@ namespace AC
 		}
 
 
+		public override void OverrideLabel (string newLabel, int _lineID = -1)
+		{
+			if (labelType == AC_LabelType.Normal)
+			{
+				label = newLabel;
+				lineID = _lineID;
+				UpdateLabelText ();
+				ClearCache ();
+			}
+			else
+			{
+				ACDebug.LogWarning ("Only Label elements of the type Normal can have their content overridden");
+			}
+		}
+
+
 		protected override string GetLabelToTranslate ()
 		{
 			return (labelType == AC_LabelType.Normal) ? label : string.Empty;
@@ -474,7 +490,7 @@ namespace AC
 
 					if (string.IsNullOrEmpty (_newLabel))
 					{
-						_newLabel = KickStarter.playerMenus.GetHotspotLabel ();
+						_newLabel = parentMenu.HotspotLabelData.HotspotLabel;
 					}
 
 					if (!string.IsNullOrEmpty (_newLabel) || updateIfEmpty)
@@ -798,7 +814,7 @@ namespace AC
 		{
 			if (!isDuppingSpeech)
 			{
-				speech = KickStarter.dialog.GetLatestSpeech ();
+				speech = KickStarter.dialog.GetLatestSpeech (parentMenu);
 			}
 		}
 

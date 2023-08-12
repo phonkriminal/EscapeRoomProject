@@ -43,7 +43,12 @@ namespace AC
 		public Char charToMove;
 
 		public bool doTeleport;
-		public bool startRandom = false;
+		[SerializeField] private bool startRandom = false; // Deprecated
+
+		public enum MovePathNode { First, Random, Specific, Closest };
+		public MovePathNode movePathNode = MovePathNode.First;
+		public int nodeIndex;
+		public int nodeIndexParameterID = -1;
 
 		protected Char runtimeChar;
 
@@ -53,9 +58,21 @@ namespace AC
 		public override string Description { get { return "Moves the Character along a pre-determined path. Will adhere to the speed setting selected in the relevant Paths object. Can also be used to stop a character from moving, or resume moving along a path if it was previously stopped."; }}
 
 
+		public override void Upgrade ()
+		{
+			if (movePath != null && movePath.pathType == AC_PathType.IsRandom && startRandom)
+			{
+				startRandom = false;
+				movePathNode = MovePathNode.Random;
+			}
+			base.Upgrade ();
+		}
+
+
 		public override void AssignValues (List<ActionParameter> parameters)
 		{
 			runtimeMovePath = AssignFile <Paths> (parameters, movePathParameterID, movePathID, movePath);
+			nodeIndex = AssignInteger (parameters, nodeIndexParameterID, nodeIndex);
 
 			if (isPlayer)
 			{
@@ -106,16 +123,24 @@ namespace AC
 						case MovePathMethod.MoveOnNewPath:
 							if (runtimeMovePath)
 							{
-								int randomIndex = -1;
-								if (runtimeMovePath.pathType == AC_PathType.IsRandom && startRandom)
+								int runtimeNodeIndex = nodeIndex;
+								if (movePathNode == MovePathNode.First)
+								{
+									runtimeNodeIndex = 0;
+								}
+								else if (movePathNode == MovePathNode.Random)
 								{
 									if (runtimeMovePath.nodes.Count > 1)
 									{
-										randomIndex = Random.Range (0, runtimeMovePath.nodes.Count);
+										runtimeNodeIndex = Random.Range (0, runtimeMovePath.nodes.Count);
 									}
 								}
-
-								PrepareCharacter (randomIndex);
+								else if (movePathNode == MovePathNode.Closest)
+								{
+									runtimeNodeIndex = runtimeMovePath.GetNearestNode (runtimeChar.Transform.position);
+								}
+								
+								PrepareCharacter (runtimeNodeIndex, runtimeMovePath.pathType != AC_PathType.IsRandom);
 
 								if (willWait && runtimeMovePath.pathType != AC_PathType.ForwardOnly && runtimeMovePath.pathType != AC_PathType.ReverseOnly)
 								{
@@ -123,13 +148,23 @@ namespace AC
 									LogWarning ("Cannot pause while character moves along a linear path, as this will create an indefinite cutscene.");
 								}
 
-								if (randomIndex >= 0)
+								int prevNodeIndex = runtimeNodeIndex - 1;
+								if (runtimeMovePath.pathType == AC_PathType.IsRandom)
 								{
-									runtimeChar.SetPath (runtimeMovePath, randomIndex, 0);
+									prevNodeIndex = 0;
+								}
+								else if (runtimeMovePath.pathType == AC_PathType.ReverseOnly)
+								{
+									prevNodeIndex = runtimeNodeIndex + 1;
+								}
+
+								if (prevNodeIndex < 0 || prevNodeIndex >= runtimeMovePath.nodes.Count)
+								{
+									runtimeChar.SetPath (runtimeMovePath);
 								}
 								else
 								{
-									runtimeChar.SetPath (runtimeMovePath);
+									runtimeChar.SetPath (runtimeMovePath, runtimeNodeIndex, prevNodeIndex);
 								}
 
 								if (willWait)
@@ -145,7 +180,7 @@ namespace AC
 								runtimeMovePath = runtimeChar.GetLastPath ();
 								runtimeChar.ResumeLastPath ();
 
-								if (runtimeMovePath.pathType == AC_PathType.ForwardOnly || runtimeMovePath.pathType == AC_PathType.ReverseOnly)
+								if (willWait && (runtimeMovePath.pathType == AC_PathType.ForwardOnly || runtimeMovePath.pathType == AC_PathType.ReverseOnly))
 								{
 									return defaultPauseTime;
 								}
@@ -198,55 +233,44 @@ namespace AC
 				
 				if (runtimeMovePath != null)
 				{
-					int randomIndex = -1;
-
-					switch (runtimeMovePath.pathType)
+					int runtimeNodeIndex = nodeIndex;
+					if (movePathNode == MovePathNode.First)
 					{
-						case AC_PathType.ForwardOnly:
-							{
-								// Place at end
-								int i = runtimeMovePath.nodes.Count - 1;
-								runtimeChar.Teleport (runtimeMovePath.nodes[i]);
-								if (i > 0)
-								{
-									runtimeChar.SetLookDirection (runtimeMovePath.nodes[i] - runtimeMovePath.nodes[i - 1], true);
-								}
-								return;
-							}
-
-						case AC_PathType.ReverseOnly:
-							{
-								// Place at start
-								runtimeChar.Teleport (runtimeMovePath.transform.position);
-								if (runtimeMovePath.nodes.Count > 1)
-								{
-									runtimeChar.SetLookDirection (runtimeMovePath.nodes[0] - runtimeMovePath.nodes[1], true);
-								}
-								return;
-							}
-
-						case AC_PathType.IsRandom:
-							if (startRandom && runtimeMovePath.nodes.Count > 1)
-							{
-								randomIndex = Random.Range (0, runtimeMovePath.nodes.Count);
-							}
-							break;
-
-						default:
-							break;
+						runtimeNodeIndex = 0;
+					}
+					else if (movePathNode == MovePathNode.Random)
+					{
+						if (runtimeMovePath.nodes.Count > 1)
+						{
+							runtimeNodeIndex = Random.Range (0, runtimeMovePath.nodes.Count);
+						}
+					}
+					else if (movePathNode == MovePathNode.Closest)
+					{
+						runtimeNodeIndex = runtimeMovePath.GetNearestNode (runtimeChar.Transform.position);
 					}
 
-					PrepareCharacter (randomIndex);
+					PrepareCharacter (runtimeNodeIndex, runtimeMovePath.pathType != AC_PathType.IsRandom);
 
-					if (!isPlayer)
+					if (!runtimeChar.IsActivePlayer ())
 					{
-						if (randomIndex >= 0)
+						int prevNodeIndex = runtimeNodeIndex - 1;
+						if (runtimeMovePath.pathType == AC_PathType.IsRandom)
 						{
-							runtimeChar.SetPath (runtimeMovePath, randomIndex, 0);
+							prevNodeIndex = 0;
+						}
+						else if (runtimeMovePath.pathType == AC_PathType.ReverseOnly)
+						{
+							prevNodeIndex = runtimeNodeIndex + 1;
+						}
+
+						if (prevNodeIndex < 0 || prevNodeIndex >= runtimeMovePath.nodes.Count)
+						{
+							runtimeChar.SetPath (runtimeMovePath);
 						}
 						else
 						{
-							runtimeChar.SetPath (runtimeMovePath);
+							runtimeChar.SetPath (runtimeMovePath, runtimeNodeIndex, prevNodeIndex);
 						}
 					}
 				}
@@ -254,36 +278,43 @@ namespace AC
 		}
 
 
-		protected void PrepareCharacter (int randomIndex)
+		protected void PrepareCharacter (int startIndex = -1, bool faceDirection = true)
 		{
 			if (doTeleport)
 			{
-				if (randomIndex >= 0)
+				if (startIndex < 0)
 				{
-					runtimeChar.Teleport (runtimeMovePath.nodes[randomIndex]);
-				}
-				else
-				{
-					int numNodes = runtimeMovePath.nodes.Count;
-
 					if (runtimeMovePath.pathType == AC_PathType.ReverseOnly)
 					{
-						runtimeChar.Teleport (runtimeMovePath.nodes[numNodes-1]);
+						startIndex = runtimeMovePath.nodes.Count - 1;
+					}
+					else
+					{
+						startIndex = 0;
+					}
+				}
 
-						// Set rotation if there is more than two nodes
-						if (numNodes > 2)
+				if (startIndex < 0 || startIndex >= runtimeMovePath.nodes.Count)
+				{
+					return;
+				}
+
+				runtimeChar.Teleport (runtimeMovePath.nodes[startIndex]);
+
+				if (faceDirection)
+				{
+					if (runtimeMovePath.pathType == AC_PathType.ReverseOnly)
+					{
+						if (startIndex > 0 && runtimeMovePath.nodes.Count >= 2)
 						{
-							runtimeChar.SetLookDirection (runtimeMovePath.nodes[numNodes-2] - runtimeMovePath.nodes[numNodes-1], true);
+							runtimeChar.SetLookDirection (runtimeMovePath.nodes[startIndex-1] - runtimeMovePath.nodes[startIndex], true);
 						}
 					}
 					else
 					{
-						runtimeChar.Teleport (runtimeMovePath.transform.position);
-						
-						// Set rotation if there is more than one node
-						if (numNodes > 1)
+						if ((startIndex + 1) < runtimeMovePath.nodes.Count)
 						{
-							runtimeChar.SetLookDirection (runtimeMovePath.nodes[1] - runtimeMovePath.nodes[0], true);
+							runtimeChar.SetLookDirection (runtimeMovePath.nodes[startIndex+1] - runtimeMovePath.nodes[startIndex], true);
 						}
 					}
 				}
@@ -343,9 +374,10 @@ namespace AC
 						movePath = IDToField <Paths> (movePath, movePathID, false);
 					}
 
-					if (movePath != null && movePath.pathType == AC_PathType.IsRandom)
+					movePathNode = (MovePathNode) EditorGUILayout.EnumPopup ("Starting node:", movePathNode);
+					if (movePathNode == MovePathNode.Specific)
 					{
-						startRandom = EditorGUILayout.Toggle ("Start at random node?", startRandom);
+						nodeIndex = EditorGUILayout.IntField ("Specific node index:", nodeIndex);
 					}
 
 					doTeleport = EditorGUILayout.Toggle ("Teleport to start?", doTeleport);

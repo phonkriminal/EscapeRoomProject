@@ -90,6 +90,13 @@ namespace AC
 					return false;
 					#endif
 
+				case PlatformType.Editor:
+					#if UNITY_EDITOR
+					return true;
+					#else
+					return false;
+					#endif
+
 				default:
 					break;
 			}

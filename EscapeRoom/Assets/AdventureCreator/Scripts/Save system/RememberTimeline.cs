@@ -20,16 +20,20 @@ using System.Collections;
 using UnityEngine.ResourceManagement.AsyncOperations;
 using UnityEngine.AddressableAssets;
 #endif
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 
 namespace AC
 {
 
 	/** Attach this script to PlayableDirector objects you wish to save. */
-	[RequireComponent (typeof (PlayableDirector))]
 	[AddComponentMenu("Adventure Creator/Save system/Remember Timeline")]
 	[HelpURL("https://www.adventurecreator.org/scripting-guide/class_a_c_1_1_remember_timeline.html")]
 	public class RememberTimeline : Remember
 	{
+
+		#region Variables
 
 		/** If True, the GameObjects bound to the Timeline will be stored in save game files */
 		public bool saveBindings;
@@ -37,12 +41,17 @@ namespace AC
 		public bool saveTimelineAsset;
 		/** If True, and the Timeline was not playing when it was saved, it will be evaluated at its playback point - causing the effects of it running at that single frame to be restored */
 		public bool evaluateWhenStopped;
+		[SerializeField] private PlayableDirector playableDirectorToSave = null;
 
-		private PlayableDirector playableDirector;
+		#endregion
 
+
+		#region PublicFunctions
 
 		public override string SaveData ()
 		{
+			if (PlayableDirector == null) return string.Empty;
+
 			TimelineData timelineData = new TimelineData ();
 			timelineData.objectID = constantID;
 			timelineData.savePrevented = savePrevented;
@@ -101,6 +110,8 @@ namespace AC
 
 		public override IEnumerator LoadDataCo (string stringData)
 		{
+			if (PlayableDirector == null) yield break;
+
 			TimelineData data = Serializer.LoadScriptData <TimelineData> (stringData);
 			if (data == null) yield break;
 			SavePrevented = data.savePrevented; if (savePrevented) yield break;
@@ -126,6 +137,31 @@ namespace AC
 		}
 
 
+		#if UNITY_EDITOR
+
+		public void ShowGUI ()
+		{
+			if (playableDirectorToSave == null) playableDirectorToSave = GetComponent<PlayableDirector> ();
+
+			CustomGUILayout.BeginVertical ();
+			EditorGUILayout.LabelField ("Timeline", EditorStyles.boldLabel);
+			playableDirectorToSave = (PlayableDirector) CustomGUILayout.ObjectField<PlayableDirector> ("PlayableDirector to save:", playableDirectorToSave, true);
+			saveBindings = CustomGUILayout.Toggle ("Save bindings?", saveBindings, "", "If True, the GameObjects bound to the Timeline will be stored in save game files.");
+			saveTimelineAsset = CustomGUILayout.Toggle ("Save Timeline asset?", saveTimelineAsset, "", "If True, the Timeline asset assigned in the PlayableDirector's Timeline field will be stored in save game files.");
+			if (saveTimelineAsset)
+			{
+				EditorGUILayout.HelpBox ("Both the original and new 'Timeline' assets will need placing in a Resources folder.", MessageType.Info);
+			}
+			evaluateWhenStopped = CustomGUILayout.Toggle ("Evaluate when stopped?", evaluateWhenStopped, "", "If True, and the Timeline was not playing when it was saved, it will be evaluated at its playback point - causing the effects of it running at that single frame to be restored");
+			CustomGUILayout.EndVertical ();
+		}
+
+		#endif
+
+		#endregion
+
+
+		#region PrivateFunctions
 
 		private IEnumerator LoadDataFromAddressable (TimelineData data)
 		{
@@ -220,21 +256,27 @@ namespace AC
 			}
 		}
 
+		#endregion
+
+
+		#region GetSet
 
 		private PlayableDirector PlayableDirector
 		{
 			get
 			{
-				if (playableDirector == null)
+				if (playableDirectorToSave == null)
 				{
-					playableDirector = GetComponent <PlayableDirector>();
+					playableDirectorToSave = GetComponent <PlayableDirector>();
 				}
-				return playableDirector;
+				return playableDirectorToSave;
 			}
 		}
 
+		#endregion
+
 	}
-	
+
 
 	/** A data container used by the RememberTimeline script. */
 	[System.Serializable]

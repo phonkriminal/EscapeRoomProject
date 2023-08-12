@@ -11,6 +11,9 @@
  */
 
 using UnityEngine;
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 
 namespace AC
 {
@@ -23,9 +26,8 @@ namespace AC
 
 		#region Variables
 
-		/** Determines whether the Hotspot is on or off when the game begins */
+		[SerializeField] private Hotspot hotspotToSave = null;
 		public AC_OnOff startState = AC_OnOff.On;
-		private Hotspot ownHotspot;
 
 		#endregion
 
@@ -34,17 +36,17 @@ namespace AC
 
 		protected override void OnInitialiseScene ()
 		{
-			if (OwnHotspot != null &&
+			if (Hotspot != null &&
 				KickStarter.settingsManager &&
 				isActiveAndEnabled)
 			{
 				if (startState == AC_OnOff.On)
 				{
-					OwnHotspot.TurnOn ();
+					Hotspot.TurnOn ();
 				}
 				else
 				{
-					OwnHotspot.TurnOff ();
+					Hotspot.TurnOff ();
 				}
 			}
 		}
@@ -56,18 +58,17 @@ namespace AC
 
 		public override string SaveData ()
 		{
+			if (Hotspot == null) return string.Empty;
+
 			HotspotData hotspotData = new HotspotData ();
 			hotspotData.objectID = constantID;
 			hotspotData.savePrevented = savePrevented;
 
-			if (OwnHotspot)
-			{
-				hotspotData.isOn = OwnHotspot.IsOn ();
-				hotspotData.buttonStates = ButtonStatesToString (OwnHotspot);
+			hotspotData.isOn = Hotspot.IsOn ();
+			hotspotData.buttonStates = ButtonStatesToString (Hotspot);
 
-				hotspotData.hotspotName = OwnHotspot.GetName (0);
-				hotspotData.displayLineID = OwnHotspot.displayLineID;
-			}
+			hotspotData.hotspotName = Hotspot.GetName (0);
+			hotspotData.displayLineID = Hotspot.displayLineID;
 			
 			return Serializer.SaveScriptData <HotspotData> (hotspotData);
 		}
@@ -75,6 +76,8 @@ namespace AC
 
 		public override void LoadData (string stringData)
 		{
+			if (Hotspot == null) return;
+
 			HotspotData data = Serializer.LoadScriptData <HotspotData> (stringData);
 			if (data == null)
 			{
@@ -84,33 +87,48 @@ namespace AC
 
 			if (data.isOn)
 			{
-				gameObject.layer = LayerMask.NameToLayer (KickStarter.settingsManager.hotspotLayer);
+				Hotspot.gameObject.layer = LayerMask.NameToLayer (KickStarter.settingsManager.hotspotLayer);
 			}
 			else
 			{
-				gameObject.layer = LayerMask.NameToLayer (KickStarter.settingsManager.deactivatedLayer);
+				Hotspot.gameObject.layer = LayerMask.NameToLayer (KickStarter.settingsManager.deactivatedLayer);
 			}
 
-			if (OwnHotspot)
+			if (Hotspot)
 			{
 				if (data.isOn)
 				{
-					OwnHotspot.TurnOn ();
+					Hotspot.TurnOn ();
 				}
 				else
 				{
-					OwnHotspot.TurnOff ();
+					Hotspot.TurnOff ();
 				}
 
-				StringToButtonStates (OwnHotspot, data.buttonStates);
+				StringToButtonStates (Hotspot, data.buttonStates);
 
 				if (!string.IsNullOrEmpty (data.hotspotName))
 				{
-					OwnHotspot.SetName (data.hotspotName, data.displayLineID);
+					Hotspot.SetName (data.hotspotName, data.displayLineID);
 				}
-				OwnHotspot.ResetMainIcon ();
+				Hotspot.ResetMainIcon ();
 			}
 		}
+
+		#if UNITY_EDITOR
+
+		public void ShowGUI ()
+		{
+			if (hotspotToSave == null) hotspotToSave = GetComponent<Hotspot> ();
+
+			CustomGUILayout.BeginVertical ();
+			EditorGUILayout.LabelField ("Hotspot", EditorStyles.boldLabel);
+			hotspotToSave = (Hotspot) CustomGUILayout.ObjectField<Hotspot> ("Hotspot to save:", hotspotToSave, true);
+			startState = (AC_OnOff) CustomGUILayout.EnumPopup ("State on start:", startState, "The interactive state of the Hotspot when the game begins");
+			CustomGUILayout.EndVertical ();
+		}
+
+		#endif
 
 		#endregion
 
@@ -269,15 +287,15 @@ namespace AC
 
 		#region GetSet
 		
-		private Hotspot OwnHotspot
+		private Hotspot Hotspot
 		{
 			get
 			{
-				if (ownHotspot == null)
+				if (hotspotToSave == null)
 				{
-					ownHotspot = GetComponent <Hotspot>();
+					hotspotToSave = GetComponent <Hotspot>();
 				}
-				return ownHotspot;
+				return hotspotToSave;
 			}
 		}
 

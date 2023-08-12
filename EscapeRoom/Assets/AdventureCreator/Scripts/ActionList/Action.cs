@@ -538,9 +538,9 @@ namespace AC
 		}
 
 
-		public static int ChooseParameterGUI (string label, List<ActionParameter> _parameters, int _parameterID, ParameterType _expectedType, int excludeParameterID = -1, string tooltip = "")
+		public static int ChooseParameterGUI (string label, List<ActionParameter> _parameters, int _parameterID, ParameterType _expectedType, int excludeParameterID = -1, string tooltip = "", bool alwaysShow = false)
 		{
-			if (_parameters == null || _parameters.Count == 0)
+			if ((_parameters == null || _parameters.Count == 0) && !alwaysShow)
 			{
 				return -1;
 			}
@@ -558,7 +558,7 @@ namespace AC
 					}
 				}
 			}
-			if (!found)
+			if (!found && !alwaysShow)
 			{
 				return -1;
 			}
@@ -584,10 +584,16 @@ namespace AC
 			}
 
 			List<string> labelList = new List<string>();
+
 			labelList.Add ("(No parameter)");
 			foreach (PopupSelectData popupSelectData in popupSelectDataList)
 			{
 				labelList.Add (popupSelectData.label);
+			}
+
+			if (labelList.Count == 1 && alwaysShow)
+			{
+				labelList[0] = "(No " + _expectedType + " parameters found)";
 			}
 
 			if (!string.IsNullOrEmpty (label))
@@ -729,7 +735,8 @@ namespace AC
 					}
 					else if (field.GetComponent <Player>() == null)
 					{
-						UnityVersionHandler.AddConstantIDToGameObject <ConstantID> (field.gameObject);
+						ConstantID cID = UnityVersionHandler.AddConstantIDToGameObject <ConstantID> (field.gameObject);
+						_constantID = cID.constantID;
 					}
 					return _constantID;
 				}
@@ -760,7 +767,8 @@ namespace AC
 					}
 					else if (field.GetComponent <Player>() == null)
 					{
-						UnityVersionHandler.AddConstantIDToGameObject <ConstantID> (field.gameObject);
+						ConstantID cID = UnityVersionHandler.AddConstantIDToGameObject <ConstantID> (field.gameObject);
+						_constantID = cID.constantID;
 					}
 					return _constantID;
 				}
@@ -958,7 +966,8 @@ namespace AC
 					}
 					else if (field.GetComponent <Player>() == null)
 					{
-						UnityVersionHandler.AddConstantIDToGameObject <ConstantID> (field.gameObject);
+						ConstantID cID = UnityVersionHandler.AddConstantIDToGameObject <ConstantID> (field.gameObject);
+						_constantID = cID.constantID;
 					}
 					return _constantID;
 				}
@@ -1044,7 +1053,8 @@ namespace AC
 					}
 					else if (field.GetComponent <Player>() == null)
 					{
-						UnityVersionHandler.AddConstantIDToGameObject <ConstantID> (field.gameObject);
+						ConstantID cID = UnityVersionHandler.AddConstantIDToGameObject <ConstantID> (field.gameObject);
+						_constantID = cID.constantID;
 					}
 					return _constantID;
 				}
@@ -1482,6 +1492,22 @@ namespace AC
 					case ParameterType.PopUp:
 						return parameter.GetValueAsString ();
 
+					case ParameterType.InventoryItem:
+						InvItem invItem = KickStarter.inventoryManager.GetItem (parameter.intValue);
+						if (invItem != null)
+						{
+							return invItem.GetLabel (Options.GetLanguage ());
+						}
+						break;
+
+					case ParameterType.Document:
+						Document document = KickStarter.inventoryManager.GetDocument (parameter.intValue);
+						if (document != null)
+						{
+							return document.GetTitleText ();
+						}
+						break;
+
 					default:
 						break;
 				}
@@ -1594,7 +1620,11 @@ namespace AC
 			ActionParameter parameter = GetParameterWithID (parameters, _parameterID);
 			if (parameter != null && parameter.parameterType == ParameterType.ComponentVariable)
 			{
-				return (parameter.variables);
+				return parameter.variables;
+			}
+			if (parameter != null && parameter.parameterType == ParameterType.GameObject && parameter.gameObject)
+			{
+				return parameter.gameObject.GetComponent<Variables> ();
 			}
 			return field;
 		}
@@ -1974,16 +2004,6 @@ namespace AC
 
 		public virtual void ClearIDs ()
 		{}
-
-
-		public void BreakPoint (int i, ActionList list)
-		{
-			if (isBreakPoint)
-			{
-				ACDebug.Log ("Break-point with (" + i.ToString () + ")", list, this);
-				EditorApplication.isPaused = true;
-			}
-		}
 
 
 		protected virtual string GetSocketLabel (int i)

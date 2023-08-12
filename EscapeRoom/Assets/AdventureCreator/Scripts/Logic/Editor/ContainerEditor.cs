@@ -172,6 +172,8 @@ namespace AC
 				{
 					for (int i=0; i<bins.Count; i++)
 					{
+						if (!bins[i].forItems) continue;
+
 						bool include = (_target.categoryIDs.Contains (bins[i].id)) ? true : false;
 						include = EditorGUILayout.ToggleLeft (" " + i.ToString () + ": " + bins[i].label, include);
 

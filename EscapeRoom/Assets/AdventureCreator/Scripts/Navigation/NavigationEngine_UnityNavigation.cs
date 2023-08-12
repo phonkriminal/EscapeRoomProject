@@ -123,12 +123,6 @@ namespace AC
 			return base.GetPointNear (point, minDistance, maxDistance);
 		}
 
-
-		public override string GetPrefabName ()
-		{
-			return ("NavMeshSegment");
-		}
-
 		#endregion
 
 	}

@@ -90,16 +90,16 @@ namespace AC
 				colorProperty = "_BaseColor";
 			}
 
-			/*#if UNITY_2019_3_OR_NEWER
-			if (GraphicsSettings.currentRenderPipeline)
+			#if UNITY_2019_3_OR_NEWER
+			if (UnityEngine.Rendering.GraphicsSettings.currentRenderPipeline)
 			{
-				string pipelineType = GraphicsSettings.currentRenderPipeline.GetType ().ToString ();
+				string pipelineType = UnityEngine.Rendering.GraphicsSettings.currentRenderPipeline.GetType ().ToString ();
 				if (pipelineType.Contains ("HighDefinition") || pipelineType.Contains ("UniversalRenderPipelineAsset"))
 				{
 					colorProperty = "_BaseColor";
 				}
 			}
-			#endif*/
+			#endif
 
 			if (affectChildren)
 			{

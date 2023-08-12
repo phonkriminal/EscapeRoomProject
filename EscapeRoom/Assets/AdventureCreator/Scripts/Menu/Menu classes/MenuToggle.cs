@@ -447,6 +447,14 @@ namespace AC
 		}
 
 
+		public override void OverrideLabel (string newLabel, int _lineID = -1)
+		{
+			label = newLabel;
+			lineID = _lineID;
+			ClearCache ();
+		}
+
+
 		protected override string GetLabelToTranslate ()
 		{
 			return label;

@@ -32,6 +32,7 @@ namespace AC
 		public int slotIndexParameterID = -1;
 
 		public bool selectFirstVisible = false;
+		public bool simulateClick = false;
 
 
 		public override ActionCategory Category { get { return ActionCategory.Menu; }}
@@ -74,6 +75,11 @@ namespace AC
 					{
 						menu.Select (elementName, slotIndex);
 					}
+
+					if (simulateClick)
+					{
+						PlayerMenus.SimulateClick (menuName, elementName, slotIndex);
+					}
 				}
 			}
 			
@@ -106,6 +112,8 @@ namespace AC
 					slotIndex = EditorGUILayout.IntField ("Slot index (optional):", slotIndex);
 				}
 			}
+
+			simulateClick = EditorGUILayout.Toggle ("Simulate click?", simulateClick);
 		}
 		
 		

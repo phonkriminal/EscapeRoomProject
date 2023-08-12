@@ -131,6 +131,7 @@ namespace AC
 			
 			_collider = GetComponent <Collider>();
 			_collider2D = GetComponent <Collider2D>();
+			if (highlight == null) highlight = GetComponent<Highlight> ();
 
 			lastInteractionIndex = FindFirstEnabledInteraction ();
 			displayLineID = lineID;
@@ -1134,6 +1135,11 @@ namespace AC
 		 */
 		public string GetName (int languageNumber)
 		{
+			if (!Application.isPlaying || KickStarter.runtimeLanguages == null)
+			{
+				return !string.IsNullOrEmpty (hotspotName) ? hotspotName : gameObject.name;
+			}
+
 			if (languageNumber == Options.GetLanguage ())
 			{ 
 				if (string.IsNullOrEmpty (cachedLabel))
@@ -1271,6 +1277,17 @@ namespace AC
 				return hotspotName;
 			}
 			return name;
+		}
+
+
+		/**
+		 * <summary>Gets the Hotspot's "main" icon, which refers to the first-found interaction icon associated with the Hotspot.</summary>
+		 * <returns>The Hotspot's "main" icon.</returns>
+		 */
+		public CursorIcon GetMainIcon ()
+		{
+			GenerateMainIcon ();
+			return mainIcon;
 		}
 
 		#endregion
@@ -1782,17 +1799,6 @@ namespace AC
 				}
 			}
 			return numFound;
-		}
-
-
-		/**
-		 * <summary>Gets the Hotspot's "main" icon, which refers to the first-found interaction icon associated with the Hotspot.</summary>
-		 * <returns>The Hotspot's "main" icon.</returns>
-		 */
-		public CursorIcon GetMainIcon ()
-		{
-			GenerateMainIcon ();
-			return mainIcon;
 		}
 
 		#endif

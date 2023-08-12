@@ -31,7 +31,9 @@ namespace AC
 		public int linkedPrefabID;
 		/** How to reference transform co-ordinates (Global, Local) */
 		public GlobalLocal transformSpace = GlobalLocal.Global;
-		
+		/**  An integer used to sort the order in which RememberTransform scripts are loaded. Note that RememberTransform scripts will always be loaded before regular Remember scripts. */
+		public int loadOrder;
+
 		#if AddressableIsPresent
 		/** The name of the prefab to spawn if it needs to be added to the scene, and addressables are used when saving */
 		public string addressableName;
@@ -81,6 +83,7 @@ namespace AC
 			
 			transformData.objectID = constantID;
 			transformData.savePrevented = savePrevented;
+			transformData.loadOrder = loadOrder;
 
 			switch (transformSpace)
 			{
@@ -124,10 +127,16 @@ namespace AC
 			transformData.ScaleZ = transform.localScale.z;
 
 			transformData.bringBack = saveScenePresence;
+
+			if (GetComponent<RememberSceneItem> ())
+			{
+				transformData.bringBack = false;
+			}
+
 			#if AddressableIsPresent
-			transformData.addressableName = (saveScenePresence) ? addressableName : string.Empty;
+			transformData.addressableName = (transformData.bringBack) ? addressableName : string.Empty;
 			#endif
-			transformData.linkedPrefabID = (saveScenePresence) ? linkedPrefabID : 0;
+			transformData.linkedPrefabID = (transformData.bringBack) ? linkedPrefabID : 0;
 
 			if (saveParent)
 			{
@@ -308,6 +317,8 @@ namespace AC
 		public int objectID;
 		/** If True, saving is prevented */
 		public bool savePrevented;
+		/** An integer used to sort RememberData by when loading */
+		public int loadOrder;
 
 		#if AddressableIsPresent
 		/** The addressable of the prefab to spawn, if necessary */

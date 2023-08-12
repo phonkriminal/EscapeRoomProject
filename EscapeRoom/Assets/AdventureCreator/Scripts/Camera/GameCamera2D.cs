@@ -77,7 +77,7 @@ namespace AC
 
 		protected override void Awake ()
 		{
-			if (!haveSetOriginalPosition && Target)
+			if (!haveSetOriginalPosition)
 			{
 				SetOriginalPosition ();
 			}
@@ -108,10 +108,7 @@ namespace AC
 			base.Start ();
 
 			ResetTarget ();
-			if (Target)
-			{
-				MoveCameraInstant ();
-			}
+			MoveCameraInstant ();
 		}
 
 
@@ -133,10 +130,20 @@ namespace AC
 		/** Force-sets the current position as its original position. This should not normally need to be called externally. */
 		public void ForceRecordOriginalPosition ()
 		{
-			if (!haveSetOriginalPosition && backgroundConstraint && Camera.orthographic && ((limitHorizontal && !lockHorizontal) || (limitVertical && !lockVertical)) && Target)
+			if (!haveSetOriginalPosition && backgroundConstraint && Camera.orthographic && ((limitHorizontal && !lockHorizontal) || (limitVertical && !lockVertical)))
 			{
 				bool clearX = limitHorizontal && !lockHorizontal;
 				bool clearY = limitVertical && !lockVertical;
+
+				if (Target || (targetIsPlayer && (KickStarter.settingsManager.player || KickStarter.settingsManager.playerSwitching == PlayerSwitching.Allow)))
+				{
+					// Bypass if have, or will have, a target
+				}
+				else
+				{
+					if (clearX) afterOffset.x += Transform.position.x;
+					if (clearY) afterOffset.y += Transform.position.y;
+				}
 				Transform.position = new Vector3 (clearX ? 0f : Transform.position.x, clearY ? 0f : Transform.position.y, Transform.position.z);
 			}
 			originalPosition = Transform.position;
@@ -156,32 +163,16 @@ namespace AC
 
 			if (!lockHorizontal || !lockVertical)
 			{
-				if (Target)
-				{
-					SetDesired ();
+				SetDesired ();
 			
-					if (!lockHorizontal)
-					{
-						perspectiveOffset.x = xLerp.Update (desiredOffset.x, desiredOffset.x, dampSpeed);
-					}
-				
-					if (!lockVertical)
-					{
-						perspectiveOffset.y = yLerp.Update (desiredOffset.y, desiredOffset.y, dampSpeed);
-					}
-				}
-				else if ((limitHorizontal || limitVertical) && Camera.orthographic)
+				if (!lockHorizontal)
 				{
-					Vector3 position = originalPosition;
-					if (limitHorizontal && !lockHorizontal)
-					{
-						position.x = Mathf.Clamp (position.x, constrainHorizontal.x, constrainHorizontal.y);
-					}
-					if (limitVertical && !lockVertical)
-					{
-						position.y = Mathf.Clamp (position.y, constrainVertical.x, constrainVertical.y);
-					}
-					transform.position = position;
+					perspectiveOffset.x = xLerp.Update (desiredOffset.x, desiredOffset.x, dampSpeed);
+				}
+				
+				if (!lockVertical)
+				{
+					perspectiveOffset.y = yLerp.Update (desiredOffset.y, desiredOffset.y, dampSpeed);
 				}
 			}
 
@@ -380,7 +371,7 @@ namespace AC
 
 		protected void SetDesired ()
 		{
-			Vector2 targetOffset = GetOffsetForPosition (Target.position);
+			Vector2 targetOffset = GetOffsetForPosition (Target ? Target.position : Vector3.zero);
 			if (targetOffset.x < (perspectiveOffset.x - freedom.x))
 			{
 				desiredOffset.x = targetOffset.x + freedom.x;
@@ -488,7 +479,7 @@ namespace AC
 
 		protected void MoveCamera ()
 		{
-			if (Target && (!lockHorizontal || !lockVertical))
+			if (!lockHorizontal || !lockVertical)
 			{
 				SetDesired ();
 
@@ -527,8 +518,6 @@ namespace AC
 
 		protected void SetProjection ()
 		{
-			if (Target == null) return;
-
 			Vector2 snapOffset = GetSnapOffset ();
 
 			if (Camera.orthographic)

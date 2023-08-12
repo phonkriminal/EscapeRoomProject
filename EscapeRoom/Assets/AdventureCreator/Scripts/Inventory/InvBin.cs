@@ -8,14 +8,12 @@
  *	This script is a container class for inventory item categories.
  * 
  */
-
+using UnityEngine;
 
 namespace AC
 {
 
-	/**
-	 * A data container for an inventory item category.
-	 */
+	/** A data container for an inventory item category. */
 	[System.Serializable]
 	public class InvBin
 	{
@@ -26,6 +24,11 @@ namespace AC
 		public string label;
 		/** A unique identifier */
 		public int id;
+		[SerializeField] private bool notForItems;
+		/** If True, the category is avaiable for Objectives to use */
+		public bool forObjectives;
+		/** If True, the category is avaiable for Documents to use */
+		public bool forDocuments;
 
 		#endregion
 
@@ -49,6 +52,9 @@ namespace AC
 			}
 
 			label = "Category " + (id + 1).ToString ();
+			forItems = true;
+			forObjectives = false;
+			forDocuments = false;
 		}
 
 		#endregion
@@ -65,6 +71,24 @@ namespace AC
 		}
 
 		#endif
+
+
+		#region GetSet
+
+		/** If True, the category is avaiable for Inventory items to use */
+		public bool forItems
+		{
+			get
+			{
+				return !notForItems;
+			}
+			set
+			{
+				notForItems = !value;
+			}
+		}
+
+		#endregion
 
 	}
 

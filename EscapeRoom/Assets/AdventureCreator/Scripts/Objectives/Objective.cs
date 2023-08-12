@@ -45,6 +45,8 @@ namespace AC
 		/** If True, the state cannot be changed once it is considered failed */
 		public bool lockStateWhenFail = true;
 
+		public int binID = 0;
+
 		#endregion
 
 
@@ -193,11 +195,14 @@ namespace AC
 				EditorGUILayout.LabelField ("Speech Manager ID:", titleLineID.ToString ());
 			}
 
+			binID = KickStarter.inventoryManager.ChooseCategoryGUI ("Category:", binID, false, false, true, apiPrefix + ".binID", "The Objective's category");
+
 			EditorGUILayout.BeginHorizontal ();
 			CustomGUILayout.LabelField ("Description:", GUILayout.Width (140f), apiPrefix + ".description");
 			EditorStyles.textField.wordWrap = true;
 			description = CustomGUILayout.TextArea (description, GUILayout.MaxWidth (800f), apiPrefix + ".description");
 			EditorGUILayout.EndHorizontal ();
+
 			if (descriptionLineID > -1)
 			{
 				EditorGUILayout.LabelField ("Speech Manager ID:", descriptionLineID.ToString ());

@@ -603,7 +603,6 @@ namespace AC
 				CreateSubFolder ("_Navigation", "_CollisionCubes");
 				CreateSubFolder ("_Navigation", "_CollisionCylinders");
 				CreateSubFolder ("_Navigation", "_Markers");
-				CreateSubFolder ("_Navigation", "_NavMeshSegments");
 				CreateSubFolder ("_Navigation", "_NavMesh");
 				CreateSubFolder ("_Navigation", "_Paths");
 				CreateSubFolder ("_Navigation", "_PlayerStarts");
@@ -1289,8 +1288,9 @@ namespace AC
 				}
 				else if (engine == AC_NavigationMethod.UnityNavigation)
 				{
-					scenePrefabs.Add (new ScenePrefab ("Navigation", "NavMesh segment", "Navigation/NavMeshSegment", "_NavMeshSegments", "A plane that defines a portion of the area that Characters can move in.", "NavMeshSegment"));
-					scenePrefabs.Add (new ScenePrefab ("Navigation", "Static obstacle", "Navigation/StaticObstacle", "_NavMeshSegments", "A cube that defines a portion of the area that Characters cannot move in.", "", "StaticObstacle"));
+					// Deprecated
+					//scenePrefabs.Add (new ScenePrefab ("Navigation", "NavMesh segment", "Navigation/NavMeshSegment", "_NavMeshSegments", "A plane that defines a portion of the area that Characters can move in.", "NavMeshSegment"));
+					//scenePrefabs.Add (new ScenePrefab ("Navigation", "Static obstacle", "Navigation/StaticObstacle", "_NavMeshSegments", "A cube that defines a portion of the area that Characters cannot move in.", "", "StaticObstacle"));
 				}
 			}
 			

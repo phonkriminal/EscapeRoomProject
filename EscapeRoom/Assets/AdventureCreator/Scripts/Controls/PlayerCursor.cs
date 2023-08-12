@@ -49,7 +49,7 @@ namespace AC
 		protected bool forceOffCursor;
 
 
-		protected void Start ()
+		public void OnInitialiseScene ()
 		{
 			if (KickStarter.cursorManager)
 			{
@@ -968,7 +968,7 @@ namespace AC
 
 		protected void SetHardwareCursor (Texture2D texture2D, Vector2 clickOffset)
 		{
-			Cursor.SetCursor (texture2D, clickOffset, CursorMode.Auto);
+			Cursor.SetCursor (texture2D, clickOffset, KickStarter.cursorManager.cursorMode);
 			KickStarter.eventManager.Call_OnSetHardwareCursor (texture2D, clickOffset);
 		}
 

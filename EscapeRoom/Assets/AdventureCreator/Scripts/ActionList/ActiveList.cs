@@ -220,9 +220,7 @@ namespace AC
 		}
 
 
-		/**
-		 * <summary>Skips the associated ActionList.</summary>
-		 */
+		/** Skips the associated ActionList. */
 		public void Skip ()
 		{
 			if (inSkipQueue)

@@ -60,7 +60,7 @@ namespace AC
 				}
 				else
 				{
-					LogWarning ("Cannot change Hotspot " + runtimeHotspot.gameObject.name + "'s Use button " + number.ToString () + " because it doesn't exist!");
+					LogWarning ("Cannot change Hotspot " + runtimeHotspot.gameObject.name + "'s Use interaction " + number.ToString () + " because it doesn't exist!");
 				}
 			}
 			else if (interactionType == InteractionType.Examine)
@@ -75,7 +75,7 @@ namespace AC
 				}
 				else
 				{
-					LogWarning ("Cannot change Hotspot " + runtimeHotspot.gameObject.name + "'s Inventory button " + number.ToString () + " because it doesn't exist!");
+					LogWarning ("Cannot change Hotspot " + runtimeHotspot.gameObject.name + "'s Inventory interaction " + number.ToString () + " because it doesn't exist!");
 				}
 			}
 			runtimeHotspot.ResetMainIcon ();

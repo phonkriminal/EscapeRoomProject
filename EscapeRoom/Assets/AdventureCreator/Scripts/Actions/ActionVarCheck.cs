@@ -109,6 +109,12 @@ namespace AC
 						runtimeVariable = runtimeVariables.GetVariable (variableID);
 					}
 					runtimeVariable = AssignVariable (parameters, parameterID, runtimeVariable);
+
+					runtimeVariables = AssignVariablesComponent (parameters, parameterID, runtimeVariables);
+					if (runtimeVariables && parameterID >= 0 && GetParameterWithID (parameters, parameterID) != null && GetParameterWithID (parameters, parameterID).parameterType == ParameterType.GameObject)
+					{
+						runtimeVariable = runtimeVariables.GetVariable (variableID);
+					}
 					break;
 			}
 
@@ -447,9 +453,14 @@ namespace AC
 					break;
 
 				case VariableLocation.Component:
-					parameterID = Action.ChooseParameterGUI ("Variable:", parameters, parameterID, ParameterType.ComponentVariable);
+					parameterID = Action.ChooseParameterGUI ("Variable:", parameters, parameterID, new ParameterType[] { ParameterType.ComponentVariable, ParameterType.GameObject });
 					if (parameterID >= 0)
 					{
+						if (GetParameterWithID (parameters, parameterID) != null && GetParameterWithID (parameters, parameterID).parameterType == ParameterType.GameObject)
+						{
+							variableID = EditorGUILayout.IntField ("Variable ID:", variableID);
+						}
+
 						placeholderType = (VariableType) EditorGUILayout.EnumPopup ("Placeholder type:", placeholderType);
 						variableID = ShowVarGUI (parameters, (variables != null) ? variables.vars : null, variableID, false);
 					}

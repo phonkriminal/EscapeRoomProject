@@ -10,7 +10,7 @@
  */
 
 using System.Collections.Generic;
-
+using UnityEngine;
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
@@ -28,26 +28,99 @@ namespace AC
 		public int elementNameParameterID = -1;
 
 		public string newLabel;
+		private string runtimeNewLabel;
 		public int newLabelParameterID = -1;
+		public int newLabelLineID = -1;
+		private int runtimeLineID;
 
 		public enum SetMenuInputBoxSource { EnteredHere, FromGlobalVariable };
 		public SetMenuInputBoxSource setMenuInputBoxSource = SetMenuInputBoxSource.EnteredHere;
 
+		private enum ElementContentType { Text=0, Texture=1 };
+		[SerializeField] private ElementContentType elementContentType = ElementContentType.Text;
+
 		public int varID = 0;
 		public int varParameterID = -1;
 
-		
+		public Texture newTexture;
+		public int newTextureParameterID = -1;
+		private Texture runtimeNewTexture;
+
+
 		public override ActionCategory Category { get { return ActionCategory.Menu; }}
-		public override string Title { get { return "Set Input box text"; }}
-		public override string Description { get { return "Replaces the text within an Input box element."; }}
+		public override string Title { get { return "Update content"; }}
+		public override string Description { get { return "Replaces the text within an element."; }}
 
 
 		public override void AssignValues (List<ActionParameter> parameters)
 		{
 			menuName = AssignString (parameters, menuNameParameterID, menuName);
 			elementName = AssignString (parameters, elementNameParameterID, elementName);
-			newLabel = AssignString (parameters, newLabelParameterID, newLabel);
-			varID = AssignVariableID (parameters, varParameterID, varID);
+
+			switch (elementContentType)
+			{
+				case ElementContentType.Text:
+					{
+						runtimeNewLabel = AssignString (parameters, newLabelParameterID, newLabel);
+						varID = AssignVariableID (parameters, varParameterID, varID);
+						runtimeLineID = newLabelLineID;
+						if (newLabelParameterID >= 0)
+						{
+							ActionParameter parameter = GetParameterWithID (parameters, newLabelParameterID);
+							if (parameter != null && parameter.parameterType == ParameterType.InventoryItem)
+							{
+								newLabelLineID = -1;
+								InvItem invItem = KickStarter.inventoryManager.GetItem (parameter.intValue);
+								if (invItem != null)
+								{
+									runtimeLineID = invItem.lineID;
+								}
+							}
+							else if (parameter != null && parameter.parameterType == ParameterType.Document)
+							{
+								newLabelLineID = -1;
+								Document document = KickStarter.inventoryManager.GetDocument (parameter.intValue);
+								if (document != null)
+								{
+									runtimeLineID = document.titleLineID;
+								}
+							}
+						}
+					}
+					break;
+
+				case ElementContentType.Texture:
+					{
+						runtimeNewTexture = (Texture) AssignObject<Texture> (parameters, newTextureParameterID, newTexture);
+
+						if (newTextureParameterID >= 0)
+						{
+							ActionParameter parameter = GetParameterWithID (parameters, newTextureParameterID);
+							if (parameter != null && parameter.parameterType == ParameterType.InventoryItem)
+							{
+								int itemID = parameter.intValue;
+								InvItem invItem = KickStarter.inventoryManager.GetItem (itemID);
+								if (invItem != null)
+								{
+									runtimeNewTexture = invItem.tex;
+								}
+							}
+							else if (parameter != null && parameter.parameterType == ParameterType.Document)
+							{
+								int documentID = parameter.intValue;
+								Document document = KickStarter.inventoryManager.GetDocument (documentID);
+								if (document != null)
+								{
+									runtimeNewTexture = document.texture;
+								}
+							}
+						}
+					}
+					break;
+
+				default:
+					break;
+			}
 		}
 
 		
@@ -56,16 +129,50 @@ namespace AC
 			if (!string.IsNullOrEmpty (menuName) && !string.IsNullOrEmpty (elementName))
 			{
 				MenuElement menuElement = PlayerMenus.GetElementWithName (menuName, elementName);
-				if (menuElement is MenuInput)
+				if (menuElement != null)
 				{
-					MenuInput menuInput = (MenuInput) menuElement;
-					if (setMenuInputBoxSource == SetMenuInputBoxSource.EnteredHere)
+					switch (elementContentType)
 					{
-						menuInput.SetLabel (newLabel);
-					}
-					else if (setMenuInputBoxSource == SetMenuInputBoxSource.FromGlobalVariable)
-					{
-						menuInput.SetLabel (GlobalVariables.GetStringValue (varID));
+						case ElementContentType.Text:
+							{
+								if (setMenuInputBoxSource == SetMenuInputBoxSource.FromGlobalVariable)
+								{
+									GVar variable = GlobalVariables.GetVariable (varID);
+									if (variable != null)
+									{
+										menuElement.OverrideLabel (variable.TextValue, variable.canTranslate ? variable.textValLineID : -1);
+									}
+								}
+								else
+								{
+									menuElement.OverrideLabel (runtimeNewLabel, runtimeLineID);
+								}
+							}
+							break;
+
+						case ElementContentType.Texture:
+							{
+								if (runtimeNewTexture)
+								{
+									MenuGraphic menuGraphic = menuElement as MenuGraphic;
+									if (menuGraphic)
+									{
+										menuGraphic.SetNormalGraphicTexture (runtimeNewTexture);
+									}
+									else if (menuGraphic.ParentMenu && menuGraphic.ParentMenu.IsUnityUI ())
+									{
+										LogWarning ("Only 'AC' Menus and Graphic elements can have their texture updated at runtime");
+									}
+									else
+									{
+										menuElement.backgroundTexture = (Texture2D) runtimeNewTexture;
+									}
+								}
+							}
+							break;
+
+						default:
+							break;
 					}
 				}
 				else
@@ -82,34 +189,58 @@ namespace AC
 		
 		public override void ShowGUI (List<ActionParameter> parameters)
 		{
-			menuNameParameterID = Action.ChooseParameterGUI ("Menu containing Input:", parameters, menuNameParameterID, new ParameterType[2] { ParameterType.String, ParameterType.PopUp });
+			menuNameParameterID = Action.ChooseParameterGUI ("Menu containing Element:", parameters, menuNameParameterID, new ParameterType[2] { ParameterType.String, ParameterType.PopUp });
 			if (menuNameParameterID < 0)
 			{
-				menuName = TextField ("Menu containing Input:", menuName);
+				menuName = TextField ("Menu containing Element:", menuName);
 			}
 			
-			elementNameParameterID = Action.ChooseParameterGUI ("Input element name:", parameters, elementNameParameterID, new ParameterType[2] { ParameterType.String, ParameterType.PopUp });
+			elementNameParameterID = Action.ChooseParameterGUI ("Element name:", parameters, elementNameParameterID, new ParameterType[2] { ParameterType.String, ParameterType.PopUp });
 			if (elementNameParameterID < 0)
 			{
-				elementName = TextField ("Input element name:", elementName);
+				elementName = TextField ("Element name:", elementName);
 			}
 
-			setMenuInputBoxSource = (SetMenuInputBoxSource) EditorGUILayout.EnumPopup ("New text is:", setMenuInputBoxSource);
-			if (setMenuInputBoxSource == SetMenuInputBoxSource.EnteredHere)
+			elementContentType = (ElementContentType) EditorGUILayout.EnumPopup ("Content type:", elementContentType);
+			switch (elementContentType)
 			{
-				newLabelParameterID = Action.ChooseParameterGUI ("New text:", parameters, newLabelParameterID, new ParameterType[2] { ParameterType.String, ParameterType.PopUp });
-				if (newLabelParameterID < 0)
-				{
-					newLabel = TextField ("New text:", newLabel);
-				}
-			}
-			else if (setMenuInputBoxSource == SetMenuInputBoxSource.FromGlobalVariable)
-			{
-				varParameterID = Action.ChooseParameterGUI ("String variable:", parameters, varParameterID, new ParameterType[2] { ParameterType.String, ParameterType.PopUp });
-				if (varParameterID == -1)
-				{
-					varID = AdvGame.GlobalVariableGUI ("String variable:", varID, new VariableType[2] { VariableType.String, VariableType.PopUp });
-				}
+				case ElementContentType.Text:
+					{
+						setMenuInputBoxSource = (SetMenuInputBoxSource) EditorGUILayout.EnumPopup ("New label is:", setMenuInputBoxSource);
+						if (setMenuInputBoxSource == SetMenuInputBoxSource.EnteredHere)
+						{
+							newLabelParameterID = Action.ChooseParameterGUI ("New label:", parameters, newLabelParameterID, new ParameterType[4] { ParameterType.String, ParameterType.PopUp, ParameterType.InventoryItem, ParameterType.Document });
+							if (newLabelParameterID < 0)
+							{
+								newLabel = TextField ("New label:", newLabel);
+							}
+						}
+						else if (setMenuInputBoxSource == SetMenuInputBoxSource.FromGlobalVariable)
+						{
+							varParameterID = Action.ChooseParameterGUI ("String variable:", parameters, varParameterID, new ParameterType[2] { ParameterType.String, ParameterType.PopUp });
+							if (varParameterID == -1)
+							{
+								varID = AdvGame.GlobalVariableGUI ("String variable:", varID, new VariableType[2] { VariableType.String, VariableType.PopUp });
+							}
+						}
+					}
+					break;
+
+				case ElementContentType.Texture:
+					newTextureParameterID = Action.ChooseParameterGUI ("New texture:", parameters, newTextureParameterID, new ParameterType[3] { ParameterType.UnityObject, ParameterType.InventoryItem, ParameterType.Document });
+					if (newTextureParameterID < 0)
+					{
+						newTexture = (Texture) EditorGUILayout.ObjectField ("New texture:", newTexture, typeof (Texture), true);
+					}
+
+					if (newTextureParameterID >= 0 || newTexture)
+					{
+						EditorGUILayout.HelpBox ("A texture can only be assigned to either Graphic elements, or as the background of an AC menu-based element.", MessageType.Info);
+					}
+					break;
+
+				default:
+					break;
 			}
 		}
 		
@@ -238,35 +369,103 @@ namespace AC
 		#endif
 
 
+		#region ITranslatable
+
+		public string GetTranslatableString (int index)
+		{
+			return newLabel;
+		}
+
+
+		public int GetTranslationID (int index)
+		{
+			return newLabelLineID;
+		}
+
+
+		#if UNITY_EDITOR
+
+		public void UpdateTranslatableString (int index, string updatedText)
+		{
+			newLabel = updatedText;
+		}
+
+
+		public int GetNumTranslatables ()
+		{
+			return 1;
+		}
+
+
+		public bool HasExistingTranslation (int index)
+		{
+			return newLabelLineID > -1;
+		}
+
+
+		public void SetTranslationID (int index, int _lineID)
+		{
+			newLabelLineID = _lineID;
+		}
+
+
+		public string GetOwner (int index)
+		{
+			return string.Empty;
+		}
+
+
+		public bool OwnerIsPlayer (int index)
+		{
+			return false;
+		}
+
+
+		public AC_TextType GetTranslationType (int index)
+		{
+			return AC_TextType.MenuElement;
+		}
+
+
+		public bool CanTranslate (int index)
+		{
+			return setMenuInputBoxSource == SetMenuInputBoxSource.EnteredHere && newLabelParameterID < 0 && !string.IsNullOrEmpty (newLabel);
+		}
+
+		#endif
+
+		#endregion
+
+
 		/**
-		 * <summary>Creates a new instance of the 'Menu: Set Input box text' Action, set to update an InputBox element directly</summary>
-		 * <param name = "menuName">The name of the Menu containing the InputBox element</param>
-		 * <param name = "inputBoxElementName">The name of the InputBox element</param>
+		 * <summary>Creates a new instance of the 'Menu: Update content' Action, set to update an InputBox element directly</summary>
+		 * <param name = "menuName">The name of the Menu containing the element</param>
+		 * <param name = "inputBoxElementName">The name of the element</param>
 		 * <param name = "newText">The new text to display in the InputBox element</param>
 		 * <returns>The generated Action</returns>
 		 */
-		public static ActionMenuSetInputBox CreateNew_SetDirectly (string menuName, string inputBoxElementName, string newText)
+		public static ActionMenuSetInputBox CreateNew_SetDirectly (string menuName, string elementName, string newText)
 		{
 			ActionMenuSetInputBox newAction = CreateNew<ActionMenuSetInputBox> ();
 			newAction.menuName = menuName;
-			newAction.elementName = inputBoxElementName;
+			newAction.elementName = elementName;
 			newAction.newLabel = newText;
 			return newAction;
 		}
 
 
 		/**
-		 * <summary>Creates a new instance of the 'Menu: Set Input box text' Action, set to update an InputBox element from a Global String variable</summary>
-		 * <param name = "menuName">The name of the Menu containing the InputBox element</param>
-		 * <param name = "inputBoxElementName">The name of the InputBox element</param>
+		 * <summary>Creates a new instance of the 'Menu: Update content' Action, set to update an InputBox element from a Global String variable</summary>
+		 * <param name = "menuName">The name of the Menu containing the element</param>
+		 * <param name = "inputBoxElementName">The name of the element</param>
 		 * <param name = "globalStringVariableID">The ID number of the Global String variable with the InputBox element's new display text</param>
 		 * <returns>The generated Action</returns>
 		 */
-		public static ActionMenuSetInputBox CreateNew_SetFromVariable (string menuName, string inputBoxElementName, int globalStringVariableID)
+		public static ActionMenuSetInputBox CreateNew_SetFromVariable (string menuName, string elementName, int globalStringVariableID)
 		{
 			ActionMenuSetInputBox newAction = CreateNew<ActionMenuSetInputBox> ();
 			newAction.menuName = menuName;
-			newAction.elementName = inputBoxElementName;
+			newAction.elementName = elementName;
 			newAction.varID = globalStringVariableID;
 			return newAction;
 		}

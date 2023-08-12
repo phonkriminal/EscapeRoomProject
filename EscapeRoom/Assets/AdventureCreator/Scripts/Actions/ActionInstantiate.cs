@@ -128,7 +128,20 @@ namespace AC
 						}
 						else
 						{
-							LogWarning ("Cannot locate scene instance of prefab " + invPrefab + " as it has no Constant ID number");
+							SceneItem[] sceneItems = FindObjectsOfType<SceneItem> ();
+							foreach (SceneItem sceneItem in sceneItems)
+							{
+								if (InvInstance.IsValid (sceneItem.LinkedInvInstance) && sceneItem.LinkedInvInstance.ItemID == parameter.intValue)
+								{
+									_gameObject = sceneItem.gameObject;
+									break;
+								}
+							}
+
+							if (_gameObject == null)
+							{
+								LogWarning ("Cannot locate scene instance of prefab " + invPrefab + " as it has no Constant ID number");
+							}
 						}
 					}
 					else
@@ -250,6 +263,7 @@ namespace AC
 					break;
 
 				case InvAction.Remove:
+					if (_gameObject == null) return 0f;
 					#if AddressableIsPresent
 					if (!Addressables.ReleaseInstance (_gameObject))
 					{
@@ -421,6 +435,8 @@ namespace AC
 			{
 				newObject.GetComponent<RememberTransform> ().OnSpawn ();
 			}
+
+			KickStarter.actionListManager.RegisterCutsceneSpawnedObject (newObject);
 
 			KickStarter.stateHandler.IgnoreNavMeshCollisions ();
 

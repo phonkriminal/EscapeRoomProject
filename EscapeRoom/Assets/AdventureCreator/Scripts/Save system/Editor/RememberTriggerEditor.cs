@@ -12,17 +12,7 @@ namespace AC
 		public override void OnInspectorGUI ()
 		{
 			RememberTrigger _target = (RememberTrigger) target;
-			
-			CustomGUILayout.BeginVertical ();
-			EditorGUILayout.LabelField ("Trigger", EditorStyles.boldLabel);
-			_target.startState = (AC_OnOff) CustomGUILayout.EnumPopup ("Trigger state on start:", _target.startState, "", "The enabled state of the Trigger when the game begins");
-			CustomGUILayout.EndVertical ();
-			
-			if (_target.GetComponent <AC_Trigger>() == null)
-			{
-				EditorGUILayout.HelpBox ("This script expects a Trigger component!", MessageType.Warning);
-			}
-			
+			_target.ShowGUI ();
 			SharedGUI ();
 		}
 		

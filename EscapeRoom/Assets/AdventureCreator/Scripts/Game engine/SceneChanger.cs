@@ -253,7 +253,7 @@ namespace AC
 					}
 
 					PrepareSceneForExit (!KickStarter.settingsManager.useAsyncLoading, saveRoomData, doOverlay);
-					if (KickStarter.eventManager) KickStarter.eventManager.Call_OnBeforeChangeScene (IndexToName (nextSceneIndex));
+					KickStarter.eventManager.Call_OnBeforeChangeScene (IndexToName (nextSceneIndex));
 					LoadLevel (nextSceneIndex, KickStarter.settingsManager.useLoadingScreen, KickStarter.settingsManager.useAsyncLoading, forceReload, doOverlay);
 					return true;
 				}
@@ -342,6 +342,8 @@ namespace AC
 		 */
 		public void ScheduleForDeletion (GameObject _gameObject)
 		{
+			if (_gameObject == null) return;
+
 			if (_gameObject.GetComponentInChildren <ActionList>())
 			{
 				ActionList actionList = _gameObject.GetComponent <ActionList>();

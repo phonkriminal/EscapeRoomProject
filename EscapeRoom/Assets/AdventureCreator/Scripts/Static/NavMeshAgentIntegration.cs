@@ -42,9 +42,14 @@ namespace AC
 	public class NavMeshAgentIntegration : MonoBehaviour
 	{
 
+		/** If True, the AC character's walk and run speed values will be used to set the speed of the NavMeshAgent */
 		public bool useACForSpeedValues;
+		/** If useACForSpeedValues is False, the factor to apply to the character's regular speed when running */
 		public float runSpeedFactor = 2f;
+		/** If True, the AC character's motion control field will be set to Just Turning, as opposed to Manual */
 		public bool useACForTurning = true;
+		/** If True, the NavMeshAgent's avoidance priority will be set automatically based on its current speed, so that it has more priority the faster it moves */
+		public bool autoSetAvoidanceFromSpeed = false;
 
 		private float originalSpeed;
 		private NavMeshAgent navMeshAgent;
@@ -216,6 +221,12 @@ namespace AC
 					navMeshAgent.speed = (_char.isRunning) ? (originalSpeed * runSpeedFactor) : originalSpeed;
 				}
 
+				/** Scale the avoidance priority based on the character's speed */
+				if (autoSetAvoidanceFromSpeed)
+				{
+					navMeshAgent.avoidancePriority = Mathf.Clamp (99 - (int) navMeshAgent.velocity.sqrMagnitude, 0, 99);
+				}
+
 				/*
 				 * Provided the NavMeshAgent is on a NavMesh, set the destination point
 				 */
@@ -233,7 +244,7 @@ namespace AC
 		 */
 		private void SetMotionControl ()
 		{
-			_char.motionControl = (useACForTurning) ? MotionControl.JustTurning : MotionControl.Manual;
+			_char.motionControl = useACForTurning ? MotionControl.JustTurning : MotionControl.Manual;
 		}
 
 	}

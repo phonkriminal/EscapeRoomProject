@@ -247,7 +247,6 @@ namespace AC
 				ACDebug.LogWarning ("No linked Selectable found for element " + title + " inside menu " + _menu, _menu.RuntimeCanvas);
 				return;
 			}
-
 			UISlotClick uiSlotClick = selectable.gameObject.GetComponent <UISlotClick>();
 			if (uiSlotClick == null)
 			{
@@ -350,6 +349,12 @@ namespace AC
 					ID ++;
 				}
 			}
+		}
+
+
+		public virtual void OverrideLabel (string newLabel, int _lineID = -1)
+		{
+			ACDebug.LogWarning ("Overriding element labels of the type " + GetType () + " is not supported");
 		}
 
 

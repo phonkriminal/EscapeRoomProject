@@ -418,6 +418,9 @@ namespace AC
 				Event.current.Use ();
 				EditorUtility.SetDirty (_target);
 			}
+
+			DeactivateAllOptions ();
+			ActivateOption (option);
 		}
 
 

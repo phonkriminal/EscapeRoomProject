@@ -83,6 +83,7 @@ namespace AC
 			iconID = button.iconID;
 			selectItemMode = button.selectItemMode;
 			playerAction = button.playerAction;
+			doubleClickDoesNotSnapPlayerToMarker = button.doubleClickDoesNotSnapPlayerToMarker;
 			setProximity = button.setProximity;
 			proximity = button.proximity;
 			faceAfter = button.faceAfter;
@@ -103,15 +104,16 @@ namespace AC
 		public bool IsButtonModified ()
 		{
 			if (interaction != null ||
-			    assetFile != null ||
-			    customScriptObject != null ||
-			    customScriptFunction != "" ||
-			    isDisabled != false ||
-			    playerAction != PlayerAction.DoNothing ||
-			    setProximity != false ||
-			    !Mathf.Approximately (proximity, 1f) ||
-			    faceAfter != false ||
-			    isBlocking != false)
+				assetFile != null ||
+				customScriptObject != null ||
+				customScriptFunction != "" ||
+				isDisabled != false ||
+				playerAction != PlayerAction.DoNothing ||
+				doubleClickDoesNotSnapPlayerToMarker != false ||
+				setProximity != false ||
+				!Mathf.Approximately (proximity, 1f) ||
+				faceAfter != false ||
+				isBlocking != false)
 			{
 				return true;
 			}
@@ -133,6 +135,7 @@ namespace AC
 			invID = _button.invID;
 			iconID = _button.iconID;
 			playerAction = _button.playerAction;
+			doubleClickDoesNotSnapPlayerToMarker = _button.doubleClickDoesNotSnapPlayerToMarker;
 			setProximity = _button.setProximity;
 			proximity = _button.proximity;
 			faceAfter = _button.faceAfter;

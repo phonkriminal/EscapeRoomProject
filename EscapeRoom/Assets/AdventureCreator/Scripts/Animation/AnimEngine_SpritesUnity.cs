@@ -23,11 +23,8 @@ namespace AC
 	public class AnimEngine_SpritesUnity : AnimEngine
 	{
 
-		protected string hideHeadClip = "HideHead";
+		protected const string hideHeadClip = "HideHead";
 		protected string headDirection;
-		private string clip2DNew;
-		private int startingIdleHash;
-		private bool enteredCorrectState;
 
 
 		public override void Declare (AC.Char _character)
@@ -155,6 +152,12 @@ namespace AC
 			}
 
 			CustomGUILayout.EndVertical ();
+			CustomGUILayout.BeginVertical ();
+			EditorGUILayout.LabelField ("Bone transforms", EditorStyles.boldLabel);
+
+			character.leftHandBone = (Transform) CustomGUILayout.ObjectField<Transform> ("Left hand:", character.leftHandBone, true, "", "The 'Left hand bone' transform");
+			character.rightHandBone = (Transform) CustomGUILayout.ObjectField<Transform> ("Right hand:", character.rightHandBone, true, "", "The 'Right hand bone' transform");
+			CustomGUILayout.EndVertical ();
 
 			if (GUI.changed && character)
 			{
@@ -209,7 +212,7 @@ namespace AC
 		{
 #if UNITY_EDITOR
 
-			action.method = (ActionCharAnim.AnimMethodChar) EditorGUILayout.EnumPopup ("Methodd:", action.method);
+			action.method = (ActionCharAnim.AnimMethodChar) EditorGUILayout.EnumPopup ("Method:", action.method);
 
 			if (action.method == ActionCharAnim.AnimMethodChar.PlayCustom)
 			{
@@ -289,33 +292,33 @@ namespace AC
 			{
 				action.isRunning = true;
 
-				clip2DNew = action.clip2D;
+				action.runtimeClip2D = action.clip2D;
 				if (action.includeDirection)
 				{
-					clip2DNew += character.GetSpriteDirection ();
+					action.runtimeClip2D += character.GetSpriteDirection ();
 				}
 
 				if (action.method == ActionCharAnim.AnimMethodChar.PlayCustom && !string.IsNullOrEmpty (action.clip2D))
 				{
 					if (character.GetAnimator ())
 					{
-						int hash = Animator.StringToHash (clip2DNew);
+						int hash = Animator.StringToHash (action.runtimeClip2D);
 						if (!character.GetAnimator ().HasState (action.layerInt, hash))
 						{
-							action.ReportWarning ("Cannot play clip " + clip2DNew + " on " + character.name);
+							action.ReportWarning ("Cannot play clip " + action.runtimeClip2D + " on " + character.name);
 							action.isRunning = false;
 							return 0f;
 						}
 
-						enteredCorrectState = false;
+						action.enteredCorrectState = false;
 						character.charState = CharState.Custom;
 						if (action.fadeTime > 0f)
 						{
-							character.GetAnimator ().CrossFade (clip2DNew, action.fadeTime, action.layerInt);
+							character.GetAnimator ().CrossFade (action.runtimeClip2D, action.fadeTime, action.layerInt);
 						}
 						else
 						{
-							character.GetAnimator ().Play (clip2DNew, action.layerInt);
+							character.GetAnimator ().Play (action.runtimeClip2D, action.layerInt);
 						}
 
 						if (character.talkingAnimation == TalkingAnimation.Standard && character.separateTalkingLayer)
@@ -337,7 +340,7 @@ namespace AC
 					if (action.idleAfterCustom)
 					{
 						action.layerInt = 0;
-						enteredCorrectState = false;
+						action.enteredCorrectState = false;
 						return action.defaultPauseTime;
 					}
 					else
@@ -421,17 +424,17 @@ namespace AC
 			{
 				if (character.GetAnimator ())
 				{
-					if (action.method == ActionCharAnim.AnimMethodChar.ResetToIdle && !enteredCorrectState && action.idleAfterCustom)
+					if (action.method == ActionCharAnim.AnimMethodChar.ResetToIdle && !action.enteredCorrectState && action.idleAfterCustom)
 					{
-						startingIdleHash = character.GetAnimator ().GetCurrentAnimatorStateInfo (action.layerInt).shortNameHash;
-						enteredCorrectState = true;
+						action.startingIdleHash = character.GetAnimator ().GetCurrentAnimatorStateInfo (action.layerInt).shortNameHash;
+						action.enteredCorrectState = true;
 					}
 
-					if (action.method == ActionCharAnim.AnimMethodChar.PlayCustom && !enteredCorrectState)
+					if (action.method == ActionCharAnim.AnimMethodChar.PlayCustom && !action.enteredCorrectState)
 					{
-						if (character.GetAnimator ().GetCurrentAnimatorStateInfo (action.layerInt).shortNameHash == Animator.StringToHash (clip2DNew))
+						if (character.GetAnimator ().GetCurrentAnimatorStateInfo (action.layerInt).shortNameHash == Animator.StringToHash (action.runtimeClip2D))
 						{
-							enteredCorrectState = true;
+							action.enteredCorrectState = true;
 						}
 						else
 						{
@@ -440,8 +443,8 @@ namespace AC
 					}
 					
 					if (character.GetAnimator ().GetCurrentAnimatorStateInfo (action.layerInt).normalizedTime >= 1f ||
-						(action.method == ActionCharAnim.AnimMethodChar.PlayCustom && character.GetAnimator ().GetCurrentAnimatorStateInfo (action.layerInt).shortNameHash != Animator.StringToHash (clip2DNew)) ||
-						(action.method == ActionCharAnim.AnimMethodChar.ResetToIdle && character.GetAnimator ().GetCurrentAnimatorStateInfo (action.layerInt).shortNameHash != startingIdleHash))
+						(action.method == ActionCharAnim.AnimMethodChar.PlayCustom && character.GetAnimator ().GetCurrentAnimatorStateInfo (action.layerInt).shortNameHash != Animator.StringToHash (action.runtimeClip2D)) ||
+						(action.method == ActionCharAnim.AnimMethodChar.ResetToIdle && character.GetAnimator ().GetCurrentAnimatorStateInfo (action.layerInt).shortNameHash != action.startingIdleHash))
 					{
 						if (action.method == ActionCharAnim.AnimMethodChar.ResetToIdle)
 						{
@@ -494,10 +497,10 @@ namespace AC
 				return;
 			}
 
-			clip2DNew = action.clip2D;
+			action.runtimeClip2D = action.clip2D;
 			if (action.includeDirection)
 			{
-				clip2DNew += character.GetSpriteDirection ();
+				action.runtimeClip2D += character.GetSpriteDirection ();
 			}
 
 			if (action.method == ActionCharAnim.AnimMethodChar.PlayCustom)
@@ -509,7 +512,7 @@ namespace AC
 				else if (character.GetAnimator ())
 				{
 					character.charState = CharState.Custom;
-					character.GetAnimator ().Play (clip2DNew, action.layerInt, 0.8f);
+					character.GetAnimator ().Play (action.runtimeClip2D, action.layerInt, 0.8f);
 				}
 			}
 		}
@@ -648,7 +651,7 @@ namespace AC
 							return 0f;
 						}
 
-						enteredCorrectState = false;
+						action.enteredCorrectState = false;
 						if (action.fadeTime > 0f)
 						{
 							action.runtimeAnimator.CrossFade (action.clip2D, action.fadeTime, action.layerInt);
@@ -674,11 +677,11 @@ namespace AC
 			{
 				if (action.runtimeAnimator && !string.IsNullOrEmpty (action.clip2D))
 				{
-					if (action.method == AnimMethod.PlayCustom && !enteredCorrectState)
+					if (action.method == AnimMethod.PlayCustom && !action.enteredCorrectState)
 					{
 						if (action.runtimeAnimator.GetCurrentAnimatorStateInfo (action.layerInt).shortNameHash == Animator.StringToHash (action.clip2D))
 						{
-							enteredCorrectState = true;
+							action.enteredCorrectState = true;
 						}
 						else
 						{

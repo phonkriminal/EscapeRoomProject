@@ -43,10 +43,12 @@ namespace AC
 		protected GameObject loadedObject = null;
 
 		public AnimationCurve ikTransitionCurve = AnimationCurve.Linear (0f, 0f, 1f, 1f);
-		protected enum CharHoldMethod { ParentObjectToHand, MoveHandWithIK };
+		protected enum CharHoldMethod { ParentObjectToHand, MoveHandWithIK, DropObject };
 		[SerializeField] protected CharHoldMethod charHoldMethod = CharHoldMethod.ParentObjectToHand;
 		protected enum IKHoldMethod { SetTarget, Release, ReleaseInstantly };
 		[SerializeField] protected IKHoldMethod ikHoldMethod = IKHoldMethod.SetTarget;
+
+		[SerializeField] private bool deleteDroppedObject;
 
 		public Hand hand;
 
@@ -97,33 +99,34 @@ namespace AC
 		{
 			if (runtimeChar != null)
 			{
-				if (runtimeChar.GetAnimEngine () != null && runtimeChar.GetAnimEngine ().ActionCharHoldPossible ())
+				if (charHoldMethod == CharHoldMethod.MoveHandWithIK && runtimeChar.GetAnimEngine ().IKEnabled)
 				{
-					if (charHoldMethod == CharHoldMethod.MoveHandWithIK && runtimeChar.GetAnimEngine ().IKEnabled)
+					if (GetObjectToHold () == null && ikHoldMethod == IKHoldMethod.SetTarget) return 0f;
+
+					switch (hand)
 					{
-						if (GetObjectToHold () == null && ikHoldMethod == IKHoldMethod.SetTarget) return 0f;
+						case Hand.Left:
+							ApplyIK (runtimeChar.LeftHandIKController, isSkipping);
+							break;
 
-						switch (hand)
-						{
-							case Hand.Left:
-								ApplyIK (runtimeChar.LeftHandIKController, isSkipping);
-								break;
+						case Hand.Right:
+							ApplyIK (runtimeChar.RightHandIKController, isSkipping);
+							break;
 
-							case Hand.Right:
-								ApplyIK (runtimeChar.RightHandIKController, isSkipping);
-								break;
-
-							default:
-								break;
-						}
+						default:
+							break;
 					}
-					else if (charHoldMethod == CharHoldMethod.ParentObjectToHand)
+				}
+				else if (charHoldMethod == CharHoldMethod.ParentObjectToHand)
+				{
+					if (runtimeChar.HoldObject (GetObjectToHold (), hand))
 					{
-						if (runtimeChar.HoldObject (GetObjectToHold (), hand))
-						{
-							GetObjectToHold ().transform.localEulerAngles = localEulerAngles;
-						}
+						GetObjectToHold ().transform.localEulerAngles = localEulerAngles;
 					}
+				}
+				else if (charHoldMethod == CharHoldMethod.DropObject)
+				{
+					runtimeChar.ReleaseHeldObject (hand, deleteDroppedObject);
 				}
 			}
 			else
@@ -201,64 +204,57 @@ namespace AC
 
 				_char = editorChar;
 			}
-			
-			if (editorChar)
+
+			if (editorChar && editorChar.GetAnimEngine ())
 			{
-				if (editorChar.GetAnimEngine () && editorChar.GetAnimEngine ().ActionCharHoldPossible ())
+				if (editorChar.GetAnimEngine ().IKEnabled)
 				{
-					if (editorChar.GetAnimEngine ().IKEnabled)
+					charHoldMethod = (CharHoldMethod) EditorGUILayout.EnumPopup ("Hold method:", charHoldMethod);
+					if (charHoldMethod == CharHoldMethod.MoveHandWithIK)
 					{
-						charHoldMethod = (CharHoldMethod) EditorGUILayout.EnumPopup ("Hold method:", charHoldMethod);
-						if (charHoldMethod == CharHoldMethod.MoveHandWithIK)
-						{
-							ikHoldMethod = (IKHoldMethod)EditorGUILayout.EnumPopup ("IK command:", ikHoldMethod);
-						}
+						ikHoldMethod = (IKHoldMethod) EditorGUILayout.EnumPopup ("IK command:", ikHoldMethod);
 					}
-					else
-					{
-						charHoldMethod = CharHoldMethod.ParentObjectToHand;
-					}
+				}
+				else if (charHoldMethod == CharHoldMethod.MoveHandWithIK)
+				{
+					charHoldMethod = CharHoldMethod.ParentObjectToHand;
+				}
+			}
 
-					if (charHoldMethod == CharHoldMethod.ParentObjectToHand || ikHoldMethod == IKHoldMethod.SetTarget)
-					{
-						objectToHoldParameterID = Action.ChooseParameterGUI ("Object to hold:", parameters, objectToHoldParameterID, ParameterType.GameObject);
-						if (objectToHoldParameterID >= 0)
-						{
-							objectToHoldID = 0;
-							objectToHold = null;
-						}
-						else
-						{
-							objectToHold = (GameObject)EditorGUILayout.ObjectField ("Object to hold:", objectToHold, typeof (GameObject), true);
-
-							objectToHoldID = FieldToID (objectToHold, objectToHoldID);
-							objectToHold = IDToField (objectToHold, objectToHoldID, false);
-						}
-					}
-					
-					hand = (Hand) EditorGUILayout.EnumPopup ("Hand:", hand);
-
-					if (charHoldMethod == CharHoldMethod.ParentObjectToHand)
-					{
-						localEulerAnglesParameterID = Action.ChooseParameterGUI ("Object local angles:", parameters, localEulerAnglesParameterID, ParameterType.Vector3);
-						if (localEulerAnglesParameterID < 0)
-						{
-							localEulerAngles = EditorGUILayout.Vector3Field ("Object local angles:", localEulerAngles);
-						}
-					}
-					else if (charHoldMethod == CharHoldMethod.MoveHandWithIK && ikHoldMethod == IKHoldMethod.SetTarget)
-					{
-						ikTransitionCurve = EditorGUILayout.CurveField ("Transition curve:", ikTransitionCurve);
-					}
+			if (charHoldMethod == CharHoldMethod.ParentObjectToHand || (charHoldMethod == CharHoldMethod.MoveHandWithIK && ikHoldMethod == IKHoldMethod.SetTarget))
+			{
+				objectToHoldParameterID = Action.ChooseParameterGUI ("Object to hold:", parameters, objectToHoldParameterID, ParameterType.GameObject);
+				if (objectToHoldParameterID >= 0)
+				{
+					objectToHoldID = 0;
+					objectToHold = null;
 				}
 				else
 				{
-					EditorGUILayout.HelpBox ("This Action is not compatible with this Character's Animation Engine.", MessageType.Info);
+					objectToHold = (GameObject)EditorGUILayout.ObjectField ("Object to hold:", objectToHold, typeof (GameObject), true);
+
+					objectToHoldID = FieldToID (objectToHold, objectToHoldID);
+					objectToHold = IDToField (objectToHold, objectToHoldID, false);
 				}
 			}
-			else
+					
+			hand = (Hand) EditorGUILayout.EnumPopup ("Hand:", hand);
+
+			if (charHoldMethod == CharHoldMethod.ParentObjectToHand)
 			{
-				EditorGUILayout.HelpBox ("This Action requires a Character before more options will show.", MessageType.Info);
+				localEulerAnglesParameterID = Action.ChooseParameterGUI ("Object local angles:", parameters, localEulerAnglesParameterID, ParameterType.Vector3);
+				if (localEulerAnglesParameterID < 0)
+				{
+					localEulerAngles = EditorGUILayout.Vector3Field ("Object local angles:", localEulerAngles);
+				}
+			}
+			else if (charHoldMethod == CharHoldMethod.MoveHandWithIK && ikHoldMethod == IKHoldMethod.SetTarget)
+			{
+				ikTransitionCurve = EditorGUILayout.CurveField ("Transition curve:", ikTransitionCurve);
+			}
+			else if (charHoldMethod == CharHoldMethod.DropObject)
+			{
+				deleteDroppedObject = EditorGUILayout.Toggle ("Delete dropped object?", deleteDroppedObject);
 			}
 		}
 

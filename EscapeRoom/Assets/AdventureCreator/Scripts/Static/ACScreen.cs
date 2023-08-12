@@ -15,6 +15,15 @@ namespace AC
 		private static int cachedHeight = 0;
 		#endif
 
+		public static float AspectRatio
+		{
+			get
+			{
+				return (float) width / (float) height;
+			}
+		}
+
+
 		public static int width
 		{
 			get

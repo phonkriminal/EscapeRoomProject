@@ -309,6 +309,7 @@ namespace AC
 				KickStarter.mainCamera.attachedCamera.MoveCameraInstant ();
 			}
 
+			newPlayer._Update ();
 			hasSpawnedPlayer = true;
 		}
 

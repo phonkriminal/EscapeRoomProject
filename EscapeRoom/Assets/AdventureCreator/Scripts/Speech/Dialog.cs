@@ -320,13 +320,20 @@ namespace AC
 
 		/**
 		 * <summary>Gets the last Speech line to be played.</summary>
+		 * <param name = "menu">If set, the Speech must be compatible with the Menu's properties</param>
 		 * <returns>The last item in the speechList List</returns>
 		 */
-		public Speech GetLatestSpeech ()
+		public Speech GetLatestSpeech (Menu menu = null)
 		{
 			if (speechList.Count > 0)
 			{
-				return speechList [speechList.Count - 1];
+				for (int i = speechList.Count - 1; i >= 0; i--)
+				{
+					if (menu == null || speechList[i].MenuCanShow (menu))
+					{
+						return speechList[i];
+					}
+				}
 			}
 			return null;
 		}
@@ -414,7 +421,7 @@ namespace AC
 			{
 				return GetLatestSpeech ().GetSpeaker (languageNumber);
 			}			
-			return "";
+			return string.Empty;
 		}
 
 

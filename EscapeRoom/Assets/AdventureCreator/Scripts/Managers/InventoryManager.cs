@@ -230,7 +230,7 @@ namespace AC
 				showItemProperties = CustomGUILayout.ToggleHeader (showItemProperties, "Inventory item '" + selectedItem.label + "' settings");
 				if (showItemProperties)
 				{
-					selectedItem.ShowGUI (apiPrefix, binList);
+					selectedItem.ShowGUI (apiPrefix);
 				}
 				CustomGUILayout.EndVertical ();
 			}
@@ -334,6 +334,9 @@ namespace AC
 				if (showSelectedCategory)
 				{
 					selectedCategory.label = CustomGUILayout.TextField ("Category name:", selectedCategory.label, "AC.KickStarter.inventoryManager.GetCategory (" + selectedCategory.id + ").label", "The category's editor name");
+					selectedCategory.forItems = CustomGUILayout.Toggle ("Available to Items?", selectedCategory.forItems, "AC.KickStarter.inventoryManager.GetCategory (" + selectedCategory.id + ").forItems", "If True, the category is avaiable for Inventory items to use");
+					selectedCategory.forDocuments = CustomGUILayout.Toggle ("Avaiable to Documents?", selectedCategory.forDocuments, "AC.KickStarter.inventoryManager.GetCategory (" + selectedCategory.id + ").forDocuments", "If True, the category is avaiable for Documents to use");
+					selectedCategory.forObjectives = CustomGUILayout.Toggle ("Avaiable to Objectives?", selectedCategory.forObjectives, "AC.KickStarter.inventoryManager.GetCategory (" + selectedCategory.id + ").forObjectives", "If True, the category is avaiable for Objectives to use");
 				}
 				CustomGUILayout.EndVertical ();
 			}
@@ -434,6 +437,8 @@ namespace AC
 						List<int> newCategoryIDs = new List<int>();
 						foreach (InvBin bin in bins)
 						{
+							if (!bin.forItems) continue;
+
 							bool usesCategory = false;
 							if (selectedInvVar.categoryIDs.Contains (bin.id))
 							{
@@ -1431,10 +1436,20 @@ namespace AC
 			menu.AddItem (new GUIContent ("Import items..."), false, ItemsCallback, "Import");
 			menu.AddItem (new GUIContent ("Export items..."), false, ItemsCallback, "Export");
 
-			if (Application.isPlaying && items.Count > 0)
+			if (items.Count > 0)
 			{
-				menu.AddItem (new GUIContent ("Give all to Player"), false, ItemsCallback, "Give all to Player");
+				menu.AddSeparator (string.Empty);
+				
+				if (Application.isPlaying)
+				{
+					menu.AddItem (new GUIContent ("Give all to Player"), false, ItemsCallback, "Give all to Player");
+				}
+				else
+				{
+					menu.AddItem (new GUIContent ("Delete all"), false, ItemsCallback, "Delete all");
+				}
 			}
+
 
 			menu.AddSeparator (string.Empty);
 			menu.AddItem (new GUIContent ("Sort/By ID"), false, ItemsCallback, "SortByID");
@@ -1462,6 +1477,13 @@ namespace AC
 						KickStarter.runtimeInventory.PlayerInvCollection.AddToEnd (new InvInstance (item));
 					}
 					ACDebug.Log ("All items added to Player's inventory");
+					break;
+
+				case "Delete all":
+					Undo.RecordObject (this, "Delete all items");
+					items.Clear ();
+					EditorUtility.SetDirty (this);
+					AssetDatabase.SaveAssets ();
 					break;
 
 				case "SortByID":
@@ -2672,6 +2694,74 @@ namespace AC
 		}
 
 
+		/** Gets the ID of the first-defined category avaiable for Inventory items, or -1 otherwise */
+		public int GetFirstItemsCategoryID ()
+		{
+			if (bins == null) return -1;
+			foreach (InvBin bin in bins)
+			{
+				if (bin.forItems)
+				{
+					return bin.id;
+				}
+			}
+			return -1;
+		}
+
+
+		public bool IsInItemsCategory (int binID)
+		{
+			InvBin bin = GetCategory (binID);
+			if (bin == null) return false;
+			return bin.forItems;
+		}
+
+
+		public bool IsInDocumentsCategory (int binID)
+		{
+			InvBin bin = GetCategory (binID);
+			if (bin == null) return false;
+			return bin.forDocuments;
+		}
+
+
+		public bool IsInObjectivesCategory (int binID)
+		{
+			InvBin bin = GetCategory (binID);
+			if (bin == null) return false;
+			return bin.forObjectives;
+		}
+
+		/** Gets the ID of the first-defined category avaiable for Documents, or -1 otherwise */
+		public int GetFirstDocumentsCategoryID ()
+		{
+			if (bins == null) return -1;
+			foreach (InvBin bin in bins)
+			{
+				if (bin.forDocuments)
+				{
+					return bin.id;
+				}
+			}
+			return -1;
+		}
+
+
+		/** Gets the ID Of the first-defined category avaiable for Objectives, or -1 otherwise */
+		public int GetFirstObjectivessCategoryID ()
+		{
+			if (bins == null) return -1;
+			foreach (InvBin bin in bins)
+			{
+				if (bin.forObjectives)
+				{
+					return bin.id;
+				}
+			}
+			return -1;
+		}
+
+
 		/**
 		 * <summary>Gets an inventory category.</summary>
 		 * <param name = "categoryID">The ID number of the inventory category to find</param>
@@ -2752,6 +2842,67 @@ namespace AC
 
 
 		#if UNITY_EDITOR
+		
+		public int ChooseCategoryGUI (string label, int binID, bool forItems, bool forDocuments, bool forObjectives, string apiPrefix = "", string tooltip = "")
+		{
+			if (bins == null || bins.Count == 0)
+			{
+				return -1;
+			}
+
+			// Don't show list if no parameters of the correct type are present
+			bool found = false;
+			foreach (InvBin bin in bins)
+			{
+				if ((forItems && bin.forItems) ||
+					(forDocuments && bin.forDocuments) ||
+					(forObjectives && bin.forObjectives))
+				{
+					found = true;
+				}
+			}
+			if (!found)
+			{
+				return -1;
+			}
+
+			int chosenNumber = 0;
+			List<PopupSelectData> popupSelectDataList = new List<PopupSelectData> ();
+			for (int i = 0; i < bins.Count; i++)
+			{
+				if ((forItems && !bins[i].forItems) ||
+					(forDocuments && !bins[i].forDocuments) ||
+					(forObjectives && !bins[i].forObjectives))
+				{
+					continue;
+				}
+
+				PopupSelectData popupSelectData = new PopupSelectData (bins[i].id, bins[i].label, i);
+				popupSelectDataList.Add (popupSelectData);
+
+				if (popupSelectData.ID == binID)
+				{
+					chosenNumber = popupSelectDataList.Count - 1;
+				}
+			}
+
+			List<string> labelList = new List<string> ();
+
+			foreach (PopupSelectData popupSelectData in popupSelectDataList)
+			{
+				labelList.Add (popupSelectData.label);
+			}
+
+			chosenNumber = CustomGUILayout.Popup (label, chosenNumber, labelList.ToArray (),  apiPrefix, tooltip);
+
+			if (chosenNumber < 0)
+			{
+				return -1;
+			}
+			int rootIndex = popupSelectDataList[chosenNumber].rootIndex;
+			return bins[rootIndex].id;
+		}
+
 
 		private void OnCompleteDragItem (object data)
 		{
@@ -2777,6 +2928,9 @@ namespace AC
 				Event.current.Use ();
 				EditorUtility.SetDirty (this);
 			}
+
+			DeactivateAllItems ();
+			ActivateItem (item);
 		}
 
 
@@ -2815,6 +2969,9 @@ namespace AC
 				Event.current.Use ();
 				EditorUtility.SetDirty (this);
 			}
+
+			DeactivateAllCategories ();
+			ActivateCategory (bin);
 		}
 
 
@@ -2853,6 +3010,9 @@ namespace AC
 				Event.current.Use ();
 				EditorUtility.SetDirty (this);
 			}
+
+			DeactivateAllInvVars ();
+			ActivateItem (var);
 		}
 
 
@@ -2891,6 +3051,9 @@ namespace AC
 				Event.current.Use ();
 				EditorUtility.SetDirty (this);
 			}
+
+			DeactivateAllRecipes ();
+			ActivateRecipe (recipe);
 		}
 
 
@@ -2929,6 +3092,9 @@ namespace AC
 				Event.current.Use ();
 				EditorUtility.SetDirty (this);
 			}
+
+			DeactivateAllObjectives ();
+			ActivateObjective (objective);
 		}
 
 
@@ -2967,6 +3133,9 @@ namespace AC
 				Event.current.Use ();
 				EditorUtility.SetDirty (this);
 			}
+
+			DeactivateAllDocuments ();
+			ActivateDocument (document);
 		}
 
 

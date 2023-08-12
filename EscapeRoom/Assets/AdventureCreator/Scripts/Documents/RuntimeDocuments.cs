@@ -11,37 +11,47 @@
 
 using UnityEngine;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace AC
 {
 
-	/**
-	 * This script stores information about the currently-open Document, as well as any runtime-made changes to all Documents.
-	 */
+	/** This script stores information about the currently-open Document, as well as any runtime-made changes to all Documents. */
 	[HelpURL("https://www.adventurecreator.org/scripting-guide/class_a_c_1_1_runtime_documents.html")]
 	public class RuntimeDocuments : MonoBehaviour
 	{
 
 		#region Variables
 
-		protected Document activeDocument;
+		protected DocumentInstance activeDocumentInstance;
+		protected readonly Dictionary<int, DocumentInstance> collectedDocumentsDict = new Dictionary<int, DocumentInstance> (); 
+		
+		#endregion
 
-		protected List<int> collectedDocuments = new List<int>(); 
-		protected Dictionary<int, int> lastOpenPages = new Dictionary<int, int>();
+
+		#region UnityStandards
+
+		private void OnEnable ()
+		{
+			EventManager.OnInitialiseScene += OnInitialiseScene;
+		}
+
+
+		private void OnDisable ()
+		{
+			EventManager.OnInitialiseScene -= OnInitialiseScene;
+		}
 
 		#endregion
 
 
 		#region PublicFunctions
 
-		/**
-		 * This is called when the game begins, and sets up the initial state.
-		 */
+		/** This is called when the game begins, and sets up the initial state. */
 		public void OnInitPersistentEngine ()
 		{
-			activeDocument = null;
-			collectedDocuments.Clear ();
-			lastOpenPages.Clear ();
+			activeDocumentInstance = null;
+			collectedDocumentsDict.Clear ();
 
 			GetDocumentsOnStart ();
 		}
@@ -53,12 +63,20 @@ namespace AC
 		 */
 		public void OpenDocument (Document document)
 		{
-			if (document != null && activeDocument != document)
+			if (document != null && (!DocumentInstance.IsValid (activeDocumentInstance) || activeDocumentInstance.Document != document))
 			{
 				CloseDocument ();
 
-				activeDocument = document;
-				KickStarter.eventManager.Call_OnHandleDocument (activeDocument, true);
+				if (collectedDocumentsDict.ContainsKey (document.ID))
+				{
+					activeDocumentInstance = collectedDocumentsDict[document.ID];
+				}
+				else
+				{
+					activeDocumentInstance = new DocumentInstance (document);
+				}
+				activeDocumentInstance.hasBeenViewed = true;
+				KickStarter.eventManager.Call_OnHandleDocument (activeDocumentInstance, true);
 			}
 		}
 
@@ -77,37 +95,88 @@ namespace AC
 		}
 
 
-		/**
-		 * <summary>Closes the currently-viewed Document, if there is one</summary>
-		 */
+		/** Closes the currently-viewed Document, if there is one */
 		public void CloseDocument ()
 		{
-			if (activeDocument != null)
+			if (activeDocumentInstance != null)
 			{
-				KickStarter.eventManager.Call_OnHandleDocument (activeDocument, false);
-				activeDocument = null;
+				KickStarter.eventManager.Call_OnHandleDocument (activeDocumentInstance, false);
+				activeDocumentInstance = null;
 			}
 		}
 
 
 		/**
 		 * <summary>Checks if a particular Document is in the Player's collection</summary>
-		 * <param name = "ID">The ID number of the Document to check for</param>
+		 * <param name = "documentID">The ID number of the Document to check for</param>
 		 * <returns>True if the Document is in the Player's collection</returns>
 		 */
-		public bool DocumentIsInCollection (int ID)
+		public bool DocumentIsInCollection (int documentID)
 		{
-			if (collectedDocuments != null)
+			return collectedDocumentsDict.ContainsKey (documentID);
+		}
+
+
+		/**
+		 * <summary>Checks if a given Document has been read by the Player</summary>
+		 * <param name = "document">The Document to check for</param>
+		 * <returns>True if the Document is held by the Player and has been read</returns>
+		 */
+		public bool HasBeenRead (Document document)
+		{
+			if (document == null) return false;
+
+			DocumentInstance documentInstance = null;
+			if (collectedDocumentsDict.TryGetValue (document.ID, out documentInstance))
 			{
-				foreach (int documentID in collectedDocuments)
-				{
-					if (documentID == ID)
-					{
-						return true;
-					}
-				}
+				return documentInstance.hasBeenViewed;
 			}
 			return false;
+		}
+
+
+		/**
+		 * <summary>Checks if a given Document has been read by the Player</summary>
+		 * <param name = "documentID">The ID of theDocument to check for</param>
+		 * <returns>True if the Document is held by the Player and has been read</returns>
+		 */
+		public bool HasBeenRead (int documentID)
+		{
+			if (documentID >= 0)
+			{
+				Document document = KickStarter.inventoryManager.GetDocument (documentID);
+				return HasBeenRead (document);
+			}
+			return false;
+		}
+
+
+		/**
+		 * <summary>Gets the DocumentInstance class for a Document present in the Player's collection</summary>
+		 * <param name = "document">The original Document, as defined in the Inventory Manager</param>
+		 * <returns>The DocumentInstance class, if present, or null otherwise</returns>
+		 */
+		public DocumentInstance GetCollectedDocumentInstance (Document document)
+		{
+			if (document == null) return null;
+
+			DocumentInstance documentInstance = null;
+			if (collectedDocumentsDict.TryGetValue (document.ID, out documentInstance))
+			{
+				return documentInstance;
+			}
+			return null;
+		}
+
+
+		/**
+		 * <summary>Gets the DocumentInstance class for a Document present in the Player's collection</summary>
+		 * <param name = "ID">The ID of the Document</param>
+		 * <returns>The DocumentInstance class, if present, or null otherwise</returns>
+		 */
+		public DocumentInstance GetCollectedDocumentInstance (int ID)
+		{
+			return GetCollectedDocumentInstance (KickStarter.inventoryManager.GetDocument (ID));
 		}
 
 
@@ -117,11 +186,24 @@ namespace AC
 		 */
 		public void AddToCollection (Document document)
 		{
-			if (!collectedDocuments.Contains (document.ID))
-			{
-				collectedDocuments.Add (document.ID);
-				PlayerMenus.ResetInventoryBoxes ();
-			}
+			if (document == null || DocumentIsInCollection (document.ID)) return;
+
+			DocumentInstance documentInstance = new DocumentInstance (document);
+			collectedDocumentsDict.Add (document.ID, documentInstance);
+			PlayerMenus.ResetInventoryBoxes ();
+
+			KickStarter.eventManager.Call_OnAddRemoveDocument (documentInstance, true);
+		}
+
+
+		/**
+		 * <summary>Adds a Document to the Player's own collection</summary>
+		 * <param name = "documentID">The ID of the Document to add</param>
+		 */
+		public void AddToCollection (int documentID)
+		{
+			Document document = KickStarter.inventoryManager.GetDocument (documentID);
+			AddToCollection (document);
 		}
 
 
@@ -131,20 +213,32 @@ namespace AC
 		 */
 		public void RemoveFromCollection (Document document)
 		{
-			if (collectedDocuments.Contains (document.ID))
-			{
-				collectedDocuments.Remove (document.ID);
-				PlayerMenus.ResetInventoryBoxes ();
-			}
+			if (document == null || !DocumentIsInCollection (document.ID)) return;
+
+			DocumentInstance documentInstance = collectedDocumentsDict[document.ID];
+
+			collectedDocumentsDict.Remove (document.ID);
+			PlayerMenus.ResetInventoryBoxes ();
+
+			KickStarter.eventManager.Call_OnAddRemoveDocument (documentInstance, true);
 		}
 
 
 		/**
-		 * <summary>Removes all Documents from the Player's own collection</summary>
+		 * <summary>Removes a Document from the Player's own collection</summary>
+		 * <param name = "documentID">The ID of the Document to remove</param>
 		 */
+		public void RemoveFromCollection (int documentID)
+		{
+			Document document = KickStarter.inventoryManager.GetDocument (documentID);
+			RemoveFromCollection (document);
+		}
+
+
+		/** Removes all Documents from the Player's own collection */
 		public void ClearCollection ()
 		{
-			collectedDocuments.Clear ();
+			collectedDocumentsDict.Clear ();
 			PlayerMenus.ResetInventoryBoxes ();
 		}
 
@@ -154,15 +248,11 @@ namespace AC
 		 * <param name = "document">The Document in question</param>
 		 * <returns>The page number to return to when opening a previously-read Document</returns>
 		 */
-		public int GetLastOpenPage (Document document)
+		public int GetLastOpenPage (DocumentInstance documentInstance)
 		{
-			if (document.rememberLastOpenPage)
+			if (DocumentInstance.IsValid (documentInstance) && documentInstance.Document.rememberLastOpenPage)
 			{
-				int lastOpenPage = 0;
-				if (lastOpenPages.TryGetValue (document.ID, out lastOpenPage))
-				{
-					return lastOpenPage;
-				}
+				return documentInstance.lastOpenPage;
 			}
 			return 1;
 		}
@@ -173,18 +263,11 @@ namespace AC
 		 * <param name = "document">The Document in question</param>
 		 * <param name = "page">The page number to return to next time</param>
 		 */
-		public void SetLastOpenPage (Document document, int page)
+		public void SetLastOpenPage (DocumentInstance documentInstance, int page)
 		{
-			if (document.rememberLastOpenPage)
+			if (DocumentInstance.IsValid (documentInstance) && documentInstance.Document.rememberLastOpenPage)
 			{
-				if (lastOpenPages.ContainsKey (document.ID))
-				{
-					lastOpenPages[document.ID] = page;
-				}
-				else
-				{
-					lastOpenPages.Add (document.ID, page);
-				}
+				documentInstance.lastOpenPage = page;
 			}
 		}
 
@@ -196,33 +279,24 @@ namespace AC
 		 */
 		public PlayerData SavePlayerDocuments (PlayerData playerData)
 		{
-			playerData.activeDocumentID = (activeDocument != null) ? activeDocument.ID : -1;
+			playerData.activeDocumentID = DocumentInstance.IsValid (activeDocumentInstance) ? activeDocumentInstance.DocumentID : -1;
 
 			System.Text.StringBuilder collectedDocumentsData = new System.Text.StringBuilder ();
-			foreach (int collectedDocument in collectedDocuments)
+			foreach (int collectedDocument in collectedDocumentsDict.Keys)
 			{
 				collectedDocumentsData.Append (collectedDocument.ToString ());
+				collectedDocumentsData.Append (SaveSystem.colon);
+				collectedDocumentsData.Append (collectedDocumentsDict[collectedDocument].lastOpenPage);
+				collectedDocumentsData.Append (SaveSystem.colon);
+				collectedDocumentsData.Append (collectedDocumentsDict[collectedDocument].hasBeenViewed ? 1 : 0);
 				collectedDocumentsData.Append (SaveSystem.pipe);
 			}
-			if (collectedDocuments.Count > 0)
+			if (collectedDocumentsDict.Count > 0)
 			{
 				collectedDocumentsData.Remove (collectedDocumentsData.Length-1, 1);
 			}
 			playerData.collectedDocumentData = collectedDocumentsData.ToString ();
-
-			System.Text.StringBuilder lastOpenPagesData = new System.Text.StringBuilder ();
-			foreach (KeyValuePair<int, int> lastOpenPage in lastOpenPages)
-			{
-				lastOpenPagesData.Append (lastOpenPage.Key.ToString ());
-				lastOpenPagesData.Append (SaveSystem.colon);
-				lastOpenPagesData.Append (lastOpenPage.Value.ToString ());
-				lastOpenPagesData.Append (SaveSystem.pipe);
-			}
-			if (lastOpenPages.Count > 0)
-			{
-				lastOpenPagesData.Remove (lastOpenPagesData.Length-1, 1);
-			}
-			playerData.lastOpenDocumentPagesData = lastOpenPagesData.ToString ();
+			playerData.lastOpenDocumentPagesData = string.Empty;
 			
 			return playerData;
 		}
@@ -234,43 +308,50 @@ namespace AC
 		 */
 		public void AssignPlayerDocuments (PlayerData playerData)
 		{
-			collectedDocuments.Clear ();
+			collectedDocumentsDict.Clear ();
 			if (!string.IsNullOrEmpty (playerData.collectedDocumentData))
 			{
 				string[] collectedDocumentArray = playerData.collectedDocumentData.Split (SaveSystem.pipe[0]);
 				
-				foreach (string chunk in collectedDocumentArray)
+				foreach (string chunkBlock in collectedDocumentArray)
 				{
-					int _id = -1;
-					if (int.TryParse (chunk, out _id))
-					{
-						if (_id >= 0)
-						{
-							collectedDocuments.Add (_id);
-						}
-					}
-				}
-			}
+					string[] chunkArray = chunkBlock.Split (SaveSystem.colon[0]);
+					if (chunkArray == null) continue;
 
-			lastOpenPages.Clear ();
-			if (!string.IsNullOrEmpty (playerData.lastOpenDocumentPagesData))
-			{
-				string[] lastOpenPagesArray = playerData.lastOpenDocumentPagesData.Split (SaveSystem.pipe[0]);
-
-				foreach (string chunk in lastOpenPagesArray)
-				{
-					string[] chunkData = chunk.Split (SaveSystem.colon[0]);
-					int documentID = -1;
-					if (int.TryParse (chunkData[0], out documentID))
+					if (chunkArray.Length >= 1)
 					{
-						if (documentID >= 0)
+						int _id = -1;
+						if (int.TryParse (chunkArray[0], out _id))
 						{
-							int pageNumber = 1;
-							if (int.TryParse (chunkData[1], out pageNumber))
+							if (_id >= 0)
 							{
-								if (pageNumber > 1)
+								Document document = KickStarter.inventoryManager.GetDocument (_id);
+								if (document != null)
 								{
-									lastOpenPages.Add (documentID, pageNumber);
+									DocumentInstance documentInstance = new DocumentInstance (document);
+
+									if (chunkArray.Length >= 2)
+									{
+										if (document.rememberLastOpenPage)
+										{
+											int _lastOpenPage = 1;
+											if (int.TryParse (chunkArray[1], out _lastOpenPage))
+											{
+												documentInstance.lastOpenPage = _lastOpenPage;
+											}
+										}
+
+										if (chunkArray.Length >= 3)
+										{
+											int _hasBeenViewed = 0;
+											if (int.TryParse (chunkArray[2], out _hasBeenViewed))
+											{
+												documentInstance.hasBeenViewed = _hasBeenViewed == 1;
+											}
+										}
+									}
+
+									collectedDocumentsDict.Add (_id, documentInstance);
 								}
 							}
 						}
@@ -279,45 +360,6 @@ namespace AC
 			}
 
 			OpenDocument (playerData.activeDocumentID);
-		}
-
-		#endregion
-
-
-		#region ProtectedFunctions
-
-		protected void GetDocumentsOnStart ()
-		{
-			if (KickStarter.inventoryManager)
-			{
-				foreach (Document document in KickStarter.inventoryManager.documents)
-				{
-					if (document.carryOnStart)
-					{
-						collectedDocuments.Add (document.ID);
-					}
-				}
-			}
-			else
-			{
-				ACDebug.LogError ("No Inventory Manager found - please use the Adventure Creator window to create one.");
-			}
-		}
-
-		#endregion
-
-
-		#region GetSet
-
-		/**
-		 * The currently-active Document
-		 */
-		public Document ActiveDocument
-		{
-			get
-			{
-				return activeDocument;
-			}
 		}
 
 
@@ -330,8 +372,8 @@ namespace AC
 		{
 			if (limitToCategoryIDs != null && limitToCategoryIDs.Length >= 0)
 			{
-				List<int> limitedDocuments = new List<int>();
-				foreach (int documentID in collectedDocuments)
+				List<int> limitedDocuments = new List<int> ();
+				foreach (int documentID in collectedDocumentsDict.Keys)
 				{
 					if (documentID >= 0)
 					{
@@ -352,8 +394,52 @@ namespace AC
 				}
 				return limitedDocuments.ToArray ();
 			}
-			return collectedDocuments.ToArray ();
+			return collectedDocumentsDict.Keys.ToArray ();
 		}
+
+		#endregion
+
+
+		#region ProtectedFunctions
+
+		protected void GetDocumentsOnStart ()
+		{
+			if (KickStarter.inventoryManager)
+			{
+				foreach (Document document in KickStarter.inventoryManager.documents)
+				{
+					if (document.carryOnStart)
+					{
+						collectedDocumentsDict.Add (document.ID, new DocumentInstance (document));
+					}
+				}
+			}
+			else
+			{
+				ACDebug.LogError ("No Inventory Manager found - please use the Adventure Creator window to create one.");
+			}
+		}
+
+		#endregion
+
+
+		#region CustomEvents
+
+		private void OnInitialiseScene ()
+		{
+			activeDocumentInstance = null;
+		}
+
+		#endregion
+
+
+		#region GetSet
+
+		/** The currently-active Document Instance */
+		public DocumentInstance ActiveDocumentInstance { get { return activeDocumentInstance; } }
+
+		/** The currently-active Document */
+		public Document ActiveDocument { get { return DocumentInstance.IsValid (activeDocumentInstance) ? activeDocumentInstance.Document : null; } }
 
 		#endregion
 

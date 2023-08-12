@@ -23,19 +23,29 @@ namespace AC
 	public class RememberTrack : Remember
 	{
 
+		#region Variables
+
+		[SerializeField] private DragTrack trackToSave = null;
+
+		#endregion
+
+
+		#region PublicFunctions
+
 		public override string SaveData()
 		{
+			if (Track == null) return string.Empty;
+
 			TrackData data = new TrackData ();
 
 			data.objectID = constantID;
 			data.savePrevented = savePrevented;
 
-			DragTrack track = GetComponent <DragTrack>();
-			if (track && track.allTrackSnapData != null)
+			if (Track.allTrackSnapData != null)
 			{
 				StringBuilder stateString = new StringBuilder ();
 
-				foreach (TrackSnapData trackSnapData in track.allTrackSnapData)
+				foreach (TrackSnapData trackSnapData in Track.allTrackSnapData)
 				{
 					stateString.Append (trackSnapData.ID.ToString ());
 					stateString.Append (SaveSystem.colon);
@@ -50,8 +60,10 @@ namespace AC
 		}
 
 
-		public override void LoadData(string stringData)
+		public override void LoadData (string stringData)
 		{
+			if (Track == null) return;
+
 			TrackData data = Serializer.LoadScriptData <TrackData> (stringData);
 			if (data == null)
 			{
@@ -59,11 +71,10 @@ namespace AC
 			}
 			SavePrevented = data.savePrevented; if (savePrevented) return;
 
-			DragTrack track = GetComponent <DragTrack>();
-			if (track && track.allTrackSnapData != null)
+			if (Track.allTrackSnapData != null)
 			{
 				string[] valuesArray = data.enabledStates.Split (SaveSystem.pipe[0]);
-				for (int i = 0; i < track.allTrackSnapData.Count; i++)
+				for (int i = 0; i < Track.allTrackSnapData.Count; i++)
 				{
 					if (i < valuesArray.Length)
 					{
@@ -73,7 +84,7 @@ namespace AC
 							int _regionID = 0;
 							if (int.TryParse (chunkData[0], out _regionID))
 							{
-								TrackSnapData snapData = track.GetSnapData(_regionID);
+								TrackSnapData snapData = Track.GetSnapData(_regionID);
 								if (snapData != null)
 								{
 									int _isEnabled = 1;
@@ -88,6 +99,39 @@ namespace AC
 				}
 			}
 		}
+		
+
+		#if UNITY_EDITOR
+
+		public void ShowGUI ()
+		{
+			if (trackToSave == null) trackToSave = GetComponent<DragTrack> ();
+
+			CustomGUILayout.BeginVertical ();
+			trackToSave = (DragTrack) CustomGUILayout.ObjectField<DragTrack> ("Track to save:", trackToSave, true);
+			CustomGUILayout.EndVertical ();
+		}
+
+		#endif
+
+		#endregion
+
+
+		#region GetSet
+
+		private DragTrack Track
+		{
+			get
+			{
+				if (trackToSave == null || !Application.isPlaying)
+				{
+					trackToSave = GetComponent<DragTrack> ();
+				}
+				return trackToSave;
+			}
+		}
+
+		#endregion
 
 	}
 

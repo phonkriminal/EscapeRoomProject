@@ -467,7 +467,7 @@ namespace AC
 			#if UNITY_EDITOR
 			if (GetComponent <NavMeshAgent>() && GetComponent <NavMeshAgentIntegration>() == null && motionControl != MotionControl.Manual)
 			{
-				ACDebug.LogWarning ("Character " + GetName (0) + " has a NavMesh Agent, but no NavMesh Agent Integration component - unless you are using a custom motion controller, add this to make use of the NavMesh Agent.", this);
+				ACDebug.LogWarning ("Character " + gameObject.name + " has a NavMesh Agent, but no NavMesh Agent Integration component - unless you are using a custom motion controller, add this to make use of the NavMesh Agent.", this);
 			}
 			#endif
 
@@ -849,9 +849,11 @@ namespace AC
 
 					if (SceneSettings.IsUnity2D ())
 					{
+						direction.z = 0f;
+						directionSqrMagnitude = direction.sqrMagnitude;
+
 						if (KickStarter.settingsManager.alwaysPathfindInSpriteDirection && directionSqrMagnitude > nodeThresholdSqrd)
 						{
-							direction.z = 0f;
 							lookDir = new Vector3 (direction.x, 0f, direction.y);
 
 							SetLookDirection (lookDir, false);
@@ -859,7 +861,6 @@ namespace AC
 						}
 						else
 						{
-							direction.z = 0f;
 							SetMoveDirection (direction);
 
 							lookDir = new Vector3 (direction.x, 0f, direction.y);
@@ -898,6 +899,7 @@ namespace AC
 					if (retroPathfinding)
 					{
 						nodeThreshold = 0.01f;
+						nodeThresholdSqrd = nodeThreshold * nodeThreshold;
 					}
 
 					if ((SceneSettings.IsUnity2D () && directionSqrMagnitude < nodeThresholdSqrd) ||
@@ -3408,6 +3410,23 @@ namespace AC
 		}
 
 
+		/** Gets the Transform associated with a given hand bone */
+		public Transform GetHandTransform (Hand hand)
+		{
+			switch (hand)
+			{
+				case Hand.Left:
+					return leftHandBone;
+
+				case Hand.Right:
+					return rightHandBone;
+
+				default:
+					return null;
+			}
+		}
+
+
 		/**
 		 * <summary>Parents an object to the character's hand</summary>
 		 * <param name = "objectToHold">The object to hold</param>
@@ -3437,6 +3456,7 @@ namespace AC
 			{
 				objectToHold.transform.parent = handTransform;
 				objectToHold.transform.localPosition = Vector3.zero;
+				KickStarter.eventManager.Call_OnCharacterHoldObject (this, objectToHold, hand);
 				return true;
 			}
 
@@ -3445,19 +3465,40 @@ namespace AC
 		}
 
 
-		/**
-		 * Drops any objects held in the character's hands.
-		 */
-		public void ReleaseHeldObjects ()
+		/** Drops any objects held in the character's hands. */
+		public void ReleaseHeldObjects (bool delete)
 		{
-			if (leftHandHeldObject && leftHandHeldObject.transform.IsChildOf (transform))
-			{
-				leftHandHeldObject.transform.parent = null;
-			}
+			ReleaseHeldObject (Hand.Left, delete);
+			ReleaseHeldObject (Hand.Right, delete);
+		}
 
-			if (rightHandHeldObject && rightHandHeldObject.transform.IsChildOf (transform))
+
+		/** Drops any objects held in the character's hands. */
+		public void ReleaseHeldObject (Hand hand, bool delete)
+		{
+			if (hand == Hand.Left && leftHandHeldObject && leftHandHeldObject.transform.IsChildOf (transform))
 			{
-				rightHandHeldObject.transform.parent = null;
+				KickStarter.eventManager.Call_OnCharacterDropObject (this, leftHandHeldObject, hand);
+				if (delete)
+				{
+					Destroy (leftHandHeldObject);
+				}
+				else
+				{
+					leftHandHeldObject.transform.parent = null;
+				}
+			}
+			else if (hand == Hand.Right && rightHandHeldObject && rightHandHeldObject.transform.IsChildOf (transform))
+			{
+				KickStarter.eventManager.Call_OnCharacterDropObject (this, rightHandHeldObject, hand);
+				if (delete)
+				{
+					Destroy (rightHandHeldObject);
+				}
+				else
+				{
+					rightHandHeldObject.transform.parent = null;
+				}
 			}
 		}
 
@@ -4186,7 +4227,8 @@ namespace AC
 			if (!string.IsNullOrEmpty (speechLabel))
 			{
 				newName = speechLabel;
-				return KickStarter.runtimeLanguages.GetTranslation (newName, displayLineID, languageNumber, GetTranslationType (0));
+				if (KickStarter.runtimeLanguages)
+					return KickStarter.runtimeLanguages.GetTranslation (newName, displayLineID, languageNumber, GetTranslationType (0));
 			}
 
 			return newName;

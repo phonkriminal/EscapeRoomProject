@@ -15,7 +15,6 @@ namespace AC
 {
 
 	/** This script is attached to Variables components in the scene we wish to save the state of. */
-	[RequireComponent (typeof (Variables))]
 	[AddComponentMenu("Adventure Creator/Save system/Remember Variables")]
 	[HelpURL("https://www.adventurecreator.org/scripting-guide/class_a_c_1_1_remember_variables.html")]
 	public class RememberVariables : Remember
@@ -23,7 +22,7 @@ namespace AC
 
 		#region Variables
 
-		private Variables variables;
+		[SerializeField] private Variables variablesToSave = null;
 
 		#endregion
 
@@ -32,6 +31,8 @@ namespace AC
 
 		public override string SaveData ()
 		{
+			if (Variables == null) return string.Empty;
+
 			VariablesData data = new VariablesData ();
 			data.objectID = constantID;
 			data.savePrevented = savePrevented;
@@ -48,6 +49,8 @@ namespace AC
 
 		public override void LoadData (string stringData)
 		{
+			if (Variables == null) return;
+
 			VariablesData data = Serializer.LoadScriptData <VariablesData> (stringData);
 			if (data == null)
 			{
@@ -63,6 +66,20 @@ namespace AC
 				var.BackupValue ();
 			}
 		}
+		
+
+		#if UNITY_EDITOR
+
+		public void ShowGUI ()
+		{
+			if (variablesToSave == null) variablesToSave = GetComponent<Variables> ();
+
+			CustomGUILayout.BeginVertical ();
+			variablesToSave = (Variables) CustomGUILayout.ObjectField<Variables> ("Variables to save:", variablesToSave, true);
+			CustomGUILayout.EndVertical ();
+		}
+
+		#endif
 
 		#endregion
 
@@ -73,11 +90,11 @@ namespace AC
 		{
 			get
 			{
-				if (variables == null)
+				if (variablesToSave == null)
 				{
-					variables = GetComponent <Variables>();
+					variablesToSave = GetComponent <Variables>();
 				}
-				return variables;
+				return variablesToSave;
 			}
 		}
 

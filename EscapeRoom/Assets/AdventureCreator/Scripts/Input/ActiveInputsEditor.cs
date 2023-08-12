@@ -29,17 +29,9 @@ namespace AC
 		}
 
 
-		private void OnEnable ()
-		{
-			if (AdvGame.GetReferences () && AdvGame.GetReferences ().settingsManager)
-			{
-				settingsManager = AdvGame.GetReferences ().settingsManager;
-			}
-		}
-
-
 		private void OnGUI ()
 		{
+			settingsManager = KickStarter.settingsManager;
 			if (settingsManager == null)
 			{
 				EditorGUILayout.HelpBox ("A Settings Manager must be assigned before this window can display correctly.", MessageType.Warning);
@@ -122,9 +114,9 @@ namespace AC
 					}
 				}
 				EditorGUILayout.EndHorizontal ();
-				CustomGUILayout.EndVertical ();
 			}
 
+			CustomGUILayout.EndVertical ();
 			EditorGUILayout.Space ();
 
 			if (selectedActiveInput != null && settingsManager.activeInputs.Contains (selectedActiveInput))
@@ -153,7 +145,7 @@ namespace AC
 			}
 			if (sideInput > 0 || sideInput < settingsManager.activeInputs.Count - 1)
 			{
-				menu.AddSeparator ("");
+				menu.AddSeparator (string.Empty);
 			}
 			if (sideInput > 0)
 			{

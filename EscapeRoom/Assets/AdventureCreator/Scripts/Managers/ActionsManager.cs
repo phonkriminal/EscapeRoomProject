@@ -87,7 +87,7 @@ namespace AC
 			{
 				return AdvGame.GetReferences ().actionsManager._GetDefaultAction ();
 			}
-			ACDebug.LogError ("Cannot create Action - no Actions Manager found.");
+			ACDebug.LogWarning ("Cannot create Action - no Actions Manager found.");
 			return string.Empty;
 		}
 
@@ -100,7 +100,7 @@ namespace AC
 			{
 				return defaultClassName;
 			}
-			ACDebug.LogError ("Cannot create default Action - no default set.");
+			ACDebug.LogWarning ("Cannot create default Action - no default set.");
 			return string.Empty;
 		}
 

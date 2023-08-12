@@ -25,7 +25,7 @@ namespace AC
 
 		#region Variables
 
-		private int itemID;
+		private readonly int itemID;
 		private int count;
 		private int transferCount;
 		private InvItem invItem;
@@ -40,6 +40,7 @@ namespace AC
 		private HashSet<int> disabledCombineIDs;
 		private InvInteraction[] enabledInteractions = new InvInteraction[0];
 		private InvCombineInteraction[] enabledCombineInteractions = new InvCombineInteraction[0];
+		private string sceneItemRememberData;
 
 		private Texture overrideTex;
 		private Texture overrideActiveTex;
@@ -82,6 +83,7 @@ namespace AC
 				overrideActiveTex = invInstance.overrideActiveTex;
 				overrideSelectedTex = invInstance.overrideSelectedTex;
 				overrideLabel = invInstance.overrideLabel;
+				sceneItemRememberData = invInstance.sceneItemRememberData;
 			}
 			else
 			{
@@ -96,6 +98,7 @@ namespace AC
 				lastInteractionIndex = 0;
 				disabledInteractionIDs = new HashSet<int>();
 				disabledCombineIDs = new HashSet<int>();
+				sceneItemRememberData = string.Empty;
 			}
 			canBeAnimated = DetermineCanBeAnimated ();
 			UpdateInteractionsRecord ();
@@ -200,8 +203,9 @@ namespace AC
 		 * <param name = "propertyData">Serialized data related to the instance's property data, which will override the default values.</param>
 		 * <param name = "propertyData">Serialized data related to the instance's disabled interaction data, which will override the default values.</param>
 		 * <param name = "propertyData">Serialized data related to the instance's disabled combine data, which will override the default values.</param>
+		 * <param name = "_sceneItemRememberData">A backup of its associated SceneItem's Remember component data.</param>
 		 */
-		public InvInstance (int _itemID, int _count, string propertyData, string disabledInteractionData, string disabledCombineIndices)
+		public InvInstance (int _itemID, int _count, string propertyData, string disabledInteractionData, string disabledCombineIndices, string _sceneItemRememberData)
 		{
 			itemID = _itemID;
 			invItem = (KickStarter.inventoryManager) ? KickStarter.inventoryManager.GetItem (itemID) : null;
@@ -218,6 +222,7 @@ namespace AC
 			LoadPropertyData (propertyData);
 			LoadDisabledInteractionData (disabledInteractionData);
 			LoadDisabledCombineData (disabledCombineIndices);
+			sceneItemRememberData = _sceneItemRememberData;
 			canBeAnimated = DetermineCanBeAnimated ();
 		}
 
@@ -679,7 +684,6 @@ namespace AC
 			}
 			return (i + 1);
 		}
-
 
 
 		/** Runs the item's default 'Use' interactions. This is the first defined 'Standard Interaction' in the item's properties. */
@@ -1253,6 +1257,69 @@ namespace AC
 			}
 		}
 
+
+		/**
+		 * <summary>Instantiates the item's Linked Prefab into the scene, and creates a link between the two by adding a SceneItem comopnent if it doesn't have one.</summary>
+		 * <param name = "reduceCount">If True, and this object can represent multiple instances of the same item, the instantiated object will only represent a single instance, and that instance will be removed from the object</param>
+		 * <param name = "applyRememberData">If True, any backedup Remember data associated with the SceneItem and its children will be applied</param>
+		 * <returns>The instantiated object that represents the item in the scene.</returns>
+		 */
+		public SceneItem SpawnInScene (bool reduceCount = false, bool applyRememberData = true)
+		{
+			if (!IsValid (this))
+			{
+				return null;
+			}
+
+			if (InvItem.linkedPrefab == null)
+			{
+				ACDebug.LogWarning (InvItem.ToString () + " has no linked prefab!");
+				return null;
+			}
+
+			GameObject spawnedObject = Object.Instantiate (InvItem.linkedPrefab);
+			spawnedObject.name = InvItem.linkedPrefab.name;
+			SceneItem sceneItem = spawnedObject.GetComponent<SceneItem> ();
+			if (sceneItem == null)
+			{
+				sceneItem = spawnedObject.AddComponent<SceneItem> ();
+			}
+
+			sceneItem.OnSpawn ();
+
+			System.Action callback = () => KickStarter.eventManager.Call_OnInventorySpawn (this, sceneItem);
+
+			if (Count > 1 && reduceCount)
+			{
+				transferCount = 1;
+				sceneItem.AssignLinkedInvInstance (CreateTransferInstance (), applyRememberData, callback);
+			}
+			else if (reduceCount)
+			{
+				sceneItem.AssignLinkedInvInstance (new InvInstance (this), applyRememberData, callback);
+			}
+			else
+			{
+				sceneItem.AssignLinkedInvInstance (this, applyRememberData, callback);
+			}
+
+			return sceneItem;
+		}
+
+
+		public SceneItem GetLinkedSceneItem ()
+		{
+			SceneItem[] sceneItems = Object.FindObjectsOfType<SceneItem> ();
+			foreach (SceneItem sceneItem in sceneItems)
+			{
+				if (sceneItem.LinkedInvInstance == this)
+				{
+					return sceneItem;
+				}
+			}
+			return null;
+		}
+
 		#endregion
 
 
@@ -1581,6 +1648,9 @@ namespace AC
 				dataString += SaveSystem.colon;
 				dataString += invInstance.GetDisabledCombineData ();
 
+				dataString += SaveSystem.colon;
+				dataString += AdvGame.PrepareStringForSaving (invInstance.SceneItemRememberData);
+
 				dataString += SaveSystem.pipe;
 			}
 			else if (KickStarter.settingsManager.canReorderItems)
@@ -1599,10 +1669,65 @@ namespace AC
 				dataString += SaveSystem.colon;
 				dataString += "_";
 
+				dataString += SaveSystem.colon;
+				dataString += "_";
+
 				dataString += SaveSystem.pipe;
 			}
 
 			return dataString;
+		}
+
+
+		public static InvInstance LoadData (string dataString)
+		{
+			string[] chunkData = dataString.Split (SaveSystem.colon[0]);
+
+			int _id = -2;
+			if (int.TryParse (chunkData[0], out _id))
+			{
+				if (_id >= 0)
+				{
+					int _count = 0;
+					int.TryParse (chunkData[1], out _count);
+
+					string _propertyData = string.Empty;
+					if (chunkData.Length > 2)
+					{
+						_propertyData = chunkData[2];
+						if (_propertyData.StartsWith ("#")) _propertyData = _propertyData.Remove (0, 1);
+						if (_propertyData.EndsWith ("#")) _propertyData = _propertyData.Remove (_propertyData.Length - 1, 1);
+					}
+
+					string _disabledInteractionData = string.Empty;
+					if (chunkData.Length > 3)
+					{
+						_disabledInteractionData = chunkData[3];
+						if (_disabledInteractionData.StartsWith ("#")) _disabledInteractionData = _disabledInteractionData.Remove (0, 1);
+						if (_disabledInteractionData.EndsWith ("#")) _disabledInteractionData = _disabledInteractionData.Remove (_disabledInteractionData.Length - 1, 1);
+					}
+
+					string _disabledCombineData = string.Empty;
+					if (chunkData.Length > 4)
+					{
+						_disabledCombineData = chunkData[4];
+						if (_disabledInteractionData.StartsWith ("#")) _disabledInteractionData = _disabledInteractionData.Remove (0, 1);
+						if (_disabledInteractionData.EndsWith ("#")) _disabledInteractionData = _disabledInteractionData.Remove (_disabledInteractionData.Length - 1, 1);
+					}
+
+					string sceneItemRememberData = string.Empty;
+					if (chunkData.Length > 5)
+					{
+						sceneItemRememberData = AdvGame.PrepareStringForLoading (chunkData[5]);
+						if (sceneItemRememberData.EndsWith ("|")) sceneItemRememberData = sceneItemRememberData.Remove (sceneItemRememberData.Length - 1, 1);
+					}
+
+					InvInstance invInstance = new InvInstance (_id, _count, _propertyData, _disabledInteractionData, _disabledCombineData, sceneItemRememberData);
+					return invInstance;
+				}
+			}
+
+			return null;
 		}
 
 		#endregion
@@ -1828,6 +1953,20 @@ namespace AC
 			set
 			{
 				overrideLabel = value;
+			}
+		}
+
+
+		/** A backup of its associated SceneItem's Remember component data */
+		public string SceneItemRememberData
+		{
+			get
+			{
+				return sceneItemRememberData;
+			}
+			set
+			{
+				sceneItemRememberData = value;
 			}
 		}
 

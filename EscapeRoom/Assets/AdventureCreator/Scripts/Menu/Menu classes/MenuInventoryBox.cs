@@ -64,6 +64,13 @@ namespace AC
 		/** If True, then slots with no item in them will have highlighting effects applied as well */
 		public bool highlightEmptySlots = false;
 
+		/** If True, and inventoryBoxType = AC_InventoryBoxType.CollectedDocuents, then Documents that have already been clicked can be displayed in a different colour */
+		public bool markAlreadyRead = false;
+		/** The font colour for options already chosen (if markAlreadyChosen = True, and inventoryBoxType = AC_InventoryBoxType.CollectedDocuents). OnGUI only) */
+		public Color alreadyReadFontColour = Color.white;
+		/** If markAlreadyRead, and inventoryBoxType = AC_InventoryBoxType.CollectedDocuents, the font colour when the option is highlighted but has already been chosen (OnGUI only) */
+		public Color alreadyReadFontHighlightedColour = Color.white;
+
 		/** DisplayType != ConversationDisplayType.IconOnly, Hotspot labels will only update when hovering over items if this is True */
 		public bool updateHotspotLabelWhenHover = false;
 		/** If True, then the hover sound will play even when over an empty slot */
@@ -90,6 +97,7 @@ namespace AC
 		private Container pendingCloseContainer;
 		private string[] labels = null;
 		private int numDocuments = 0;
+		private int[] documentIDs;
 		private Texture[] textures;
 
 		#if UNITY_EDITOR
@@ -132,6 +140,9 @@ namespace AC
 			limitMaxScroll = true;
 			inventoryItemCountDisplay = InventoryItemCountDisplay.OnlyIfMultiple;
 			highlightEmptySlots = false;
+			markAlreadyRead = false;
+			alreadyReadFontColour = Color.white;
+			alreadyReadFontHighlightedColour = Color.white;
 		}
 
 
@@ -184,7 +195,21 @@ namespace AC
 			{
 				foreach (int _categoryID in _element.categoryIDs)
 				{
-					categoryIDs.Add (_categoryID);
+					if (inventoryBoxType == AC_InventoryBoxType.CollectedDocuments)
+					{
+						if (KickStarter.inventoryManager.IsInDocumentsCategory (_categoryID))
+							categoryIDs.Add (_categoryID);
+					}
+					else if (inventoryBoxType == AC_InventoryBoxType.Objectives)
+					{
+						if (KickStarter.inventoryManager.IsInObjectivesCategory (_categoryID))
+							categoryIDs.Add (_categoryID);
+					}
+					else
+					{
+						if (KickStarter.inventoryManager.IsInItemsCategory (_categoryID))
+							categoryIDs.Add (_categoryID);
+					}
 				}
 			}
 
@@ -197,8 +222,9 @@ namespace AC
 			limitMaxScroll = _element.limitMaxScroll;
 			inventoryItemCountDisplay = _element.inventoryItemCountDisplay;
 			highlightEmptySlots = _element.highlightEmptySlots;
-
-			UpdateLimitCategory ();
+			markAlreadyRead = _element.markAlreadyRead;
+			alreadyReadFontColour = _element.alreadyReadFontColour;
+			alreadyReadFontHighlightedColour = _element.alreadyReadFontHighlightedColour;
 
 			base.Copy (_element);
 			invInstances = GetItemList ();
@@ -226,25 +252,6 @@ namespace AC
 				if (Application.isPlaying)
 				{
 					ACDebug.Log ("The inventory box element '" + title + "' has been upgraded - please view it in the Menu Manager and Save.");
-				}
-			}
-		}
-
-
-		private void UpdateLimitCategory ()
-		{
-			if (Application.isPlaying && AdvGame.GetReferences ().inventoryManager && AdvGame.GetReferences ().inventoryManager.bins != null)
-			{
-				foreach (InvBin invBin in KickStarter.inventoryManager.bins)
-				{
-					if (categoryIDs.Contains (invBin.id))
-					{
-						// Fine!
-					}
-					else
-					{
-						categoryIDs.Remove (invBin.id);
-					}
 				}
 			}
 		}
@@ -409,6 +416,13 @@ namespace AC
 				case AC_InventoryBoxType.CollectedDocuments:
 					autoOpenDocument = CustomGUILayout.ToggleLeft ("Auto-open Document when clicked?", autoOpenDocument, apiPrefix + ".autoOpenDocument", "If True, then clicking a slot will open the chosen Document");
 					actionListOnClick = ActionListAssetMenu.AssetGUI ("ActionList when click:", actionListOnClick, title + "_Click", apiPrefix + ".actionListOnClick", "The ActionList asset to run whenever a slot is clicked");
+					
+					markAlreadyRead = CustomGUILayout.Toggle ("Mark read Documents?", markAlreadyRead, apiPrefix + ".markAlreadyRead", "If True, then Documents that have already been read can be displayed in a different colour");
+					if (markAlreadyRead)
+					{
+						alreadyReadFontColour = CustomGUILayout.ColorField ("'Already read' colour:", alreadyReadFontColour, apiPrefix + ".alreadyReadFontColour", "The font colour for Docuents already read");
+						alreadyReadFontHighlightedColour = CustomGUILayout.ColorField ("'Already read' highlighted colour:", alreadyReadFontHighlightedColour, apiPrefix + ".alreadyReadFontHighlightedColour", "The font colour when the Document is highlighted but has already been read");
+					}
 					break;
 
 				case AC_InventoryBoxType.Objectives:
@@ -565,6 +579,19 @@ namespace AC
 					{
 						for (int i=0; i<bins.Count; i++)
 						{
+							if (inventoryBoxType == AC_InventoryBoxType.CollectedDocuments)
+							{
+								if (!bins[i].forDocuments) continue;
+							}
+							else if (inventoryBoxType == AC_InventoryBoxType.Objectives)
+							{
+								if (!bins[i].forObjectives) continue;
+							}
+							else
+							{
+								if (!bins[i].forItems) continue;
+							}
+
 							bool include = (categoryIDs.Contains (bins[i].id)) ? true : false;
 							include = EditorGUILayout.ToggleLeft (" " + i.ToString () + ": " + bins[i].label, include);
 
@@ -664,7 +691,7 @@ namespace AC
 				return string.Empty;
 			}
 
-			string slotItemLabel = slotInvInstance.InvItem.GetLabel (_language);
+			string slotItemLabel = (_language == Options.GetLanguage ()) ? slotInvInstance.ItemLabel : slotInvInstance.InvItem.GetLabel (_language);
 
 			if (inventoryBoxType == AC_InventoryBoxType.HotspotBased)
 			{
@@ -681,7 +708,7 @@ namespace AC
 					if (InvInstance.IsValid (parentMenu.TargetInvInstance))
 					{
 						// Combine two items, i.e. "Use worm on apple"
-						string itemName = parentMenu.TargetInvInstance.InvItem.GetLabel (_language);
+						string itemName = (_language == Options.GetLanguage ()) ? parentMenu.TargetInvInstance.ItemLabel : parentMenu.TargetInvInstance.InvItem.GetLabel (_language);
 						if (parentMenu.TargetInvInstance.InvItem.canBeLowerCase && !string.IsNullOrEmpty (prefix))
 						{
 							itemName = itemName.ToLower ();
@@ -707,7 +734,7 @@ namespace AC
 					if (InvInstance.IsValid (parentMenu.TargetInvInstance))
 					{
 						// Parent menu's item label only
-						return parentMenu.TargetInvInstance.InvItem.GetLabel (_language);
+						return (_language == Options.GetLanguage ()) ? parentMenu.TargetInvInstance.ItemLabel : parentMenu.TargetInvInstance.InvItem.GetLabel (_language);
 					}
 				}
 
@@ -719,6 +746,7 @@ namespace AC
 			switch (KickStarter.settingsManager.interactionMethod)
 			{
 				case AC_InteractionMethod.ContextSensitive:
+				case AC_InteractionMethod.CustomScript:
 					{
 						if (InvInstance.IsValid (selectedInstance) &&
 							(KickStarter.cursorManager.inventoryHandling == InventoryHandling.ChangeHotspotLabel || KickStarter.cursorManager.inventoryHandling == InventoryHandling.ChangeCursorAndHotspotLabel))
@@ -865,9 +893,16 @@ namespace AC
 				{
 					if (InvInstance.IsValid (invInstances[_slot+offset]))
 					{
-						fullText = (Application.isPlaying)
-							? invInstances[_slot+offset].InvItem.GetLabel (languageNumber)
-							: invInstances[_slot+offset].InvItem.label;
+						if (Application.isPlaying && Options.GetLanguage () == languageNumber)
+						{
+							fullText = InvInstances[_slot + offset].ItemLabel;
+						}
+						else
+						{
+							fullText = (Application.isPlaying)
+								? invInstances[_slot + offset].InvItem.GetLabel (languageNumber)
+								: invInstances[_slot + offset].InvItem.label;
+						}
 					}
 					string countText = GetCount (_slot);
 					if (!string.IsNullOrEmpty (countText))
@@ -984,6 +1019,29 @@ namespace AC
 				if (zoom < 1f)
 				{
 					_style.fontSize = (int) ((float) _style.fontSize * zoom);
+				}
+
+				if (inventoryBoxType == AC_InventoryBoxType.CollectedDocuments && markAlreadyRead)
+				{
+					if (documentIDs != null && _slot < documentIDs.Length && KickStarter.runtimeDocuments.HasBeenRead (documentIDs[_slot]))
+					{
+						if (isActive)
+						{
+							_style.normal.textColor = alreadyReadFontHighlightedColour;
+						}
+						else
+						{
+							_style.normal.textColor = alreadyReadFontColour;
+						}
+					}
+					else if (isActive)
+					{
+						_style.normal.textColor = fontHighlightColor;
+					}
+					else
+					{
+						_style.normal.textColor = fontColor;
+					}
 				}
 
 				if (displayType == ConversationDisplayType.TextOnly)
@@ -1206,7 +1264,8 @@ namespace AC
 					{
 						if (limitToCategory && categoryIDs != null && categoryIDs.Count > 0)
 						{
-							if (!categoryIDs.Contains (KickStarter.runtimeInventory.SelectedInstance.InvItem.binID))
+							int binID = KickStarter.runtimeInventory.SelectedInstance.InvItem.binID;
+							if ((binID >= 0 && !KickStarter.inventoryManager.IsInItemsCategory (binID)) || !categoryIDs.Contains (binID))
 							{
 								return false;
 							}
@@ -1302,7 +1361,7 @@ namespace AC
 								}
 								else
 								{
-									invInstances[trueIndex].Use ();
+									invInstances[trueIndex].Use (AllowSelection ());
 								}
 								return true;
 							}
@@ -1464,7 +1523,7 @@ namespace AC
 						return documentIDs.Length;
 
 					case AC_InventoryBoxType.Objectives:
-						ObjectiveInstance[] objectiveInstances = KickStarter.runtimeObjectives.GetObjectives (objectiveDisplayType);
+						ObjectiveInstance[] objectiveInstances = KickStarter.runtimeObjectives.GetObjectives (objectiveDisplayType, limitToCategory ? categoryIDs : null);
 						return objectiveInstances.Length;
 
 					default:
@@ -1483,7 +1542,7 @@ namespace AC
 				{
 					if (Application.isPlaying)
 					{
-						int[] documentIDs = KickStarter.runtimeDocuments.GetCollectedDocumentIDs ((limitToCategory) ? categoryIDs.ToArray () : null);
+						documentIDs = KickStarter.runtimeDocuments.GetCollectedDocumentIDs ((limitToCategory) ? categoryIDs.ToArray () : null);
 
 						numDocuments = documentIDs.Length;
 						numSlots = numDocuments;
@@ -1511,6 +1570,26 @@ namespace AC
 							textures[i] = document.texture;
 						}
 
+						if (markAlreadyRead && source != MenuSource.AdventureCreator)
+						{
+							for (int i = 0; i < documentIDs.Length; i++)
+							{
+								if (uiSlots.Length > i)
+								{
+									bool chosen = KickStarter.runtimeDocuments.HasBeenRead (documentIDs[i]);
+
+									if (chosen)
+									{
+										uiSlots[i].SetColours (alreadyReadFontColour, alreadyReadFontHighlightedColour);
+									}
+									else
+									{
+										uiSlots[i].RestoreColour ();
+									}
+								}
+							}
+						}
+
 						if (uiHideStyle == UIHideStyle.DisableObject)
 						{
 							if (numSlots > numDocuments)
@@ -1527,7 +1606,7 @@ namespace AC
 				{
 					if (Application.isPlaying)
 					{
-						ObjectiveInstance[] objectiveInstances = KickStarter.runtimeObjectives.GetObjectives (objectiveDisplayType);
+						ObjectiveInstance[] objectiveInstances = KickStarter.runtimeObjectives.GetObjectives (objectiveDisplayType, limitToCategory ? categoryIDs : null);
 
 						numDocuments = objectiveInstances.Length;
 						numSlots = numDocuments;
@@ -1757,7 +1836,7 @@ namespace AC
 		}
 
 
-		private void OnFinishLoading ()
+		private void OnFinishLoading (int saveID)
 		{
 			pendingCloseContainer = null;
 		}
@@ -1804,7 +1883,8 @@ namespace AC
 				inventoryBoxType == AC_InventoryBoxType.CustomScript ||
 				inventoryBoxType == AC_InventoryBoxType.DisplaySelected ||
 				inventoryBoxType == AC_InventoryBoxType.DisplayLastSelected ||
-				inventoryBoxType == AC_InventoryBoxType.CollectedDocuments)
+				inventoryBoxType == AC_InventoryBoxType.CollectedDocuments ||
+				inventoryBoxType == AC_InventoryBoxType.Objectives)
 			{
 				return true;
 			}
@@ -1881,7 +1961,7 @@ namespace AC
 			{
 				for (int i=0; i<nonLinkedInvInstancesToLimit.Count; i++)
 				{
-					if (InvInstance.IsValid (nonLinkedInvInstancesToLimit[i]) && !categoryIDs.Contains (nonLinkedInvInstancesToLimit[i].InvItem.binID))
+					if (InvInstance.IsValid (nonLinkedInvInstancesToLimit[i]) && (!categoryIDs.Contains (nonLinkedInvInstancesToLimit[i].InvItem.binID) || !KickStarter.inventoryManager.IsInItemsCategory (nonLinkedInvInstancesToLimit[i].InvItem.binID)))
 					{
 						if (i <= reverseItemIndex)
 						{
@@ -2001,6 +2081,10 @@ namespace AC
 					if ((i + offset) >= invInstances.Count || !InvInstance.IsValid (invInstances[i+offset]))
 					{
 						return string.Empty;
+					}
+					if (languageNumber == Options.GetLanguage ())
+					{
+						return invInstances[i + offset].ItemLabel;
 					}
 					return invInstances[i+offset].InvItem.GetLabel (languageNumber);
 			}
@@ -2431,7 +2515,7 @@ namespace AC
 		{
 			if (inventoryBoxType == AC_InventoryBoxType.Objectives)
 			{
-				ObjectiveInstance[] allObjectives = KickStarter.runtimeObjectives.GetObjectives (objectiveDisplayType);
+				ObjectiveInstance[] allObjectives = KickStarter.runtimeObjectives.GetObjectives (objectiveDisplayType, (limitToCategory) ? categoryIDs : null);
 				return allObjectives [slotIndex+offset];
 			}
 			return null;
@@ -2497,8 +2581,12 @@ namespace AC
 			{
 				if (overrideContainer != value)
 				{
+					KickStarter.eventManager.Call_OnContainerOpenClose (overrideContainer, false);
+
 					overrideContainer = value;
 					PlayerMenus.ResetInventoryBoxes ();
+
+					KickStarter.eventManager.Call_OnContainerOpenClose (overrideContainer, true);
 				}
 			}
 		}

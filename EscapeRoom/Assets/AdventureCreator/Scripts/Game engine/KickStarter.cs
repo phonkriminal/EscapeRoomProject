@@ -1262,6 +1262,27 @@ namespace AC
 			KickStarter.stateHandler.CanGlobalOnStart ();
 		}
 
+
+		/** Clears all 'live' data such as variable, inventory and other room data */
+		public static void ResetData ()
+		{
+			KickStarter.runtimeInventory.SetNull ();
+			KickStarter.runtimeInventory.RemoveRecipes ();
+
+			KickStarter.saveSystem.ClearAllData ();
+			KickStarter.levelStorage.ClearAllLevelData ();
+
+			KickStarter.sceneChanger.OnInitPersistentEngine ();
+			KickStarter.runtimeInventory.OnInitPersistentEngine ();
+
+			KickStarter.runtimeVariables.TransferFromManager ();
+			KickStarter.runtimeVariables.OnInitPersistentEngine ();
+			KickStarter.runtimeDocuments.OnInitPersistentEngine ();
+			KickStarter.runtimeObjectives.OnInitPersistentEngine ();
+
+			KickStarter.playerMenus.RecalculateAll ();
+		}
+
 	}
 
 }

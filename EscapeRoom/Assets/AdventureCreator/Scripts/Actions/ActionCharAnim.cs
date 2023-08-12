@@ -11,6 +11,7 @@
 
 using UnityEngine;
 using System.Collections.Generic;
+using System;
 
 #if UNITY_EDITOR
 using UnityEditor;
@@ -19,7 +20,7 @@ using UnityEditor;
 namespace AC
 {
 
-	[System.Serializable]
+	[Serializable]
 	public class ActionCharAnim : Action
 	{
 
@@ -73,6 +74,11 @@ namespace AC
 		public bool hideHead = false;
 		public bool doLoop; // Ignored by official animation engines
 
+		[NonSerialized] public string runtimeClip2D;
+		[NonSerialized] public int startingIdleHash;
+		[NonSerialized] public bool enteredCorrectState;
+		
+
 		#if UNITY_EDITOR
 		public Char EditorAnimChar { get; private set; }
 		#endif
@@ -84,6 +90,8 @@ namespace AC
 
 		public override void AssignValues (List<ActionParameter> parameters)
 		{
+			enteredCorrectState = false;
+
 			newSound = (AudioClip) AssignObject <AudioClip> (parameters, newSoundParameterID, newSound);
 			newSpeed = AssignFloat (parameters, newSpeedParameterID, newSpeed);
 			parameterName = AssignString (parameters, parameterNameID, parameterName);
@@ -139,7 +147,7 @@ namespace AC
 		}
 
 
-		public void ReportWarning (string message, Object context = null)
+		public void ReportWarning (string message, UnityEngine.Object context = null)
 		{
 			LogWarning (message, context);
 		}

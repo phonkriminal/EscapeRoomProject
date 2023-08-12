@@ -142,6 +142,7 @@ namespace AC
 						});
 					}
 				}
+				CreateHoverSoundHandler (uiSlot.uiButton, _menu, i);
 				i++;
 			}
 		}

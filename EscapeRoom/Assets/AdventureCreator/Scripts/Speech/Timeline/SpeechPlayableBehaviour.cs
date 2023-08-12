@@ -162,7 +162,7 @@ namespace AC
 				if (speechLine != null)
 				{
 					string filename = speechLine.GetFilename ();
-					Addressables.LoadAssetAsync<AudioClip>(filename).Completed += OnCompleteLoad;
+					Addressables.LoadAssetAsync<AudioClip> (KickStarter.speechManager.speechAddressablesPrefix + filename).Completed += OnCompleteLoad;
 					isAwaitingAddressable = true;
 				}
 			}

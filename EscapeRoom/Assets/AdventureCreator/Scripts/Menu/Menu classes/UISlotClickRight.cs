@@ -9,6 +9,7 @@
  * 
  */
 
+using UnityEngine;
 using UnityEngine.EventSystems;
 
 namespace AC
@@ -25,6 +26,15 @@ namespace AC
 			if (menuElement)
 			{
 				if (KickStarter.playerInput && KickStarter.playerInput.InputGetButtonDown ("InteractionB"))
+				{
+					if (KickStarter.playerMenus.IsEventSystemSelectingObject (gameObject))
+					{
+						menuElement.ProcessClick (menu, slot, MouseState.RightClick);
+						return;
+					}
+				}
+
+				if (KickStarter.settingsManager.inputMethod == InputMethod.TouchScreen && KickStarter.playerInput && KickStarter.playerInput.InputTouchCount () == 2 && KickStarter.playerInput.InputTouchPhase (1) == TouchPhase.Began)
 				{
 					if (KickStarter.playerMenus.IsEventSystemSelectingObject (gameObject))
 					{

@@ -64,7 +64,7 @@ namespace AC
 				{
 					return;
 				}
-				if (touchIndex < 0 && KickStarter.playerInput.GetDragState () == DragState.Moveable)
+				if (touchIndex < 0 && (KickStarter.playerInput.GetDragState () == DragState.Moveable || KickStarter.playerInput.GetDragState () == DragState.PreMoveable))
 				{
 					return;
 				}
