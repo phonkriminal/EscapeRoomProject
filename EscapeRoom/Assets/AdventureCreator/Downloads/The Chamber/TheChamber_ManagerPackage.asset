@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b4a24d0e4a28423fb3249b923d7e418, type: 3}
+  m_Name: TheChamber_ManagerPackage
+  m_EditorClassIdentifier: 
+  actionsManager: {fileID: 11400000, guid: abc016512c4068943816fd6a025c66a8, type: 2}
+  sceneManager: {fileID: 11400000, guid: 344e2b6f4c9c18f4ead344e3fa450dff, type: 2}
+  settingsManager: {fileID: 11400000, guid: 33eeea65cfea2e3439f2efb389b47584, type: 2}
+  inventoryManager: {fileID: 11400000, guid: 33e69891eafd1c94a9fe7cd31319aa06, type: 2}
+  variablesManager: {fileID: 11400000, guid: e115b8c3ec9c2a541bc5f8852729ca0a, type: 2}
+  speechManager: {fileID: 11400000, guid: 5ba41b0c91cf4bf499d0b41551897934, type: 2}
+  cursorManager: {fileID: 11400000, guid: 27304a478022ae64989010b790d30a8f, type: 2}
+  menuManager: {fileID: 11400000, guid: 58d5562f6c865504a84a94faa3def50e, type: 2}

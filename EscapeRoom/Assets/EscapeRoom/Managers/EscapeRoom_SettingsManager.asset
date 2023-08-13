@@ -273,7 +273,7 @@ MonoBehaviour:
   linearColorTextures: 0
   movingTurning: 3
   hotspotDetection: 1
-  closeInteractionMenusIfPlayerLeavesVicinity: 1
+  closeInteractionMenusIfPlayerLeavesVicinity: 0
   placeDistantHotspotsOnSeparateLayer: 1
   hotspotsInVicinity: 2
   highlightAllHotspotsInVicinity: 1
@@ -348,14 +348,14 @@ MonoBehaviour:
   speechAttentuationParameter: speechVolume
   defaultLanguage: 0
   defaultVoiceLanguage: 0
-  defaultShowSubtitles: 0
+  defaultShowSubtitles: 1
   defaultSfxVolume: 0.9
   defaultMusicVolume: 0.6
   defaultSpeechVolume: 1
   showDebugLogs: 2
   printActionCommentsInConsole: 0
   actionCommentLogging: 0
-  showActiveActionLists: 0
+  showActiveActionLists: 1
   references:
     version: 2
     RefIds: []

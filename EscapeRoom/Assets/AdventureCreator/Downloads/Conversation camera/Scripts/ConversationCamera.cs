@@ -47,12 +47,12 @@ namespace AC
 		{
 			ownCamera = GetComponent <_Camera>();
 
-			EventManager.OnStartSpeech_Alt += OnStartSpeech;
-			EventManager.OnSwitchCamera += OnSwitchCamera;
+            EventManager.OnStartSpeech_Alt += OnStartSpeech;
+            EventManager.OnSwitchCamera += OnSwitchCamera;
 		}
 
 
-		private void OnDisable ()
+        private void OnDisable ()
 		{
 			EventManager.OnStartSpeech_Alt -= OnStartSpeech;
 			EventManager.OnSwitchCamera -= OnSwitchCamera;
