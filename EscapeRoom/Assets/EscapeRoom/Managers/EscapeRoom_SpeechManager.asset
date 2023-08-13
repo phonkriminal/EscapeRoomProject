@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 17e62d8d078be49cf8ad9ebe2efcaeb2, type: 3}
   m_Name: EscapeRoom_SpeechManager
   m_EditorClassIdentifier: 
-  scrollSubtitles: 0
+  scrollSubtitles: 1
   scrollNarration: 0
   textScrollSpeed: 50
   textScrollCLip: {fileID: 0}
@@ -32,11 +32,11 @@ MonoBehaviour:
   endScrollBeforeSkip: 0
   ifSkipWhileScrolling: 0
   scrollingTextFactorsLength: 0
-  syncSubtitlesToAudio: 0
+  syncSubtitlesToAudio: 1
   useAssetBundles: 0
   searchAudioFiles: 1
   autoNameSpeechFiles: 0
-  referenceSpeechFiles: 0
+  referenceSpeechFiles: 3
   autoSpeechFolder: Speech
   autoLipsyncFolder: Lipsync
   speechAddressablesPrefix: 
@@ -73,7 +73,7 @@ MonoBehaviour:
     ignoreDuringExport: 0
     customFilename: 
     orderID: 0
-    orderPrefix: Unhandled use_71528_
+    orderPrefix: Unhandled use_96684_
   - isPlayer: 1
     lineID: 106
     scene: Main
@@ -93,7 +93,7 @@ MonoBehaviour:
     ignoreDuringExport: 0
     customFilename: 
     orderID: 0
-    orderPrefix: 'Mysterious Book: Use_71556_'
+    orderPrefix: 'Mysterious Book: Use_96712_'
   - isPlayer: 1
     lineID: 107
     scene: Main
@@ -113,7 +113,7 @@ MonoBehaviour:
     ignoreDuringExport: 0
     customFilename: Player107
     orderID: 0
-    orderPrefix: 'Chair: Use_71584_'
+    orderPrefix: 'Chair: Use_96740_'
   - isPlayer: 1
     lineID: 108
     scene: Main
@@ -133,7 +133,7 @@ MonoBehaviour:
     ignoreDuringExport: 0
     customFilename: 
     orderID: 0
-    orderPrefix: 'Mysterious Book: Look at_71592_'
+    orderPrefix: 'Mysterious Book: Look at_96748_'
   - isPlayer: 1
     lineID: 109
     scene: Main
@@ -153,7 +153,7 @@ MonoBehaviour:
     ignoreDuringExport: 0
     customFilename: 
     orderID: 1
-    orderPrefix: 'Mysterious Book: Look at_71592_'
+    orderPrefix: 'Mysterious Book: Look at_96748_'
   - isPlayer: 1
     lineID: 110
     scene: Main
@@ -173,7 +173,7 @@ MonoBehaviour:
     ignoreDuringExport: 0
     customFilename: 
     orderID: 2
-    orderPrefix: 'Mysterious Book: Look at_71592_'
+    orderPrefix: 'Mysterious Book: Look at_96748_'
   - isPlayer: 1
     lineID: 111
     scene: Main
@@ -193,7 +193,7 @@ MonoBehaviour:
     ignoreDuringExport: 0
     customFilename: 
     orderID: 0
-    orderPrefix: 'Chair: Look at_71610_'
+    orderPrefix: 'Chair: Look at_96766_'
   - isPlayer: 0
     lineID: 112
     scene: Main
