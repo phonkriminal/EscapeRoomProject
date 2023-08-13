@@ -85,7 +85,7 @@ public class MultiHotspotLabel : MonoBehaviour
 
     private void Update()
     {
-        //if (myMenu) myMenu.HotspotLabelData.SetData(hotspotToShow, string.Empty);
+        if (myMenu) myMenu.HotspotLabelData.SetData(hotspotToShow, string.Empty);
 
         if (hotspotToShow != null && alwaysShowDuringGameplay && KickStarter.stateHandler.IsInGameplay())
         {

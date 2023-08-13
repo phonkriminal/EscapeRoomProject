@@ -1788,6 +1788,9 @@ MonoBehaviour:
   preventSelection: 0
   limitMaxScroll: 1
   highlightEmptySlots: 0
+  markAlreadyRead: 0
+  alreadyReadFontColour: {r: 1, g: 1, b: 1, a: 1}
+  alreadyReadFontHighlightedColour: {r: 1, g: 1, b: 1, a: 1}
   updateHotspotLabelWhenHover: 0
   hoverSoundOverEmptySlots: 1
   containerSelectMode: 1
@@ -2560,6 +2563,9 @@ MonoBehaviour:
   preventSelection: 0
   limitMaxScroll: 1
   highlightEmptySlots: 0
+  markAlreadyRead: 0
+  alreadyReadFontColour: {r: 1, g: 1, b: 1, a: 1}
+  alreadyReadFontHighlightedColour: {r: 1, g: 1, b: 1, a: 1}
   updateHotspotLabelWhenHover: 0
   hoverSoundOverEmptySlots: 1
   containerSelectMode: 1
@@ -3136,6 +3142,9 @@ MonoBehaviour:
   preventSelection: 0
   limitMaxScroll: 1
   highlightEmptySlots: 0
+  markAlreadyRead: 0
+  alreadyReadFontColour: {r: 1, g: 1, b: 1, a: 1}
+  alreadyReadFontHighlightedColour: {r: 1, g: 1, b: 1, a: 1}
   updateHotspotLabelWhenHover: 0
   hoverSoundOverEmptySlots: 1
   containerSelectMode: 1
@@ -3495,6 +3504,7 @@ MonoBehaviour:
   pages:
   - lineID: -1
     text: Page text goes here.
+    texture: {fileID: 0}
   numPages: 1
   showPage: 1
   startFromPage: 0
@@ -5083,6 +5093,9 @@ MonoBehaviour:
   preventSelection: 0
   limitMaxScroll: 1
   highlightEmptySlots: 0
+  markAlreadyRead: 0
+  alreadyReadFontColour: {r: 1, g: 1, b: 1, a: 1}
+  alreadyReadFontHighlightedColour: {r: 1, g: 1, b: 1, a: 1}
   updateHotspotLabelWhenHover: 0
   hoverSoundOverEmptySlots: 1
   containerSelectMode: 1
@@ -5270,6 +5283,7 @@ MonoBehaviour:
     alwaysAnimate: 0
   uiRawImage: {fileID: 0}
   uiImageType: 0
+  linkedJournalElementName: 
 --- !u!114 &2334081390933327511
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -6167,6 +6181,7 @@ MonoBehaviour:
     alwaysAnimate: 0
   uiRawImage: {fileID: 0}
   uiImageType: 0
+  linkedJournalElementName: 
 --- !u!114 &5121523299416635680
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -6307,6 +6322,9 @@ MonoBehaviour:
   preventSelection: 0
   limitMaxScroll: 1
   highlightEmptySlots: 0
+  markAlreadyRead: 0
+  alreadyReadFontColour: {r: 1, g: 1, b: 1, a: 1}
+  alreadyReadFontHighlightedColour: {r: 1, g: 1, b: 1, a: 1}
   updateHotspotLabelWhenHover: 0
   hoverSoundOverEmptySlots: 1
   containerSelectMode: 1
@@ -7771,6 +7789,9 @@ MonoBehaviour:
   preventSelection: 0
   limitMaxScroll: 1
   highlightEmptySlots: 0
+  markAlreadyRead: 0
+  alreadyReadFontColour: {r: 1, g: 1, b: 1, a: 1}
+  alreadyReadFontHighlightedColour: {r: 1, g: 1, b: 1, a: 1}
   updateHotspotLabelWhenHover: 0
   hoverSoundOverEmptySlots: 1
   containerSelectMode: 1

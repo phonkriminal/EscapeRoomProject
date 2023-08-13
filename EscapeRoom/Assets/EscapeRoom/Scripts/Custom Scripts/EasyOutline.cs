@@ -17,6 +17,8 @@ public class EasyOutline : MonoBehaviour
     [SerializeField]
     [Range(0.1f, 5.0f)]
     private float speed = 5f;
+    [SerializeField]
+    private string menuName = "Hotspot";
 
     #endregion
 
@@ -38,19 +40,45 @@ public class EasyOutline : MonoBehaviour
 
     private void OnEnable()
     {
-        EventManager.OnHotspotSelect += OnHotspotSelect;
-        EventManager.OnHotspotDeselect += OnHotspotDeselect;
+        //EventManager.OnHotspotSelect += OnHotspotSelect;
+        //EventManager.OnHotspotDeselect += OnHotspotDeselect;
+        EventManager.OnMenuTurnOn += OnMenuTurnOn;
+        EventManager.OnMenuTurnOff += OnMenuTurnOff;
+           
     }
 
     private void OnDisable()
     {
-        EventManager.OnHotspotSelect -= OnHotspotSelect;
-        EventManager.OnHotspotDeselect -= OnHotspotDeselect;
+        //EventManager.OnHotspotSelect -= OnHotspotSelect;
+        //EventManager.OnHotspotDeselect -= OnHotspotDeselect;
+        EventManager.OnMenuTurnOn -= OnMenuTurnOn;
+        EventManager.OnMenuTurnOff -= OnMenuTurnOff;
+
     }
 
     #endregion
 
     #region PrivateFunctions
+
+    private void OnMenuTurnOn(Menu _menu, bool isInstant)
+    {
+        if (_menu.title == menuName + this.name)
+        {
+            //Debug.Log(_menu.title + menuName + " On");
+            StopAllCoroutines();
+            StartCoroutine(TransitionOn());
+        }
+    }
+
+    private void OnMenuTurnOff(Menu _menu, bool isInstant)
+    {
+        if (_menu.title == menuName + this.name)
+        {
+            //Debug.Log(_menu.title + menuName + " Off");
+            StopAllCoroutines();
+            StartCoroutine(TransitionOff());
+        }
+    }
 
     private void OnHotspotSelect(Hotspot hotspot)
     {

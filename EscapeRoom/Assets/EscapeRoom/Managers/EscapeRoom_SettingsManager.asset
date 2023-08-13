@@ -36,6 +36,7 @@ MonoBehaviour:
   sceneAttributes: []
   actionListOnStart: {fileID: 11400000, guid: ed2cca998f77198478daa3b6e2d5cb98, type: 2}
   blackOutWhenSkipping: 0
+  events: []
   savePlayerReferencesWithAddressables: 0
   playerSwitching: 1
   legacyPlayer: {fileID: 0}
@@ -65,7 +66,7 @@ MonoBehaviour:
   autoCycleWhenInteract: 0
   showHoverInteractionInHotspotLabel: 0
   allowDefaultinteractions: 0
-  alwaysCloseInteractionMenus: 1
+  alwaysCloseInteractionMenus: 0
   whenReselectHotspot: 0
   lockCursorOnStart: 0
   hideLockedCursor: 0
@@ -112,7 +113,7 @@ MonoBehaviour:
   magnitudeAffectsDirect: 0
   directTurnsInstantly: 0
   stopTurningWhenReleaseInput: 0
-  disableMovementWhenInterationMenusAreOpen: 1
+  disableMovementWhenInterationMenusAreOpen: 0
   directMovementType: 0
   limitDirectMovement: 0
   cameraLockSnapAngleThreshold: 5
@@ -152,7 +153,7 @@ MonoBehaviour:
   dragLineWidth: 3
   dragLineColor: {r: 1, g: 1, b: 1, a: 1}
   offsetTouchCursor: 0
-  doubleTapHotspots: 1
+  touchScreenHotspotInput: 1
   firstPersonTouchScreen: 1
   directTouchScreen: 0
   touchUpWhenPaused: 0
@@ -168,7 +169,7 @@ MonoBehaviour:
   linearColorTextures: 0
   movingTurning: 3
   hotspotDetection: 1
-  closeInteractionMenusIfPlayerLeavesVicinity: 0
+  closeInteractionMenusIfPlayerLeavesVicinity: 1
   placeDistantHotspotsOnSeparateLayer: 1
   hotspotsInVicinity: 2
   highlightAllHotspotsInVicinity: 1
@@ -247,7 +248,10 @@ MonoBehaviour:
   defaultSfxVolume: 0.9
   defaultMusicVolume: 0.6
   defaultSpeechVolume: 1
-  showDebugLogs: 0
+  showDebugLogs: 2
   printActionCommentsInConsole: 0
   actionCommentLogging: 0
   showActiveActionLists: 0
+  references:
+    version: 2
+    RefIds: []
