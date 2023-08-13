@@ -968,6 +968,8 @@ GameObject:
   - component: {fileID: 6005973486630178603}
   - component: {fileID: 6315564894661113157}
   - component: {fileID: 3403175406560755146}
+  - component: {fileID: 6169469809237171523}
+  - component: {fileID: 8591575671725625076}
   m_Layer: 6
   m_Name: BiBo
   m_TagString: Player
@@ -3028,6 +3030,354 @@ MonoBehaviour:
   spineBend: 2
   spineSpeed: 3
   spine: []
+--- !u!114 &6169469809237171523
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2022557724074943284}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 60953a4eedd70a246ab4eadbed9f0591, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  blendSystem: {fileID: 8591575671725625076}
+  audioSource: {fileID: 3841605147686516239}
+  useBones: 1
+  boneUpdateAnimation: 0
+  phonemes:
+  - blendShapes: 0a000000
+    blendableNames:
+    - Blink (0)
+    weights:
+    - 62.7
+    bones:
+    - bone: {fileID: 53015260123819976}
+      endPosition: {x: -0.12129806, y: 0.01490267, z: -0.0039064917}
+      endRotation: {x: 0.0002283712, y: 0.00014293355, z: 240.14}
+      endScale: {x: 1.0000001, y: 1.0000001, z: 0.99999994}
+      lockPosition: 0
+      lockRotation: 0
+      lockScale: 0
+      neutralPosition: {x: -0.12129806, y: 0.01490267, z: -0.0039064917}
+      neutralRotation: {x: 0.00022837127, y: 0.00014293352, z: 244.08353}
+      neutralScale: {x: 1.0000001, y: 1.0000001, z: 0.99999994}
+    verified: 1
+    phonemeName: AI
+    phoneme: 0
+  - blendShapes: 090000000a0000000b0000000c000000
+    blendableNames:
+    - Blink (0)
+    - Eyes Wide Open (1)
+    - Eyebrows Angry (2)
+    - Eyebrows Up (3)
+    weights:
+    - 39.8
+    - 93.8
+    - 33
+    - 66.3
+    bones:
+    - bone: {fileID: 53015260123819976}
+      endPosition: {x: -0.12129806, y: 0.01490267, z: -0.0039064917}
+      endRotation: {x: 0.00022837134, y: 0.00014293354, z: 251}
+      endScale: {x: 1.0000001, y: 1.0000001, z: 0.99999994}
+      lockPosition: 0
+      lockRotation: 0
+      lockScale: 0
+      neutralPosition: {x: -0.12129806, y: 0.01490267, z: -0.0039064917}
+      neutralRotation: {x: 0.0002283713, y: 0.00014293352, z: 244.08353}
+      neutralScale: {x: 1.0000001, y: 1.0000001, z: 0.99999994}
+    verified: 1
+    phonemeName: E
+    phoneme: 0
+  - blendShapes: 0a00000008000000
+    blendableNames:
+    - Blink (0)
+    - Eyes Wide Open (1)
+    weights:
+    - 100
+    - 0
+    bones:
+    - bone: {fileID: 53015260123819976}
+      endPosition: {x: -0.11630664, y: 0.03250704, z: -0.0039064153}
+      endRotation: {x: 0.0002283714, y: 0.00014293363, z: 254.17}
+      endScale: {x: 1.0000001, y: 1.0000001, z: 0.8}
+      lockPosition: 0
+      lockRotation: 0
+      lockScale: 0
+      neutralPosition: {x: -0.12129806, y: 0.01490267, z: -0.0039064917}
+      neutralRotation: {x: 0.0002283713, y: 0.00014293352, z: 244.08353}
+      neutralScale: {x: 1.0000001, y: 1.0000001, z: 0.99999994}
+    verified: 1
+    phonemeName: U
+    phoneme: 0
+  - blendShapes: 0a000000
+    blendableNames:
+    - Blink (0)
+    weights:
+    - 100
+    bones: []
+    verified: 1
+    phonemeName: O
+    phoneme: 0
+  - blendShapes: 0a0000000b0000000c000000
+    blendableNames:
+    - Blink (0)
+    - Eyes Wide Open (1)
+    - Eyebrows Angry (2)
+    weights:
+    - 100
+    - 34.1
+    - 44.9
+    bones:
+    - bone: {fileID: 53015260123819976}
+      endPosition: {x: -0.12129806, y: 0.01490267, z: -0.0039064917}
+      endRotation: {x: 0.00022837133, y: 0.00014293357, z: 249.4}
+      endScale: {x: 1.0000001, y: 1.0000001, z: 0.99999994}
+      lockPosition: 0
+      lockRotation: 0
+      lockScale: 0
+      neutralPosition: {x: -0.12129806, y: 0.01490267, z: -0.0039064917}
+      neutralRotation: {x: 0.0002283713, y: 0.00014293352, z: 244.08353}
+      neutralScale: {x: 1.0000001, y: 1.0000001, z: 0.99999994}
+    verified: 1
+    phonemeName: CDGKNRSThYZ
+    phoneme: 0
+  - blendShapes: 
+    blendableNames: []
+    weights: []
+    bones:
+    - bone: {fileID: 53015260123819976}
+      endPosition: {x: -0.12867144, y: -0.0047138347, z: -0.003906468}
+      endRotation: {x: 0.0002283713, y: 0.00014293352, z: 249.4}
+      endScale: {x: 1.0000001, y: 1.0000001, z: 0.99999994}
+      lockPosition: 0
+      lockRotation: 0
+      lockScale: 0
+      neutralPosition: {x: -0.12129806, y: 0.01490267, z: -0.0039064917}
+      neutralRotation: {x: 0.0002283713, y: 0.00014293352, z: 244.08353}
+      neutralScale: {x: 1.0000001, y: 1.0000001, z: 0.99999994}
+    verified: 1
+    phonemeName: FV
+    phoneme: 0
+  - blendShapes: 0a0000000c0000000b000000
+    blendableNames:
+    - Blink (0)
+    - Eyes Wide Open (1)
+    - Eyebrows Angry (2)
+    weights:
+    - 100
+    - 89.1
+    - 68.5
+    bones: []
+    verified: 1
+    phonemeName: L
+    phoneme: 0
+  - blendShapes: 08000000
+    blendableNames:
+    - Blink (0)
+    weights:
+    - 59.8
+    bones:
+    - bone: {fileID: 53015260123819976}
+      endPosition: {x: -0.12129806, y: 0.01490267, z: -0.0039064917}
+      endRotation: {x: 0.00022837137, y: 0.00014293358, z: 252.70001}
+      endScale: {x: 1.0000001, y: 1.0000001, z: 0.99999994}
+      lockPosition: 0
+      lockRotation: 0
+      lockScale: 0
+      neutralPosition: {x: -0.12129806, y: 0.01490267, z: -0.0039064917}
+      neutralRotation: {x: 0.0002283713, y: 0.00014293352, z: 244.08353}
+      neutralScale: {x: 1.0000001, y: 1.0000001, z: 0.99999994}
+    verified: 1
+    phonemeName: MBP
+    phoneme: 0
+  - blendShapes: 0a000000
+    blendableNames:
+    - Blink (0)
+    weights:
+    - 100
+    bones:
+    - bone: {fileID: 53015260123819976}
+      endPosition: {x: -0.1159901, y: 0.03293739, z: -0.0039064125}
+      endRotation: {x: 0.00022837133, y: 0.00014293352, z: 253.6}
+      endScale: {x: 1.0000001, y: 1.0000001, z: 0.99999994}
+      lockPosition: 0
+      lockRotation: 0
+      lockScale: 0
+      neutralPosition: {x: -0.12129806, y: 0.01490267, z: -0.0039064917}
+      neutralRotation: {x: 0.0002283713, y: 0.00014293352, z: 244.08353}
+      neutralScale: {x: 1.0000001, y: 1.0000001, z: 0.99999994}
+    verified: 1
+    phonemeName: WQ
+    phoneme: 0
+  - blendShapes: 0a00000008000000
+    blendableNames:
+    - Blink (0)
+    - Eyes Wide Open (1)
+    weights:
+    - 100
+    - 63.4
+    bones:
+    - bone: {fileID: 53015260123819976}
+      endPosition: {x: -0.12129806, y: 0.01490267, z: -0.0039064917}
+      endRotation: {x: 0.0002283713, y: 0.00014293352, z: 251.30002}
+      endScale: {x: 1.0000001, y: 1.0000001, z: 0.99999994}
+      lockPosition: 0
+      lockRotation: 0
+      lockScale: 0
+      neutralPosition: {x: -0.12129806, y: 0.01490267, z: -0.0039064917}
+      neutralRotation: {x: 0.0002283713, y: 0.00014293352, z: 244.08353}
+      neutralScale: {x: 1.0000001, y: 1.0000001, z: 0.99999994}
+    verified: 1
+    phonemeName: Rest
+    phoneme: 0
+  emotions:
+  - blendShapes: 070000000100000003000000
+    blendableNames:
+    - Blink (0)
+    - Eyes Wide Open (1)
+    - Eyebrows Angry (2)
+    weights:
+    - 100
+    - 31.5
+    - 54
+    bones:
+    - bone: {fileID: 2803362857729708082}
+      endPosition: {x: -0.6989976, y: 0.1313727, z: 0.010052856}
+      endRotation: {x: 13.117294, y: 357.4815, z: 263.9}
+      endScale: {x: 1, y: 1, z: 0.99999994}
+      lockPosition: 0
+      lockRotation: 0
+      lockScale: 0
+      neutralPosition: {x: -0.6989976, y: 0.1313727, z: 0.010052856}
+      neutralRotation: {x: 13.117294, y: 357.4815, z: 238.8743}
+      neutralScale: {x: 1, y: 1, z: 0.99999994}
+    verified: 1
+    emotion: Happy
+  - blendShapes: 000000000200000008000000
+    blendableNames:
+    - Blink (0)
+    - Eyes Wide Open (1)
+    - Eyebrows Angry (2)
+    weights:
+    - 27.5
+    - 46
+    - 45.3
+    bones:
+    - bone: {fileID: 53015260123819976}
+      endPosition: {x: -0.12129806, y: 0.01490267, z: -0.0039064917}
+      endRotation: {x: 0.0002283713, y: 0.00014293352, z: 253}
+      endScale: {x: 1.0000001, y: 1.0000001, z: 0.99999994}
+      lockPosition: 0
+      lockRotation: 0
+      lockScale: 0
+      neutralPosition: {x: -0.12129806, y: 0.01490267, z: -0.0039064917}
+      neutralRotation: {x: 0.0002283713, y: 0.00014293352, z: 244.08353}
+      neutralScale: {x: 1.0000001, y: 1.0000001, z: 0.99999994}
+    verified: 1
+    emotion: Serious
+  - blendShapes: 0300000005000000
+    blendableNames:
+    - Blink (0)
+    - Eyes Wide Open (1)
+    weights:
+    - 38.8
+    - 100
+    bones: []
+    verified: 1
+    emotion: Eyebrows Up
+  - blendShapes: 080000000400000003000000
+    blendableNames:
+    - Blink (0)
+    - Eyes Wide Open (1)
+    - Eyebrows Angry (2)
+    weights:
+    - 100
+    - 80.8
+    - 100
+    bones:
+    - bone: {fileID: 53015260123819976}
+      endPosition: {x: -0.12129806, y: 0.01490267, z: -0.0039064917}
+      endRotation: {x: 0.00022837133, y: 0.00014293354, z: 251.69998}
+      endScale: {x: 1.0000001, y: 1.0000001, z: 0.99999994}
+      lockPosition: 0
+      lockRotation: 0
+      lockScale: 0
+      neutralPosition: {x: -0.12129806, y: 0.01490267, z: -0.0039064917}
+      neutralRotation: {x: 0.0002283713, y: 0.00014293352, z: 244.08353}
+      neutralScale: {x: 1.0000001, y: 1.0000001, z: 0.99999994}
+    verified: 1
+    emotion: Sad
+  playOnAwake: 0
+  loop: 0
+  defaultClip: {fileID: 0}
+  defaultDelay: 0
+  scaleAudioSpeed: 1
+  m_animationTimingMode: 0
+  frameRate: 30
+  restTime: 0.2
+  restHoldTime: 0.4
+  phonemeCurveGenerationMode: 1
+  emotionCurveGenerationMode: 0
+  keepEmotionWhenFinished: 0
+  setNeutralBonePosesOnStart: 0
+  gesturesAnimator: {fileID: 0}
+  gesturesLayer: 0
+  gestures: []
+  onFinishedPlaying:
+    m_PersistentCalls:
+      m_Calls: []
+  lastUsedVersion: 1.521
+--- !u!114 &8591575671725625076
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2022557724074943284}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9036ca68e4aa8924a9003edadadd85a2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isReady: 1
+  users:
+  - {fileID: 6169469809237171523}
+  _blendables:
+  - number: 0
+    currentWeight: 0
+  - number: 1
+    currentWeight: 0
+  - number: 2
+    currentWeight: 0
+  - number: 3
+    currentWeight: 0
+  - number: 4
+    currentWeight: 0
+  - number: 5
+    currentWeight: 0
+  - number: 6
+    currentWeight: 0
+  - number: 7
+    currentWeight: 0
+  - number: 8
+    currentWeight: 0
+  - number: 9
+    currentWeight: 0
+  - number: 10
+    currentWeight: 0
+  - number: 11
+    currentWeight: 0
+  - number: 12
+    currentWeight: 0
+  - number: 13
+    currentWeight: 0
+  - number: 14
+    currentWeight: 0
+  characterMesh: {fileID: 6959411109573192593}
+  optionalOtherMeshes: []
 --- !u!1 &2049856419731907624
 GameObject:
   m_ObjectHideFlags: 0
@@ -4351,7 +4701,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5420876824591459428}
-  m_LocalRotation: {x: 1.8297297e-12, y: 0.0000023510731, z: -0.8476616, w: 0.53053725}
+  m_LocalRotation: {x: -2.046363e-12, y: -0.0000023510731, z: 0.8476616, w: -0.5305373}
   m_LocalPosition: {x: -0.12129806, y: 0.01490267, z: -0.0039064917}
   m_LocalScale: {x: 1.0000001, y: 1.0000001, z: 0.99999994}
   m_ConstrainProportionsScale: 0
@@ -4511,7 +4861,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6174817580687545802}
-  m_LocalRotation: {x: -0.075135805, y: -0.088719845, z: 0.86375314, w: -0.4903202}
+  m_LocalRotation: {x: 0.07513585, y: 0.08871981, z: -0.8637531, w: 0.49032032}
   m_LocalPosition: {x: -0.6989976, y: 0.1313727, z: 0.010052856}
   m_LocalScale: {x: 1, y: 1, z: 0.99999994}
   m_ConstrainProportionsScale: 0

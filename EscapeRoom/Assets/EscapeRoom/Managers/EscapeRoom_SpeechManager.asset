@@ -49,8 +49,8 @@ MonoBehaviour:
   relegateBackgroundSpeechAudio: 0
   usePlayerRealName: 0
   separateSharedPlayerAudio: 0
-  placeAudioInSubfolders: 0
-  separateLines: 0
+  placeAudioInSubfolders: 1
+  separateLines: 1
   separateLinePause: 1
   resetExpressionsEachLine: 1
   lines: []
@@ -68,7 +68,7 @@ MonoBehaviour:
   ignoreOriginalText: 0
   sfxDucking: 0
   musicDucking: 0
-  lipSyncMode: 0
+  lipSyncMode: 7
   lipSyncOutput: 0
   phonemes: []
   lipSyncSpeed: 1
