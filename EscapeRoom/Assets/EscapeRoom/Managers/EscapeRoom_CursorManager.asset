@@ -27,7 +27,7 @@ MonoBehaviour:
   addWalkPrefix: 0
   walkPrefix:
     label: Walk to
-    lineID: -1
+    lineID: 123
   addHotspotPrefix: 1
   allowInteractionCursor: 0
   allowInteractionCursorForInventory: 0
@@ -106,16 +106,16 @@ MonoBehaviour:
   inventoryHandling: 0
   hotspotPrefix1:
     label: Use
-    lineID: -1
+    lineID: 119
   hotspotPrefix2:
     label: on
-    lineID: -1
+    lineID: 120
   hotspotPrefix3:
     label: Give
-    lineID: -1
+    lineID: 121
   hotspotPrefix4:
     label: to
-    lineID: -1
+    lineID: 122
   displayCountSize: 1.6
   displayCountFont: {fileID: 0}
   displayCountTextEffects: 0
@@ -136,7 +136,7 @@ MonoBehaviour:
     alwaysAnimate: 0
     dontCycle: 0
     label: Use
-    lineID: -1
+    lineID: 124
     id: 0
   - texture: {fileID: 2800000, guid: f03835de3da7f442f92582f0dd5e5863, type: 3}
     isAnimated: 0
@@ -152,7 +152,7 @@ MonoBehaviour:
     alwaysAnimate: 0
     dontCycle: 0
     label: Talk to
-    lineID: -1
+    lineID: 125
     id: 1
   - texture: {fileID: 2800000, guid: e0394f989f329496584e377a81d4031f, type: 3}
     isAnimated: 0
@@ -168,7 +168,7 @@ MonoBehaviour:
     alwaysAnimate: 0
     dontCycle: 0
     label: Look at
-    lineID: -1
+    lineID: 126
     id: 2
   unhandledCursorInteractions:
   - {fileID: 0}
