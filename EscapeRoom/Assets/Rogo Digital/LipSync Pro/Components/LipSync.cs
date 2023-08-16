@@ -2557,7 +2557,7 @@ namespace RogoDigital.Lipsync
 		public LipSync()
 		{
 			// Constructor used to set version value on new component
-			this.lastUsedVersion = 1.521f;
+			this.lastUsedVersion = 1.531f;
 		}
 
 		// Sort PhonemeMarker by timestamp

@@ -32,7 +32,7 @@ MonoBehaviour:
     importLabelID: 115
     defaultAutosaveLabel: Autosave
     autosaveLabelID: 116
-  referenceScenesInSave: 1
+  referenceScenesInSave: 0
   sceneAttributes: []
   actionListOnStart: {fileID: 11400000, guid: ed2cca998f77198478daa3b6e2d5cb98, type: 2}
   blackOutWhenSkipping: 0
@@ -41,7 +41,7 @@ MonoBehaviour:
   playerSwitching: 1
   legacyPlayer: {fileID: 0}
   playerPrefab:
-    playerOb: {fileID: 4736218838494356473, guid: a0874915f2bab4fb7909ed7d80521d5e,
+    playerOb: {fileID: 5614586597700508580, guid: cefbf7e873ea24b329f8c3ef1aef43a2,
       type: 3}
     playerAssetReference:
       m_AssetGUID: 
@@ -295,7 +295,7 @@ MonoBehaviour:
     alwaysAnimate: 0
   highlightMaterialPropertyOverride: 
   hotspotIconSize: 0.04
-  playerFacesHotspots: 1
+  playerFacesHotspots: 0
   onlyFaceHotspotOnSelect: 0
   scaleHighlightWithMouseProximity: 0
   highlightProximityFactor: 4

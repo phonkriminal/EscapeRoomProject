@@ -248,8 +248,7 @@ namespace AC
 						}
 					}
 					break;
-
-				default:
+			default:
 					break;
 			}
 

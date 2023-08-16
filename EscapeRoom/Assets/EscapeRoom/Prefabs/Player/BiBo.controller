@@ -601,7 +601,7 @@ AnimatorController:
   - serializedVersion: 5
     m_Name: Head Layer
     m_StateMachine: {fileID: 3923311336630410799}
-    m_Mask: {fileID: 31900000, guid: 86abeccd02fe648b999d7c464dc7934a, type: 2}
+    m_Mask: {fileID: 31900000, guid: 58864fdd166d9804f930a7b0c6b7f018, type: 2}
     m_Motions:
     - serializedVersion: 2
       m_State: {fileID: 0}
@@ -621,10 +621,10 @@ AnimatorController:
   - serializedVersion: 5
     m_Name: Mouth Layer
     m_StateMachine: {fileID: -6524341294189815188}
-    m_Mask: {fileID: 31900000, guid: 86abeccd02fe648b999d7c464dc7934a, type: 2}
+    m_Mask: {fileID: 0}
     m_Motions: []
     m_Behaviours: []
-    m_BlendingMode: 0
+    m_BlendingMode: 1
     m_SyncedLayerIndex: -1
     m_DefaultWeight: 1
     m_IKPass: 0
