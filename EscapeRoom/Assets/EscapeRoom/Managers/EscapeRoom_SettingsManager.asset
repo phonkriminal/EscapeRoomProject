@@ -32,7 +32,7 @@ MonoBehaviour:
     importLabelID: 115
     defaultAutosaveLabel: Autosave
     autosaveLabelID: 116
-  referenceScenesInSave: 0
+  referenceScenesInSave: 1
   sceneAttributes: []
   actionListOnStart: {fileID: 11400000, guid: ed2cca998f77198478daa3b6e2d5cb98, type: 2}
   blackOutWhenSkipping: 0
@@ -172,8 +172,8 @@ MonoBehaviour:
   allowDefaultinteractions: 0
   alwaysCloseInteractionMenus: 0
   whenReselectHotspot: 0
-  lockCursorOnStart: 0
-  hideLockedCursor: 0
+  lockCursorOnStart: 1
+  hideLockedCursor: 1
   disableFreeAimWhenDragging: 0
   disableFreeAimWhenDraggingPickUp: 0
   runConversationsWithKeys: 0
