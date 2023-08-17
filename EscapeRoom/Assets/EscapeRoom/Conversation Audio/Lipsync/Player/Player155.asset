@@ -12,11 +12,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f44607bd270d4f4eaa8869ed9b5b85c, type: 3}
   m_Name: Player155
   m_EditorClassIdentifier: 
-  clip: {fileID: 8300000, guid: 42500a48f54d14151a404bc723d2368f, type: 3}
+  clip: {fileID: 8300000, guid: e8fe90eab8b3a49ebb1bdb04796d2ef3, type: 3}
   phonemeData:
   - phoneme: 0
+    phonemeNumber: 3
+    time: 0.04373932
+    intensity: 1
+    sustain: 0
+    useRandomness: 0
+    intensityRandomness: 0.1
+    blendableRandomness: 0.3
+    bonePositionRandomness: 0.3
+    boneRotationRandomness: 0.3
+  - phoneme: 0
     phonemeNumber: 4
-    time: 0.01063368
+    time: 0.13794708
     intensity: 1
     sustain: 0
     useRandomness: 0
@@ -26,27 +36,7 @@ MonoBehaviour:
     boneRotationRandomness: 0.3
   - phoneme: 0
     phonemeNumber: 0
-    time: 0.05050998
-    intensity: 1
-    sustain: 0
-    useRandomness: 0
-    intensityRandomness: 0.1
-    blendableRandomness: 0.3
-    bonePositionRandomness: 0.3
-    boneRotationRandomness: 0.3
-  - phoneme: 0
-    phonemeNumber: 4
-    time: 0.124945745
-    intensity: 1
-    sustain: 0
-    useRandomness: 0
-    intensityRandomness: 0.1
-    blendableRandomness: 0.3
-    bonePositionRandomness: 0.3
-    boneRotationRandomness: 0.3
-  - phoneme: 0
-    phonemeNumber: 2
-    time: 0.22596571
+    time: 0.2557068
     intensity: 1
     sustain: 0
     useRandomness: 0
@@ -56,17 +46,7 @@ MonoBehaviour:
     boneRotationRandomness: 0.3
   - phoneme: 0
     phonemeNumber: 9
-    time: 0.35091147
-    intensity: 1
-    sustain: 0
-    useRandomness: 0
-    intensityRandomness: 0.1
-    blendableRandomness: 0.3
-    bonePositionRandomness: 0.3
-    boneRotationRandomness: 0.3
-  - phoneme: 0
-    phonemeNumber: 2
-    time: 0.45458984
+    time: 0.40374756
     intensity: 1
     sustain: 0
     useRandomness: 0
@@ -76,7 +56,27 @@ MonoBehaviour:
     boneRotationRandomness: 0.3
   - phoneme: 0
     phonemeNumber: 4
-    time: 0.5183919
+    time: 0.54169464
+    intensity: 1
+    sustain: 0
+    useRandomness: 0
+    intensityRandomness: 0.1
+    blendableRandomness: 0.3
+    bonePositionRandomness: 0.3
+    boneRotationRandomness: 0.3
+  - phoneme: 0
+    phonemeNumber: 1
+    time: 0.63253784
+    intensity: 1
+    sustain: 0
+    useRandomness: 0
+    intensityRandomness: 0.1
+    blendableRandomness: 0.3
+    bonePositionRandomness: 0.3
+    boneRotationRandomness: 0.3
+  - phoneme: 0
+    phonemeNumber: 4
+    time: 0.7267456
     intensity: 1
     sustain: 0
     useRandomness: 0
@@ -86,87 +86,7 @@ MonoBehaviour:
     boneRotationRandomness: 0.3
   - phoneme: 0
     phonemeNumber: 3
-    time: 0.5795356
-    intensity: 1
-    sustain: 0
-    useRandomness: 0
-    intensityRandomness: 0.1
-    blendableRandomness: 0.3
-    bonePositionRandomness: 0.3
-    boneRotationRandomness: 0.3
-  - phoneme: 0
-    phonemeNumber: 0
-    time: 0.62738717
-    intensity: 1
-    sustain: 0
-    useRandomness: 0
-    intensityRandomness: 0.1
-    blendableRandomness: 0.3
-    bonePositionRandomness: 0.3
-    boneRotationRandomness: 0.3
-  - phoneme: 0
-    phonemeNumber: 4
-    time: 0.6539714
-    intensity: 1
-    sustain: 0
-    useRandomness: 0
-    intensityRandomness: 0.1
-    blendableRandomness: 0.3
-    bonePositionRandomness: 0.3
-    boneRotationRandomness: 0.3
-  - phoneme: 0
-    phonemeNumber: 4
-    time: 0.7044813
-    intensity: 1
-    sustain: 0
-    useRandomness: 0
-    intensityRandomness: 0.1
-    blendableRandomness: 0.3
-    bonePositionRandomness: 0.3
-    boneRotationRandomness: 0.3
-  - phoneme: 0
-    phonemeNumber: 4
-    time: 0.7629666
-    intensity: 1
-    sustain: 0
-    useRandomness: 0
-    intensityRandomness: 0.1
-    blendableRandomness: 0.3
-    bonePositionRandomness: 0.3
-    boneRotationRandomness: 0.3
-  - phoneme: 0
-    phonemeNumber: 2
-    time: 0.81081814
-    intensity: 1
-    sustain: 0
-    useRandomness: 0
-    intensityRandomness: 0.1
-    blendableRandomness: 0.3
-    bonePositionRandomness: 0.3
-    boneRotationRandomness: 0.3
-  - phoneme: 0
-    phonemeNumber: 7
-    time: 0.85335284
-    intensity: 1
-    sustain: 0
-    useRandomness: 0
-    intensityRandomness: 0.1
-    blendableRandomness: 0.3
-    bonePositionRandomness: 0.3
-    boneRotationRandomness: 0.3
-  - phoneme: 0
-    phonemeNumber: 2
-    time: 0.8746202
-    intensity: 1
-    sustain: 0
-    useRandomness: 0
-    intensityRandomness: 0.1
-    blendableRandomness: 0.3
-    bonePositionRandomness: 0.3
-    boneRotationRandomness: 0.3
-  - phoneme: 0
-    phonemeNumber: 6
-    time: 0.9118381
+    time: 0.81422424
     intensity: 1
     sustain: 0
     useRandomness: 0
@@ -176,7 +96,7 @@ MonoBehaviour:
     boneRotationRandomness: 0.3
   - phoneme: 0
     phonemeNumber: 9
-    time: 0.96500653
+    time: 0.91516113
     intensity: 1
     sustain: 0
     useRandomness: 0
@@ -187,8 +107,8 @@ MonoBehaviour:
   emotionData: []
   gestureData: []
   version: 1.53
-  length: 1.8808163
-  transcript: Hi sir, are you in trouble?
+  length: 1.4860771
+  transcript: Okay, see you.
   phonemePoseCurves: []
   emotionPoseCurves: []
   targetComponentID: 0
