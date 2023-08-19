@@ -14,22 +14,24 @@ namespace AC
 		[SerializeField] private Texture2D nearesetIcon = null;
 		[SerializeField] private float iconSize = 0.025f;
 		[SerializeField] private float distance = 2f;
-		[SerializeField] private Vector2 screenCircleCentre = new Vector2 (0.7f, 0.5f);
+		[SerializeField] private Vector2 screenCircleCentre = new Vector2(0.7f, 0.5f);
 		[SerializeField] private float screenCircleRadius = 0.3f;
 		[SerializeField] private bool showInteractionsWithClick = true;
 		[SerializeField] private string unlockCursorWithMenu = "Interaction";
 		[SerializeField] private bool raycastWallBlocking;
 
-		private readonly HashSet<Hotspot> nearbyHotspots = new HashSet<Hotspot> ();
-		private Hotspot nearestHotspot;
+		private readonly HashSet<Hotspot> nearbyHotspots = new HashSet<Hotspot>();
+        public HashSet<Hotspot> GetNearbyHotspots => nearbyHotspots;
+        private Hotspot nearestHotspot;
 		private bool resetCustomScript;
 
-		#endregion
+        #endregion
+        public delegate void Delegate_OnShowHotspot(Hotspot hotspot);
+        public static event Delegate_OnShowHotspot OnShowHotspot;
 
+        #region UnityStandards
 
-		#region UnityStandards
-
-		private void OnEnable ()
+        private void OnEnable ()
 		{
 			EventManager.OnMenuTurnOn += OnMenuTurnOn;
 			EventManager.OnMenuTurnOff += OnMenuTurnOff;
@@ -94,8 +96,13 @@ namespace AC
 						}
 					}
 
+					//screenCircleCentre = KickStarter.player.hotspotDetector.transform.position;
+
 					float thisHotspotDistance = Vector2.Distance (viewportPosition, screenCircleCentre);
-					if (thisHotspotDistance > screenCircleRadius)
+					//float thisHotspotDistance = (hotspot.transform.position - KickStarter.player.hotspotDetector.transform.position).sqrMagnitude;
+					//float thisHotspotDistance = Vector3.Distance(hotspot.transform.position, KickStarter.player.hotspotDetector.transform.position);
+
+                    if (thisHotspotDistance > screenCircleRadius)
 					{
 						nearbyHotspots.Add (hotspot);
 						continue;
@@ -127,9 +134,10 @@ namespace AC
 						{
 							if (nearestHotspot)
 							{
-								if (KickStarter.playerInput.GetMouseState () == MouseState.SingleClick && !KickStarter.playerMenus.IsMouseOverInteractionMenu ())
-								{
-									KickStarter.playerMenus.CloseInteractionMenus ();
+								//if (KickStarter.playerInput.GetMouseState () == MouseState.SingleClick && !KickStarter.playerMenus.IsMouseOverInteractionMenu ())
+                                if (KickStarter.playerInput.GetMouseState() == MouseState.RightClick && KickStarter.playerMenus.IsInteractionMenuOn())
+                                {
+                                        KickStarter.playerMenus.CloseInteractionMenus ();
 								}
 							}
 							else
@@ -166,7 +174,8 @@ namespace AC
 			foreach (Hotspot hotspot in nearbyHotspots)
 			{
 				GUI.DrawTexture (AdvGame.GUIBox (hotspot.GetIconScreenPosition (), iconSize), nearbyIcon, ScaleMode.ScaleToFit, true, 0f);
-			}
+                OnShowHotspot?.Invoke(hotspot);
+            }
 		}
 
 		#endregion

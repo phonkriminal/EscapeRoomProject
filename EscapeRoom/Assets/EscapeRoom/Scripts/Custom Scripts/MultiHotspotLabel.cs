@@ -3,14 +3,14 @@ using AC;
 
 public class MultiHotspotLabel : MonoBehaviour
 {
-
+    
     public Hotspot hotspotToShow;
     public Highlight highlightToSync;
     public bool alwaysShowDuringGameplay;
-    public LayerMask layerMask = new LayerMask();
+    public LayerMask layerMask = new();
     public string menuName = "Hotspot"; // The name of the Hotspot Menu to copy
     public string labelName = "HotspotLabel"; // The Label element of the Hotspot Menu
-    private Menu myMenu; // Our own local Menu
+    private AC.Menu myMenu; // Our own local Menu
 
 
     private void OnEnable()
@@ -20,6 +20,9 @@ public class MultiHotspotLabel : MonoBehaviour
         {
             hotspotToShow = GetComponent<Hotspot>();
         }
+
+        if (hotspotToShow == null) Debug.Log("noHot");
+
         if (highlightToSync == null && hotspotToShow != null)
         {
             highlightToSync = hotspotToShow.highlight;
@@ -85,6 +88,7 @@ public class MultiHotspotLabel : MonoBehaviour
 
     private void Update()
     {
+
         if (myMenu) myMenu.HotspotLabelData.SetData(hotspotToShow, string.Empty);
 
         if (hotspotToShow != null && alwaysShowDuringGameplay && KickStarter.stateHandler.IsInGameplay())
@@ -96,11 +100,15 @@ public class MultiHotspotLabel : MonoBehaviour
                 return;
             }
 
-            Vector3 direction = hotspotToShow.GetIconPosition() - Camera.main.transform.position;
+            Vector3 direction = hotspotToShow.GetIconPosition() - Camera.main.transform.position; 
             Ray ray = new Ray(Camera.main.transform.position, direction);
-            RaycastHit hitInfo = new RaycastHit();
-            if (Physics.Raycast(ray, out hitInfo, direction.magnitude, layerMask.value))
+
+            RaycastHit hitInfo = new();
+
+            if (Physics.Raycast(ray, out hitInfo, direction.magnitude, layerMask.value)) //, QueryTriggerInteraction.Collide))
             {
+                
+
                 if (hitInfo.collider.gameObject != hotspotToShow.gameObject)
                 {
                     // Turn off
@@ -108,7 +116,8 @@ public class MultiHotspotLabel : MonoBehaviour
                     return;
                 }
             }
-
+            
+            //Debug.DrawLine(ray.origin, hitInfo.point);
             ShowForHotspot();
         }
     }
@@ -120,13 +129,13 @@ public class MultiHotspotLabel : MonoBehaviour
         if (myMenu == null)
         {
             // When run for the first time, create a new Menu and use the default Hotspot menu to copy from
-            Menu menuToCopy = PlayerMenus.GetMenuWithName(menuName);
+            AC.Menu menuToCopy = PlayerMenus.GetMenuWithName(menuName);
             if (menuToCopy == null)
             {
                 ACDebug.LogWarning("Cannot find menu with name '" + menuName + "'", this);
                 return;
             }
-            myMenu = ScriptableObject.CreateInstance<Menu>();
+            myMenu = ScriptableObject.CreateInstance<AC.Menu>();
 
             myMenu.CreateDuplicate(menuToCopy); // Copy from the default Menu
             myMenu.appearType = AppearType.Manual; // Set it to Manual so that we can control it easily
@@ -144,10 +153,34 @@ public class MultiHotspotLabel : MonoBehaviour
         // Turn the menu on
         myMenu.TurnOn();
 
-        // Register with PlayerMenus to handle updating
+        //if (IsMenuAlreadyRegistered(myMenu)) return;
+
         KickStarter.playerMenus.RegisterCustomMenu(myMenu, true);
+
+        /*if (!IsMenuAlreadyRegistered(myMenu))
+        {
+            // Register with PlayerMenus to handle updating    
+            KickStarter.playerMenus.RegisterCustomMenu(myMenu, true);
+        }
+        else
+        {
+            KickStarter.playerMenus.UnregisterCustomMenu(myMenu, true);
+            KickStarter.playerMenus.RegisterCustomMenu(myMenu, true);
+        }*/
+
     }
 
+    private bool IsMenuAlreadyRegistered(AC.Menu _menu)
+    {
+        AC.Menu[] menus = KickStarter.playerMenus.GetRegisteredCustomMenus();
+
+        for (int i = 0; i < menus.Length; i++)
+        {
+            if (menus[i].title == _menu.title) return true;
+        }
+
+        return false;
+    }
 
     private void Hide()
     {
@@ -160,6 +193,7 @@ public class MultiHotspotLabel : MonoBehaviour
             }
             myMenu = null;
         }
+
     }
 
 }

@@ -154,7 +154,26 @@ public static class EDSUtility
         RenderTexture.ReleaseTemporary(renderTex);
         return readableText;
     }
+    // This gives you the multiplier applied to the colour, 
+    // assuming the source colour had its greatest component set to 1
+    public static float GetEmissionMultiplier(Material mat)
+    {
+        var colour = mat.GetColor("_EmissionColor");
+        return Mathf.Max(colour.r, colour.g, colour.b);
+    }
+
+    // This gives the perceived luminance of the emissive colour,
+    // accounting for the fact that green is brighter than blue,
+    // and yellow (red + green) is brighter than green, etc.
+    // Coefficients via https://en.wikipedia.org/wiki/Luma_(video)
+    public static float GetEmissionLuminance(Material mat)
+    {
+        var colour = mat.GetVector("_EmissionColor");
+        return Vector4.Dot(colour, new Vector4(0.2126f, 0.7152f, 0.0722f, 0.0f));
+    }
 }
+
+
 
 public static class TransformEx
 { /// <summary>

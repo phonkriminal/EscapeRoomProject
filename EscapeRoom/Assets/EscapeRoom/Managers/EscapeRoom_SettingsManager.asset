@@ -23,7 +23,7 @@ MonoBehaviour:
   maxSaves: 5
   orderSavesByUpdateTime: 1
   reloadSceneWhenLoading: 0
-  saveWithThreading: 0
+  saveWithThreading: 1
   saveAssetReferencesWithAddressables: 0
   saveLabels:
     defaultSaveLabel: Save
@@ -35,7 +35,7 @@ MonoBehaviour:
   referenceScenesInSave: 1
   sceneAttributes: []
   actionListOnStart: {fileID: 11400000, guid: ed2cca998f77198478daa3b6e2d5cb98, type: 2}
-  blackOutWhenSkipping: 0
+  blackOutWhenSkipping: 1
   events: []
   savePlayerReferencesWithAddressables: 0
   playerSwitching: 1
@@ -183,12 +183,12 @@ MonoBehaviour:
   walkToHotspotMarkers: 1
   dragThreshold: 0
   shareInventory: 0
-  inventoryDragDrop: 0
+  inventoryDragDrop: 1
   dragDropThreshold: 0
   allowInventoryInteractionsDuringConversations: 0
   inventoryDropLook: 0
   inventoryDropLookNoDrag: 0
-  inventoryInteractions: 1
+  inventoryInteractions: 0
   inventoryDisableLeft: 1
   allowDefaultInventoryInteractions: 0
   inventoryDisableUnhandled: 1
@@ -201,13 +201,13 @@ MonoBehaviour:
   canReorderItems: 0
   selectInventoryDisplay: 0
   rightClickInventory: 0
-  reverseInventoryCombinations: 0
+  reverseInventoryCombinations: 1
   canMoveWhenActive: 1
   selectInvWithUnhandled: 0
   selectInvWithIconID: 0
   giveInvWithUnhandled: 0
   giveInvWithIconID: 0
-  autoDisableUnhandledHotspots: 1
+  autoDisableUnhandledHotspots: 0
   clickPrefab: {fileID: 0}
   clickMarkerPosition: 0
   walkableClickRange: 0.5
@@ -272,8 +272,8 @@ MonoBehaviour:
   cacheCameraMain: 0
   linearColorTextures: 0
   movingTurning: 3
-  hotspotDetection: 1
-  closeInteractionMenusIfPlayerLeavesVicinity: 1
+  hotspotDetection: 2
+  closeInteractionMenusIfPlayerLeavesVicinity: 0
   placeDistantHotspotsOnSeparateLayer: 1
   hotspotsInVicinity: 2
   highlightAllHotspotsInVicinity: 1
@@ -307,7 +307,7 @@ MonoBehaviour:
   navMeshRaycastLength: 100
   hotspotRaycastLength: 100
   moveableRaycastLength: 30
-  hotspotLayer: Default
+  hotspotLayer: Hotspot
   distantHotspotLayer: DistantHotspot
   navMeshLayer: NavMesh
   backgroundImageLayer: BackgroundImage
@@ -318,7 +318,7 @@ MonoBehaviour:
   loadScenesFromAddressable: 0
   loadingSceneName: 
   loadingScene: 0
-  useAsyncLoading: 0
+  useAsyncLoading: 1
   loadingDelay: 0
   blackOutWhenInitialising: 1
   spawnPersistentEnginePrefab: 1
@@ -355,7 +355,7 @@ MonoBehaviour:
   showDebugLogs: 2
   printActionCommentsInConsole: 0
   actionCommentLogging: 0
-  showActiveActionLists: 1
+  showActiveActionLists: 0
   references:
     version: 2
     RefIds: []

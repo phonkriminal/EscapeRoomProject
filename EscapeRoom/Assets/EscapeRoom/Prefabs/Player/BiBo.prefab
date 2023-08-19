@@ -813,7 +813,11 @@ GameObject:
   - component: {fileID: 5162302077868151853}
   - component: {fileID: 1731771770585853779}
   - component: {fileID: 6117651029626450883}
-  - component: {fileID: 5351190982712273947}
+  - component: {fileID: 4058418586698243419}
+  - component: {fileID: 392863215028702442}
+  - component: {fileID: 8777316913587184724}
+  - component: {fileID: 6573851211456098961}
+  - component: {fileID: 3046255065963945261}
   m_Layer: 2
   m_Name: BiBo
   m_TagString: Untagged
@@ -1018,7 +1022,7 @@ MonoBehaviour:
   speechLabel: BiBo
   lineID: 117
   displayLineID: -1
-  speechColor: {r: 1, g: 1, b: 1, a: 1}
+  speechColor: {r: 0.09968895, g: 0.8679245, b: 0.012281928, a: 1}
   portraitIcon:
     texture: {fileID: 0}
     isAnimated: 0
@@ -1222,9 +1226,9 @@ MonoBehaviour:
   runSound: {fileID: 0}
   textScrollClip: {fileID: 0}
   soundChild: {fileID: 4107694854652890705}
-  speechAudioSource: {fileID: 0}
+  speechAudioSource: {fileID: 5614586597700508582}
   headIKTurnFactor: 1
-  bodyIKTurnFactor: 0
+  bodyIKTurnFactor: 0.086
   eyesIKTurnFactor: 1
   headTurnTarget: {fileID: 0}
   headTurnTargetOffset: {x: 0, y: 0, z: 0}
@@ -2351,7 +2355,67 @@ MonoBehaviour:
   constantID: 311320
   retainInPrefab: 1
   autoManual: 0
---- !u!114 &5351190982712273947
+--- !u!114 &4058418586698243419
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1171209387228142441}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a40bd5d46c9f4408cbe6468257a31be6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  constantID: 311320
+  retainInPrefab: 1
+  autoManual: 0
+--- !u!114 &392863215028702442
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1171209387228142441}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a40bd5d46c9f4408cbe6468257a31be6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  constantID: 311320
+  retainInPrefab: 1
+  autoManual: 0
+--- !u!114 &8777316913587184724
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1171209387228142441}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a40bd5d46c9f4408cbe6468257a31be6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  constantID: 311320
+  retainInPrefab: 1
+  autoManual: 0
+--- !u!114 &6573851211456098961
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1171209387228142441}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a40bd5d46c9f4408cbe6468257a31be6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  constantID: 311320
+  retainInPrefab: 1
+  autoManual: 0
+--- !u!114 &3046255065963945261
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

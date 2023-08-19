@@ -11,9 +11,7 @@ GameObject:
   - component: {fileID: 439053800818858532}
   - component: {fileID: 439053800818858555}
   - component: {fileID: 439053800818858554}
-  - component: {fileID: 439053800818858533}
   - component: {fileID: 439053800818858552}
-  - component: {fileID: 439053800818858553}
   m_Layer: 0
   m_Name: 'Hotspot : Prof'
   m_TagString: Untagged
@@ -203,26 +201,6 @@ MonoBehaviour:
   iconSortingOrder: 0
   doubleClickingHotspot: 0
   playerTurnsHead: 1
---- !u!114 &439053800818858533
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 439053800818858535}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dd03a057fc6dc4182b186d0a8d9c4d2e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  hotspotToShow: {fileID: 0}
-  highlightToSync: {fileID: 0}
-  alwaysShowDuringGameplay: 1
-  layerMask:
-    serializedVersion: 2
-    m_Bits: 1
-  menuName: Hotspot
-  labelName: HotspotLabel
 --- !u!114 &439053800818858552
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -239,23 +217,7 @@ MonoBehaviour:
   oulineColor: {r: 255, g: 0, b: 0, a: 255}
   speed: 5
   menuName: Hotspot
---- !u!114 &439053800818858553
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 439053800818858535}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6b591419ee344469da92bd1bb7e1a1bf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  constantID: 312170
-  retainInPrefab: 0
-  autoManual: 0
-  hotspotToSave: {fileID: 0}
-  startState: 0
+  spaceHotspotDetection: {fileID: 0}
 --- !u!1 &439053802089289505
 GameObject:
   m_ObjectHideFlags: 0

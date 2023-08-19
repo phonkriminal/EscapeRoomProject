@@ -19,6 +19,8 @@ public class EasyOutline : MonoBehaviour
     private float speed = 5f;
     [SerializeField]
     private string menuName = "Hotspot";
+    [SerializeField]
+    private ScreenSpaceHotspotDetection spaceHotspotDetection;
 
     #endregion
 
@@ -42,29 +44,71 @@ public class EasyOutline : MonoBehaviour
     {
         //EventManager.OnHotspotSelect += OnHotspotSelect;
         //EventManager.OnHotspotDeselect += OnHotspotDeselect;
-        EventManager.OnMenuTurnOn += OnMenuTurnOn;
-        EventManager.OnMenuTurnOff += OnMenuTurnOff;
-           
+        //EventManager.OnMenuTurnOn += OnMenuTurnOn;
+        //EventManager.OnMenuTurnOff += OnMenuTurnOff;
+        //EventManager.OnHotspotTurnOn += OnHotspotTurnOn;
+        //EventManager.OnHotspotTurnOff += OnHotspotTurnOff;
+        ScreenSpaceHotspotDetection.OnShowHotspot += OnHotspotTurnOn;
     }
 
     private void OnDisable()
     {
         //EventManager.OnHotspotSelect -= OnHotspotSelect;
         //EventManager.OnHotspotDeselect -= OnHotspotDeselect;
-        EventManager.OnMenuTurnOn -= OnMenuTurnOn;
-        EventManager.OnMenuTurnOff -= OnMenuTurnOff;
+        //EventManager.OnMenuTurnOn -= OnMenuTurnOn;
+        //EventManager.OnMenuTurnOff -= OnMenuTurnOff;
+        //EventManager.OnHotspotTurnOn -= OnHotspotTurnOn;
+        //EventManager.OnHotspotTurnOff -= OnHotspotTurnOff;
+        ScreenSpaceHotspotDetection.OnShowHotspot -= OnHotspotTurnOn;
 
     }
 
     #endregion
 
     #region PrivateFunctions
+    private void Update()
+    {
+        CheckHotspotIsNearby();
+    }
+    private void CheckHotspotIsNearby()
+    {
+        if (!spaceHotspotDetection.GetNearbyHotspots.Contains(this.hotspot))
+        {
+            if (outlinable.enabled == true)
+            {
+                OnHotspotTurnOff(this.hotspot);
+            }
+        }
+    }
+
+    private void OnHotspotTurnOn(Hotspot _hotspot)
+    {
+        Debug.Log("TurnOn");
+        if (this.hotspot == _hotspot)
+        {
+            StopAllCoroutines();
+            StartCoroutine(TransitionOn());
+        }
+
+    }
+    private void OnHotspotTurnOff(Hotspot _hotspot)
+    {
+        Debug.Log("TurnOff");
+
+        if (this.hotspot == _hotspot)
+        {
+            StopAllCoroutines();
+            StartCoroutine(TransitionOff());
+        }
+
+    }
 
     private void OnMenuTurnOn(Menu _menu, bool isInstant)
     {
-        if (_menu.title == menuName + this.name)
+        Debug.Log(_menu.title + menuName + " On");
+        
+        if (_menu.title == menuName)
         {
-            //Debug.Log(_menu.title + menuName + " On");
             StopAllCoroutines();
             StartCoroutine(TransitionOn());
         }
@@ -72,7 +116,7 @@ public class EasyOutline : MonoBehaviour
 
     private void OnMenuTurnOff(Menu _menu, bool isInstant)
     {
-        if (_menu.title == menuName + this.name)
+        if (_menu.title == menuName)
         {
             //Debug.Log(_menu.title + menuName + " Off");
             StopAllCoroutines();
