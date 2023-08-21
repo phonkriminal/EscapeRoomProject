@@ -1,0 +1,228 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &768833834355955588
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2614717973322130913}
+  m_Layer: 0
+  m_Name: SM_ElectricGuitar_01b
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2614717973322130913
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 768833834355955588}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 6385534418516500641}
+  - {fileID: 8822844138264359393}
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!64 &7122962646990838177
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5481475328270642564}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -5605847677764635201, guid: 423abac3cc0ebd44fa474d949922f322, type: 3}
+--- !u!64 &4333927068904933181
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7553358474091772451}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 8920029770053790859, guid: be4ae82095985e348956b2a8c7e5ff33, type: 3}
+--- !u!1001 &6852016576175638346
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 2614717973322130913}
+    m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: 423abac3cc0ebd44fa474d949922f322,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 423abac3cc0ebd44fa474d949922f322,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 423abac3cc0ebd44fa474d949922f322,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 423abac3cc0ebd44fa474d949922f322,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 423abac3cc0ebd44fa474d949922f322,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 423abac3cc0ebd44fa474d949922f322,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 423abac3cc0ebd44fa474d949922f322,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 423abac3cc0ebd44fa474d949922f322,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 423abac3cc0ebd44fa474d949922f322,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 423abac3cc0ebd44fa474d949922f322,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 423abac3cc0ebd44fa474d949922f322,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 423abac3cc0ebd44fa474d949922f322,
+        type: 3}
+      propertyPath: m_Name
+      value: SM_ElectricGuitar_01 (1)
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: -7298083767607173662, guid: 423abac3cc0ebd44fa474d949922f322, type: 3}
+    - {fileID: 1433626053020878050, guid: 423abac3cc0ebd44fa474d949922f322, type: 3}
+  m_SourcePrefab: {fileID: 100100000, guid: 423abac3cc0ebd44fa474d949922f322, type: 3}
+--- !u!4 &6385534418516500641 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 423abac3cc0ebd44fa474d949922f322,
+    type: 3}
+  m_PrefabInstance: {fileID: 6852016576175638346}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &5481475328270642564 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -7852769215472063794, guid: 423abac3cc0ebd44fa474d949922f322,
+    type: 3}
+  m_PrefabInstance: {fileID: 6852016576175638346}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &9078043550303589898
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 2614717973322130913}
+    m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: be4ae82095985e348956b2a8c7e5ff33,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: be4ae82095985e348956b2a8c7e5ff33,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: be4ae82095985e348956b2a8c7e5ff33,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: be4ae82095985e348956b2a8c7e5ff33,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: be4ae82095985e348956b2a8c7e5ff33,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: be4ae82095985e348956b2a8c7e5ff33,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: be4ae82095985e348956b2a8c7e5ff33,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: be4ae82095985e348956b2a8c7e5ff33,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: be4ae82095985e348956b2a8c7e5ff33,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: be4ae82095985e348956b2a8c7e5ff33,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: be4ae82095985e348956b2a8c7e5ff33,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: be4ae82095985e348956b2a8c7e5ff33,
+        type: 3}
+      propertyPath: m_Name
+      value: SM_ElectricGuitar_Strap_01b
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: -1274426573427422017, guid: be4ae82095985e348956b2a8c7e5ff33, type: 3}
+    - {fileID: 1335194721893865520, guid: be4ae82095985e348956b2a8c7e5ff33, type: 3}
+  m_SourcePrefab: {fileID: 100100000, guid: be4ae82095985e348956b2a8c7e5ff33, type: 3}
+--- !u!4 &8822844138264359393 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: be4ae82095985e348956b2a8c7e5ff33,
+    type: 3}
+  m_PrefabInstance: {fileID: 9078043550303589898}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &7553358474091772451 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -7698522025304642519, guid: be4ae82095985e348956b2a8c7e5ff33,
+    type: 3}
+  m_PrefabInstance: {fileID: 9078043550303589898}
+  m_PrefabAsset: {fileID: 0}

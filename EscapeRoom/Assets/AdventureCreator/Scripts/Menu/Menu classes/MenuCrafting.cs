@@ -398,11 +398,9 @@ namespace AC
 			InvInstance invInstance = GetInstance (_slot);
 			if (!InvInstance.IsValid (invInstance))
 			{
-				if (invInstance == null) return string.Empty;
 				if (_language == Options.GetLanguage ())
 				{
-					
-					return invInstance.InvItem.label;
+					return invInstance.ItemLabel;
 				}
 				return invInstance.InvItem.GetLabel (_language);
 			}
