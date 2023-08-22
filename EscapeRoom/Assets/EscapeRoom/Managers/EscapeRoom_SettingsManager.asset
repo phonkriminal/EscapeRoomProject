@@ -36,7 +36,8 @@ MonoBehaviour:
   sceneAttributes: []
   actionListOnStart: {fileID: 11400000, guid: ed2cca998f77198478daa3b6e2d5cb98, type: 2}
   blackOutWhenSkipping: 1
-  events: []
+  events:
+  - rid: 3660831061363654657
   savePlayerReferencesWithAddressables: 0
   playerSwitching: 1
   legacyPlayer: {fileID: 0}
@@ -170,7 +171,7 @@ MonoBehaviour:
   autoCycleWhenInteract: 0
   showHoverInteractionInHotspotLabel: 0
   allowDefaultinteractions: 0
-  alwaysCloseInteractionMenus: 0
+  alwaysCloseInteractionMenus: 1
   whenReselectHotspot: 0
   lockCursorOnStart: 1
   hideLockedCursor: 1
@@ -183,7 +184,7 @@ MonoBehaviour:
   walkToHotspotMarkers: 1
   dragThreshold: 0
   shareInventory: 0
-  inventoryDragDrop: 1
+  inventoryDragDrop: 0
   dragDropThreshold: 0
   allowInventoryInteractionsDuringConversations: 0
   inventoryDropLook: 0
@@ -352,10 +353,20 @@ MonoBehaviour:
   defaultSfxVolume: 0.9
   defaultMusicVolume: 0.6
   defaultSpeechVolume: 1
-  showDebugLogs: 2
+  showDebugLogs: 1
   printActionCommentsInConsole: 0
   actionCommentLogging: 0
   showActiveActionLists: 0
   references:
     version: 2
-    RefIds: []
+    RefIds:
+    - rid: 3660831061363654657
+      type: {class: EventInventoryAddRemove, ns: AC, asm: Assembly-CSharp}
+      data:
+        label: 
+        id: 0
+        actionListAsset: {fileID: 11400000, guid: f5eacea12337640f2b7c799d13276415,
+          type: 2}
+        parameterIDs: 0000000001000000
+        addRemove: 0
+        itemID: -1
