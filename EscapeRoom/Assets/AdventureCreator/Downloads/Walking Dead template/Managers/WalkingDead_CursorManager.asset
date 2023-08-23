@@ -16,7 +16,7 @@ MonoBehaviour:
   cursorMode: 0
   uiCursorPrefab: {fileID: 0}
   cursorDisplay: 0
-  allowMainCursor: 0
+  allowMainCursor: 1
   lockSystemCursor: 1
   keepCursorWithinScreen: 1
   confineSystemCursor: 0
@@ -35,7 +35,7 @@ MonoBehaviour:
   leftClickExamine: 0
   onlyWalkWhenOverNavMesh: 0
   onlyShowInventoryLabelOverHotspots: 0
-  inventoryCursorSize: 0.06
+  inventoryCursorSize: 0.004
   allowIconInput: 1
   waitIcon:
     texture: {fileID: 0}
@@ -51,12 +51,12 @@ MonoBehaviour:
     frameSpeeds: []
     alwaysAnimate: 0
   pointerIcon:
-    texture: {fileID: 2800000, guid: 5c83780962ed843c0928648679746938, type: 3}
+    texture: {fileID: 2800000, guid: aae792902ff8a4bbda58dd20a7501ddd, type: 3}
     isAnimated: 0
     numFrames: 1
     numRows: 1
     numCols: 1
-    size: 0.02
+    size: 0.06
     animSpeed: 4
     endAnimOnLastFrame: 0
     skipFirstFrameWhenLooping: 0
@@ -82,7 +82,7 @@ MonoBehaviour:
     numFrames: 1
     numRows: 1
     numCols: 1
-    size: 0.04
+    size: 0.004
     animSpeed: 4
     endAnimOnLastFrame: 0
     skipFirstFrameWhenLooping: 0
@@ -102,7 +102,7 @@ MonoBehaviour:
     clickOffset: {x: 0, y: 0}
     frameSpeeds: []
     alwaysAnimate: 0
-  inventoryHandling: 0
+  inventoryHandling: 3
   hotspotPrefix1:
     label: Use
     lineID: 175
@@ -116,7 +116,7 @@ MonoBehaviour:
     label: to
     lineID: 178
   displayCountSize: 1.6
-  displayCountFont: {fileID: 0}
+  displayCountFont: {fileID: 12800000, guid: dba1e4c73d89c44408244db5a01d693e, type: 3}
   displayCountTextEffects: 0
   displayCountColor: {r: 1, g: 1, b: 1, a: 1}
   inventoryCursorOffset: {x: 0, y: 0}
@@ -126,7 +126,7 @@ MonoBehaviour:
     numFrames: 6
     numRows: 2
     numCols: 3
-    size: 0.015
+    size: 0.025
     animSpeed: 10
     endAnimOnLastFrame: 1
     skipFirstFrameWhenLooping: 0
@@ -148,7 +148,7 @@ MonoBehaviour:
     numFrames: 6
     numRows: 2
     numCols: 3
-    size: 0.015
+    size: 0.025
     animSpeed: 10
     endAnimOnLastFrame: 1
     skipFirstFrameWhenLooping: 0
@@ -170,7 +170,7 @@ MonoBehaviour:
     numFrames: 6
     numRows: 2
     numCols: 3
-    size: 0.015
+    size: 0.025
     animSpeed: 10
     endAnimOnLastFrame: 1
     skipFirstFrameWhenLooping: 0

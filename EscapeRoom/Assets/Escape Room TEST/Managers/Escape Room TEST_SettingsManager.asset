@@ -162,7 +162,7 @@ MonoBehaviour:
   interactionMethod: 2
   selectInteractions: 0
   autoHideInteractionIcons: 1
-  cancelInteractions: 2
+  cancelInteractions: 3
   seeInteractions: 0
   closeInteractionMenuIfTapHotspot: 1
   stopPlayerOnClickHotspot: 0
@@ -200,7 +200,7 @@ MonoBehaviour:
   inventoryPulseSpeed: 1
   activeWhenUnhandled: 1
   canReorderItems: 0
-  selectInventoryDisplay: 0
+  selectInventoryDisplay: 1
   rightClickInventory: 0
   reverseInventoryCombinations: 1
   canMoveWhenActive: 1
@@ -267,16 +267,16 @@ MonoBehaviour:
   placeDistantHotspotsOnSeparateLayer: 1
   hotspotsInVicinity: 0
   highlightAllHotspotsInVicinity: 1
-  hotspotIconDisplay: 0
+  hotspotIconDisplay: 4
   hotspotIcon: 0
   hotspotIconTexture: {fileID: 0}
   hotspotIconGraphic:
-    texture: {fileID: 0}
+    texture: {fileID: 2800000, guid: e36d12a3e96638149a8a494b514fed9d, type: 3}
     isAnimated: 0
     numFrames: 1
     numRows: 1
     numCols: 1
-    size: 0.04
+    size: 0.03
     animSpeed: 4
     endAnimOnLastFrame: 0
     skipFirstFrameWhenLooping: 0
@@ -284,7 +284,7 @@ MonoBehaviour:
     frameSpeeds: []
     alwaysAnimate: 0
   highlightMaterialPropertyOverride: 
-  hotspotIconSize: 0.04
+  hotspotIconSize: 0.025
   playerFacesHotspots: 0
   onlyFaceHotspotOnSelect: 0
   scaleHighlightWithMouseProximity: 1
