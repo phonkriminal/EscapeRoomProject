@@ -397,6 +397,7 @@ GameObject:
   - component: {fileID: 2064345504336273312}
   - component: {fileID: 5034413021620150698}
   - component: {fileID: 4825741032831920175}
+  - component: {fileID: 3027912599173825771}
   m_Layer: 0
   m_Name: 'Hotspot : Paperblock'
   m_TagString: Untagged
@@ -444,7 +445,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b7c3ce72f27144c1be5a4a8ce09121d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactionSource: 0
+  interactionSource: 1
   _limitToCamera: {fileID: 0}
   interactiveBoundary: {fileID: 0}
   hotspotName: Paper Block
@@ -453,7 +454,7 @@ MonoBehaviour:
   walkToMarker: {fileID: 0}
   centrePoint: {fileID: 0}
   centrePointOverrides: 0
-  provideUseInteraction: 0
+  provideUseInteraction: 1
   useButton:
     interaction: {fileID: 0}
     assetFile: {fileID: 0}
@@ -471,7 +472,23 @@ MonoBehaviour:
     isBlocking: 0
     parameterID: -1
     invParameterID: -1
-  useButtons: []
+  useButtons:
+  - interaction: {fileID: 0}
+    assetFile: {fileID: 11400000, guid: ec20f77f0b61b4ca2af6f96c032f4f01, type: 2}
+    customScriptObject: {fileID: 0}
+    customScriptFunction: 
+    isDisabled: 0
+    invID: 0
+    iconID: 0
+    selectItemMode: 0
+    playerAction: 1
+    doubleClickDoesNotSnapPlayerToMarker: 0
+    setProximity: 0
+    proximity: 1
+    faceAfter: 0
+    isBlocking: 0
+    parameterID: -1
+    invParameterID: -1
   oneClick: 0
   provideLookInteraction: 0
   lookButton:
@@ -549,11 +566,44 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b591419ee344469da92bd1bb7e1a1bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  constantID: 0
-  retainInPrefab: 0
+  constantID: 258008
+  retainInPrefab: 1
   autoManual: 0
   hotspotToSave: {fileID: 5034413021620150698}
   startState: 0
+--- !u!114 &3027912599173825771
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5894750654278931781}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3dc1d3bae29d84a98a3ae829b0aa906b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  initialGUIData:
+    fromParameters:
+    - label: Item to Remove
+      description: 
+      ID: 0
+      parameterType: 0
+      intValue: -1
+      constantID: 0
+      popUpID: 0
+      floatValue: 0
+      stringValue: 
+      gameObject: {fileID: 6593484308648891233}
+      objectValue: {fileID: 0}
+      vector3Value: {x: 0, y: 0, z: 0}
+      gameObjectParameterReferences: 1
+      variables: {fileID: 0}
+    parameterIDs: ffffffff
+  successiveGUIData: []
+  hotspot: {fileID: 5034413021620150698}
+  interactionType: 0
+  buttonIndex: 0
 --- !u!1 &5981657515248138165
 GameObject:
   m_ObjectHideFlags: 0
@@ -660,6 +710,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6593484308648891234}
+  - component: {fileID: 4245211777575724337}
+  - component: {fileID: 2964398446892130050}
+  - component: {fileID: 402405444887445808}
+  - component: {fileID: 748064281525974849}
   m_Layer: 0
   m_Name: PaperBlock
   m_TagString: Untagged
@@ -685,6 +739,71 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!54 &4245211777575724337
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6593484308648891233}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!114 &2964398446892130050
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6593484308648891233}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 63615cfbc1b1ad345964e4bbc075f5fd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &402405444887445808
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6593484308648891233}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d682a95e2dc8f7144af2dd5ab0ac7c85, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  constantID: 0
+  retainInPrefab: 0
+  autoManual: 0
+  defaultLinkedItemID: 2
+--- !u!114 &748064281525974849
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6593484308648891233}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 930cd2651ae4d46b29cf95185f455896, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  constantID: 0
+  retainInPrefab: 0
+  autoManual: 0
+  saveParent: 0
+  saveScenePresence: 0
+  linkedPrefabID: 0
+  transformSpace: 0
+  loadOrder: 0
+  addressableName: 
 --- !u!1 &6977497819312660155
 GameObject:
   m_ObjectHideFlags: 0

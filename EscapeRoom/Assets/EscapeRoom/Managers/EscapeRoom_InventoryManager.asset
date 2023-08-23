@@ -117,7 +117,11 @@ MonoBehaviour:
     useActionList: {fileID: 0}
     lookActionList: {fileID: 0}
     interactions: []
-    combineInteractions: []
+    combineInteractions:
+    - actionList: {fileID: 11400000, guid: 5b8c1235278db4fc3b4e7659139d0f99, type: 2}
+      idPlusOne: 1
+      combineID: 2
+      disabledOnStart: 0
     combineActionList: []
     combineID: 
     unhandledActionList: {fileID: 0}
@@ -163,7 +167,7 @@ MonoBehaviour:
       id: 0
     lineID: -1
     useIconID: 0
-    binID: 0
+    binID: -1
     overrideUseSyntax: 0
     hotspotPrefix1:
       label: Use

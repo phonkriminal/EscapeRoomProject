@@ -2121,7 +2121,7 @@ MonoBehaviour:
     It''s
     so cute...'
   lineID: 153
-  multiLineIDs: 9a000000
+  multiLineIDs: 
   isBackground: 0
   noAnimation: 0
   headClip: {fileID: 0}
@@ -6814,6 +6814,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6470495310184563858, guid: 02c386d3d975b4ee0bce5a1d47342961,
         type: 3}
+      propertyPath: lineID
+      value: 165
+      objectReference: {fileID: 0}
+    - target: {fileID: 6470495310184563858, guid: 02c386d3d975b4ee0bce5a1d47342961,
+        type: 3}
       propertyPath: useButtons.Array.data[0].faceAfter
       value: 0
       objectReference: {fileID: 0}
@@ -6911,6 +6916,11 @@ PrefabInstance:
         type: 3}
       propertyPath: initialGUIData.fromParameters.Array.data[9].gameObjectParameterReferences
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7947597066065839508, guid: 02c386d3d975b4ee0bce5a1d47342961,
+        type: 3}
+      propertyPath: lineID
+      value: 164
       objectReference: {fileID: 0}
     - target: {fileID: 7947597066065839508, guid: 02c386d3d975b4ee0bce5a1d47342961,
         type: 3}
@@ -13764,6 +13774,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2985930494990406718, guid: 8d69caa2effde45de8bc204dcb78569a,
         type: 3}
+      propertyPath: lineID
+      value: 163
+      objectReference: {fileID: 0}
+    - target: {fileID: 2985930494990406718, guid: 8d69caa2effde45de8bc204dcb78569a,
+        type: 3}
       propertyPath: hotspotName
       value: Bag
       objectReference: {fileID: 0}
@@ -17677,7 +17692,7 @@ MeshCollider:
   m_Mesh: {fileID: 4300054, guid: 0c0ee13a0d05340c4a3abd1be90fd27c, type: 3}
 --- !u!114 &5987042160531184190
 MonoBehaviour:
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 2
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
@@ -17703,7 +17718,7 @@ MonoBehaviour:
   drawingMode: 1
   outlineLayer: 0
   outlineTargets:
-  - IsVisible: 1
+  - IsVisible: 0
     CutoutMask: 8
     edgeDilateAmount: 5
     frontEdgeDilateAmount: 5
@@ -17719,7 +17734,7 @@ MonoBehaviour:
     cutoutTextureName: 
     DilateRenderingMode: 0
     cutoutTextureIndex: 0
-  - IsVisible: 1
+  - IsVisible: 0
     CutoutMask: 8
     edgeDilateAmount: 5
     frontEdgeDilateAmount: 5
@@ -19866,6 +19881,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: CynderBlock
+      objectReference: {fileID: 0}
+    - target: {fileID: 3530593029781018340, guid: 2c29a95d462c3415493d382f1e4edfd5,
+        type: 3}
+      propertyPath: lineID
+      value: 162
       objectReference: {fileID: 0}
     - target: {fileID: 3530593029781018340, guid: 2c29a95d462c3415493d382f1e4edfd5,
         type: 3}

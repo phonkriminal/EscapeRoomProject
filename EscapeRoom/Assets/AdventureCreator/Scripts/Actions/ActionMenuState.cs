@@ -36,6 +36,7 @@ namespace AC
 		public int elementToChangeParameterID = -1;
 		
 		public string journalText = "";
+		public int textToChangeParameterID = -1;
 		public bool onlyAddNewJournal = false;
 
 		public bool doFade = false;
@@ -74,6 +75,8 @@ namespace AC
 		{
 			menuToChange = AssignString (parameters, menuToChangeParameterID, menuToChange);
 			elementToChange = AssignString (parameters, elementToChangeParameterID, elementToChange);
+
+			journalText = AssignString(parameters, textToChangeParameterID, journalText);
 			journalPageIndex = AssignInteger (parameters, journalPageIndexParameterID, journalPageIndex);
 
 			runtimeMenuToChange = AdvGame.ConvertTokens (menuToChange, Options.GetLanguage (), localVariables, parameters);
@@ -429,9 +432,13 @@ namespace AC
 						{
 							elementToChange = EditorGUILayout.TextField ("Journal element:", elementToChange);
 						}
-				
-						journalText = CustomGUILayout.TextArea ("New page text:", journalText);
-						AddSearchTerm (journalText);
+						textToChangeParameterID = Action.ChooseParameterGUI("New page text:", parameters, textToChangeParameterID, new ParameterType[2] { ParameterType.String, ParameterType.PopUp });
+						if (textToChangeParameterID < 0)
+						{
+							journalText = CustomGUILayout.TextArea("New page text:", journalText);
+							AddSearchTerm(journalText);
+						}
+
 						preprocessTextTokens = EditorGUILayout.Toggle ("Pre-process text tokens?", preprocessTextTokens);
 
 						if (!preprocessTextTokens)

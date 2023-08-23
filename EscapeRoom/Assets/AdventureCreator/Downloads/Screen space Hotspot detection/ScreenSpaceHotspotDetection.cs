@@ -63,9 +63,11 @@ namespace AC
 			{
 				if (KickStarter.playerMenus.MouseOverMenu && KickStarter.playerMenus.MouseOverMenu.title == "Inventory" && KickStarter.playerMenus.MouseOverMenu.IsOn ())
 				{
+					Debug.Log("Exit Interaction");
 					KickStarter.playerMenus.CloseInteractionMenus ();
 					return;
 				}
+
 				float nearestHotspotDistance = Mathf.Infinity;
 
 				foreach (Hotspot hotspot in KickStarter.stateHandler.Hotspots)

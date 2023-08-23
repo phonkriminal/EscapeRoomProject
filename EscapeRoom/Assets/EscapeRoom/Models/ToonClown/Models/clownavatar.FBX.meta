@@ -1,141 +1,407 @@
 fileFormatVersion: 2
 guid: 5637ad2cc6b6e864691d5792bc8108fc
 ModelImporter:
-  serializedVersion: 23
-  fileIDToRecycleName:
-    100000: CLOWN
-    100002: Clown
-    100004: Clown Head
-    100006: Clown L Brow
-    100008: Clown L Calf
-    100010: Clown L Clavicle
-    100012: Clown L Eye
-    100014: Clown L Finger0
-    100016: Clown L Finger01
-    100018: Clown L Finger02
-    100020: Clown L Finger1
-    100022: Clown L Finger11
-    100024: Clown L Finger12
-    100026: Clown L Finger2
-    100028: Clown L Finger21
-    100030: Clown L Finger22
-    100032: Clown L Finger3
-    100034: Clown L Finger31
-    100036: Clown L Finger32
-    100038: Clown L Finger4
-    100040: Clown L Finger41
-    100042: Clown L Finger42
-    100044: Clown L Foot
-    100046: Clown L Forearm
-    100048: Clown L Hand
-    100050: Clown L Lid
-    100052: Clown L Mouth
-    100054: Clown L Thigh
-    100056: Clown L Toe0
-    100058: Clown L UpperArm
-    100060: Clown Mouth
-    100062: Clown Neck
-    100064: Clown Pelvis
-    100066: Clown R Brow
-    100068: Clown R Calf
-    100070: Clown R Clavicle
-    100072: Clown R Eye
-    100074: Clown R Finger0
-    100076: Clown R Finger01
-    100078: Clown R Finger02
-    100080: Clown R Finger1
-    100082: Clown R Finger11
-    100084: Clown R Finger12
-    100086: Clown R Finger2
-    100088: Clown R Finger21
-    100090: Clown R Finger22
-    100092: Clown R Finger3
-    100094: Clown R Finger31
-    100096: Clown R Finger32
-    100098: Clown R Finger4
-    100100: Clown R Finger41
-    100102: Clown R Finger42
-    100104: Clown R Foot
-    100106: Clown R Forearm
-    100108: Clown R Hand
-    100110: Clown R Lid
-    100112: Clown R Mouth
-    100114: Clown R Thigh
-    100116: Clown R Toe0
-    100118: Clown R UpperArm
-    100120: Clown Spine
-    100122: Clown Spine1
-    100124: //RootNode
-    100126: ROOT
-    400000: CLOWN
-    400002: Clown
-    400004: Clown Head
-    400006: Clown L Brow
-    400008: Clown L Calf
-    400010: Clown L Clavicle
-    400012: Clown L Eye
-    400014: Clown L Finger0
-    400016: Clown L Finger01
-    400018: Clown L Finger02
-    400020: Clown L Finger1
-    400022: Clown L Finger11
-    400024: Clown L Finger12
-    400026: Clown L Finger2
-    400028: Clown L Finger21
-    400030: Clown L Finger22
-    400032: Clown L Finger3
-    400034: Clown L Finger31
-    400036: Clown L Finger32
-    400038: Clown L Finger4
-    400040: Clown L Finger41
-    400042: Clown L Finger42
-    400044: Clown L Foot
-    400046: Clown L Forearm
-    400048: Clown L Hand
-    400050: Clown L Lid
-    400052: Clown L Mouth
-    400054: Clown L Thigh
-    400056: Clown L Toe0
-    400058: Clown L UpperArm
-    400060: Clown Mouth
-    400062: Clown Neck
-    400064: Clown Pelvis
-    400066: Clown R Brow
-    400068: Clown R Calf
-    400070: Clown R Clavicle
-    400072: Clown R Eye
-    400074: Clown R Finger0
-    400076: Clown R Finger01
-    400078: Clown R Finger02
-    400080: Clown R Finger1
-    400082: Clown R Finger11
-    400084: Clown R Finger12
-    400086: Clown R Finger2
-    400088: Clown R Finger21
-    400090: Clown R Finger22
-    400092: Clown R Finger3
-    400094: Clown R Finger31
-    400096: Clown R Finger32
-    400098: Clown R Finger4
-    400100: Clown R Finger41
-    400102: Clown R Finger42
-    400104: Clown R Foot
-    400106: Clown R Forearm
-    400108: Clown R Hand
-    400110: Clown R Lid
-    400112: Clown R Mouth
-    400114: Clown R Thigh
-    400116: Clown R Toe0
-    400118: Clown R UpperArm
-    400120: Clown Spine
-    400122: Clown Spine1
-    400124: //RootNode
-    400126: ROOT
-    2300000: CLOWN
-    3300000: CLOWN
-    4300000: CLOWN
-    9500000: //RootNode
-    13700000: CLOWN
+  serializedVersion: 21300
+  internalIDToNameTable:
+  - first:
+      1: 100000
+    second: CLOWN
+  - first:
+      1: 100002
+    second: Clown
+  - first:
+      1: 100004
+    second: Clown Head
+  - first:
+      1: 100006
+    second: Clown L Brow
+  - first:
+      1: 100008
+    second: Clown L Calf
+  - first:
+      1: 100010
+    second: Clown L Clavicle
+  - first:
+      1: 100012
+    second: Clown L Eye
+  - first:
+      1: 100014
+    second: Clown L Finger0
+  - first:
+      1: 100016
+    second: Clown L Finger01
+  - first:
+      1: 100018
+    second: Clown L Finger02
+  - first:
+      1: 100020
+    second: Clown L Finger1
+  - first:
+      1: 100022
+    second: Clown L Finger11
+  - first:
+      1: 100024
+    second: Clown L Finger12
+  - first:
+      1: 100026
+    second: Clown L Finger2
+  - first:
+      1: 100028
+    second: Clown L Finger21
+  - first:
+      1: 100030
+    second: Clown L Finger22
+  - first:
+      1: 100032
+    second: Clown L Finger3
+  - first:
+      1: 100034
+    second: Clown L Finger31
+  - first:
+      1: 100036
+    second: Clown L Finger32
+  - first:
+      1: 100038
+    second: Clown L Finger4
+  - first:
+      1: 100040
+    second: Clown L Finger41
+  - first:
+      1: 100042
+    second: Clown L Finger42
+  - first:
+      1: 100044
+    second: Clown L Foot
+  - first:
+      1: 100046
+    second: Clown L Forearm
+  - first:
+      1: 100048
+    second: Clown L Hand
+  - first:
+      1: 100050
+    second: Clown L Lid
+  - first:
+      1: 100052
+    second: Clown L Mouth
+  - first:
+      1: 100054
+    second: Clown L Thigh
+  - first:
+      1: 100056
+    second: Clown L Toe0
+  - first:
+      1: 100058
+    second: Clown L UpperArm
+  - first:
+      1: 100060
+    second: Clown Mouth
+  - first:
+      1: 100062
+    second: Clown Neck
+  - first:
+      1: 100064
+    second: Clown Pelvis
+  - first:
+      1: 100066
+    second: Clown R Brow
+  - first:
+      1: 100068
+    second: Clown R Calf
+  - first:
+      1: 100070
+    second: Clown R Clavicle
+  - first:
+      1: 100072
+    second: Clown R Eye
+  - first:
+      1: 100074
+    second: Clown R Finger0
+  - first:
+      1: 100076
+    second: Clown R Finger01
+  - first:
+      1: 100078
+    second: Clown R Finger02
+  - first:
+      1: 100080
+    second: Clown R Finger1
+  - first:
+      1: 100082
+    second: Clown R Finger11
+  - first:
+      1: 100084
+    second: Clown R Finger12
+  - first:
+      1: 100086
+    second: Clown R Finger2
+  - first:
+      1: 100088
+    second: Clown R Finger21
+  - first:
+      1: 100090
+    second: Clown R Finger22
+  - first:
+      1: 100092
+    second: Clown R Finger3
+  - first:
+      1: 100094
+    second: Clown R Finger31
+  - first:
+      1: 100096
+    second: Clown R Finger32
+  - first:
+      1: 100098
+    second: Clown R Finger4
+  - first:
+      1: 100100
+    second: Clown R Finger41
+  - first:
+      1: 100102
+    second: Clown R Finger42
+  - first:
+      1: 100104
+    second: Clown R Foot
+  - first:
+      1: 100106
+    second: Clown R Forearm
+  - first:
+      1: 100108
+    second: Clown R Hand
+  - first:
+      1: 100110
+    second: Clown R Lid
+  - first:
+      1: 100112
+    second: Clown R Mouth
+  - first:
+      1: 100114
+    second: Clown R Thigh
+  - first:
+      1: 100116
+    second: Clown R Toe0
+  - first:
+      1: 100118
+    second: Clown R UpperArm
+  - first:
+      1: 100120
+    second: Clown Spine
+  - first:
+      1: 100122
+    second: Clown Spine1
+  - first:
+      1: 100124
+    second: //RootNode
+  - first:
+      1: 100126
+    second: ROOT
+  - first:
+      4: 400000
+    second: CLOWN
+  - first:
+      4: 400002
+    second: Clown
+  - first:
+      4: 400004
+    second: Clown Head
+  - first:
+      4: 400006
+    second: Clown L Brow
+  - first:
+      4: 400008
+    second: Clown L Calf
+  - first:
+      4: 400010
+    second: Clown L Clavicle
+  - first:
+      4: 400012
+    second: Clown L Eye
+  - first:
+      4: 400014
+    second: Clown L Finger0
+  - first:
+      4: 400016
+    second: Clown L Finger01
+  - first:
+      4: 400018
+    second: Clown L Finger02
+  - first:
+      4: 400020
+    second: Clown L Finger1
+  - first:
+      4: 400022
+    second: Clown L Finger11
+  - first:
+      4: 400024
+    second: Clown L Finger12
+  - first:
+      4: 400026
+    second: Clown L Finger2
+  - first:
+      4: 400028
+    second: Clown L Finger21
+  - first:
+      4: 400030
+    second: Clown L Finger22
+  - first:
+      4: 400032
+    second: Clown L Finger3
+  - first:
+      4: 400034
+    second: Clown L Finger31
+  - first:
+      4: 400036
+    second: Clown L Finger32
+  - first:
+      4: 400038
+    second: Clown L Finger4
+  - first:
+      4: 400040
+    second: Clown L Finger41
+  - first:
+      4: 400042
+    second: Clown L Finger42
+  - first:
+      4: 400044
+    second: Clown L Foot
+  - first:
+      4: 400046
+    second: Clown L Forearm
+  - first:
+      4: 400048
+    second: Clown L Hand
+  - first:
+      4: 400050
+    second: Clown L Lid
+  - first:
+      4: 400052
+    second: Clown L Mouth
+  - first:
+      4: 400054
+    second: Clown L Thigh
+  - first:
+      4: 400056
+    second: Clown L Toe0
+  - first:
+      4: 400058
+    second: Clown L UpperArm
+  - first:
+      4: 400060
+    second: Clown Mouth
+  - first:
+      4: 400062
+    second: Clown Neck
+  - first:
+      4: 400064
+    second: Clown Pelvis
+  - first:
+      4: 400066
+    second: Clown R Brow
+  - first:
+      4: 400068
+    second: Clown R Calf
+  - first:
+      4: 400070
+    second: Clown R Clavicle
+  - first:
+      4: 400072
+    second: Clown R Eye
+  - first:
+      4: 400074
+    second: Clown R Finger0
+  - first:
+      4: 400076
+    second: Clown R Finger01
+  - first:
+      4: 400078
+    second: Clown R Finger02
+  - first:
+      4: 400080
+    second: Clown R Finger1
+  - first:
+      4: 400082
+    second: Clown R Finger11
+  - first:
+      4: 400084
+    second: Clown R Finger12
+  - first:
+      4: 400086
+    second: Clown R Finger2
+  - first:
+      4: 400088
+    second: Clown R Finger21
+  - first:
+      4: 400090
+    second: Clown R Finger22
+  - first:
+      4: 400092
+    second: Clown R Finger3
+  - first:
+      4: 400094
+    second: Clown R Finger31
+  - first:
+      4: 400096
+    second: Clown R Finger32
+  - first:
+      4: 400098
+    second: Clown R Finger4
+  - first:
+      4: 400100
+    second: Clown R Finger41
+  - first:
+      4: 400102
+    second: Clown R Finger42
+  - first:
+      4: 400104
+    second: Clown R Foot
+  - first:
+      4: 400106
+    second: Clown R Forearm
+  - first:
+      4: 400108
+    second: Clown R Hand
+  - first:
+      4: 400110
+    second: Clown R Lid
+  - first:
+      4: 400112
+    second: Clown R Mouth
+  - first:
+      4: 400114
+    second: Clown R Thigh
+  - first:
+      4: 400116
+    second: Clown R Toe0
+  - first:
+      4: 400118
+    second: Clown R UpperArm
+  - first:
+      4: 400120
+    second: Clown Spine
+  - first:
+      4: 400122
+    second: Clown Spine1
+  - first:
+      4: 400124
+    second: //RootNode
+  - first:
+      4: 400126
+    second: ROOT
+  - first:
+      23: 2300000
+    second: CLOWN
+  - first:
+      33: 3300000
+    second: CLOWN
+  - first:
+      43: 4300000
+    second: CLOWN
+  - first:
+      95: 9500000
+    second: //RootNode
+  - first:
+      137: 13700000
+    second: CLOWN
   externalObjects:
   - first:
       type: UnityEngine:Material
@@ -163,7 +429,7 @@ ModelImporter:
       name: clownhead1
     second: {fileID: 2100000, guid: 512c5b135155c80449edecbb44284627, type: 2}
   materials:
-    importMaterials: 0
+    materialImportMode: 0
     materialName: 0
     materialSearch: 1
     materialLocation: 0
@@ -172,6 +438,7 @@ ModelImporter:
     bakeSimulation: 0
     resampleCurves: 1
     optimizeGameObjects: 0
+    removeConstantScaleCurves: 0
     motionNodeName: 
     rigImportErrors: 
     rigImportWarnings: 
@@ -196,25 +463,34 @@ ModelImporter:
     meshCompression: 0
     addColliders: 0
     useSRGBMaterialColor: 1
+    sortHierarchyByName: 1
     importVisibility: 0
-    importBlendShapes: 0
+    importBlendShapes: 1
     importCameras: 0
     importLights: 0
+    nodeNameCollisionStrategy: 0
+    fileIdsGeneration: 1
     swapUVChannels: 0
     generateSecondaryUV: 0
     useFileUnits: 1
-    optimizeMeshForGPU: 1
     keepQuads: 0
     weldVertices: 1
+    bakeAxisConversion: 0
     preserveHierarchy: 0
+    skinWeightsMode: 0
+    maxBonesPerVertex: 4
+    minBoneWeight: 0.001
+    optimizeBones: 1
+    meshOptimizationFlags: -1
     indexFormat: 0
     secondaryUVAngleDistortion: 8
     secondaryUVAreaDistortion: 15.000001
     secondaryUVHardAngle: 88
+    secondaryUVMarginMethod: 0
+    secondaryUVMinLightmapResolution: 40
+    secondaryUVMinObjectScale: 1
     secondaryUVPackMargin: 4
     useFileScale: 1
-    previousCalculatedGlobalScale: 0.01
-    hasPreviousCalculatedGlobalScale: 1
   tangentSpace:
     normalSmoothAngle: 60
     normalImportMode: 2
@@ -223,10 +499,10 @@ ModelImporter:
     legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 1
     blendShapeNormalImportMode: 2
     normalSmoothingSource: 0
+  referencedClips: []
   importAnimation: 0
-  copyAvatar: 0
   humanDescription:
-    serializedVersion: 2
+    serializedVersion: 3
     human:
     - boneName: Clown Pelvis
       humanName: Hips
@@ -960,13 +1236,18 @@ ModelImporter:
     armStretch: 0.05
     legStretch: 0.05
     feetSpacing: 0
+    globalScale: 1
     rootMotionBoneName: 
     hasTranslationDoF: 1
     hasExtraRoot: 0
     skeletonHasParents: 0
   lastHumanDescriptionAvatarSource: {instanceID: 0}
+  autoGenerateAvatarMappingIfUnspecified: 1
   animationType: 3
   humanoidOversampling: 1
+  avatarSetup: 1
+  addHumanoidExtraRootOnlyWhenUsingAvatar: 0
+  remapMaterialsIfMaterialImportModeIsNone: 1
   additionalBone: 0
   userData: 
   assetBundleName: 

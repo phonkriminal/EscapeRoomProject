@@ -203,7 +203,7 @@ GameObject:
   - component: {fileID: 2985930494990406716}
   - component: {fileID: 2985930494990406719}
   - component: {fileID: 2985930494990406718}
-  - component: {fileID: 2985930494990406717}
+  - component: {fileID: 1067929457653637389}
   m_Layer: 0
   m_Name: 'Hotspot : PaperBag'
   m_TagString: Untagged
@@ -251,12 +251,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b7c3ce72f27144c1be5a4a8ce09121d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactionSource: 0
+  interactionSource: 1
   _limitToCamera: {fileID: 0}
   interactiveBoundary: {fileID: 0}
-  hotspotName: 
+  hotspotName: Paper Bag
   lineID: -1
-  highlight: {fileID: 0}
+  highlight: {fileID: 133244761682574607}
   walkToMarker: {fileID: 0}
   centrePoint: {fileID: 0}
   centrePointOverrides: 0
@@ -280,7 +280,7 @@ MonoBehaviour:
     invParameterID: -1
   useButtons:
   - interaction: {fileID: 0}
-    assetFile: {fileID: 0}
+    assetFile: {fileID: 11400000, guid: 6b3387e4780fa4f72880a08e7e6c5dc2, type: 2}
     customScriptObject: {fileID: 0}
     customScriptFunction: 
     isDisabled: 0
@@ -360,7 +360,7 @@ MonoBehaviour:
   iconSortingOrder: 0
   doubleClickingHotspot: 0
   playerTurnsHead: 1
---- !u!114 &2985930494990406717
+--- !u!114 &1067929457653637389
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -369,17 +369,86 @@ MonoBehaviour:
   m_GameObject: {fileID: 2985930494990406715}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dd03a057fc6dc4182b186d0a8d9c4d2e, type: 3}
+  m_Script: {fileID: 11500000, guid: 3dc1d3bae29d84a98a3ae829b0aa906b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hotspotToShow: {fileID: 0}
-  highlightToSync: {fileID: 0}
-  alwaysShowDuringGameplay: 1
-  layerMask:
-    serializedVersion: 2
-    m_Bits: 1
-  menuName: Hotspot
-  labelName: HotspotLabel
+  initialGUIData:
+    fromParameters:
+    - label: InteractionObject
+      description: 
+      ID: 0
+      parameterType: 0
+      intValue: -1
+      constantID: 0
+      popUpID: 0
+      floatValue: 0
+      stringValue: 
+      gameObject: {fileID: 8945168870158056241}
+      objectValue: {fileID: 0}
+      vector3Value: {x: 0, y: 0, z: 0}
+      gameObjectParameterReferences: 1
+      variables: {fileID: 0}
+    - label: Inventory Item
+      description: 
+      ID: 1
+      parameterType: 1
+      intValue: 1
+      constantID: 0
+      popUpID: 1
+      floatValue: 0
+      stringValue: 
+      gameObject: {fileID: 0}
+      objectValue: {fileID: 0}
+      vector3Value: {x: 0, y: 0, z: 0}
+      gameObjectParameterReferences: 0
+      variables: {fileID: 0}
+    - label: Hidden marker
+      description: 
+      ID: 2
+      parameterType: 0
+      intValue: -1
+      constantID: 0
+      popUpID: 0
+      floatValue: 0
+      stringValue: 
+      gameObject: {fileID: 0}
+      objectValue: {fileID: 0}
+      vector3Value: {x: 0, y: 0, z: 0}
+      gameObjectParameterReferences: 0
+      variables: {fileID: 0}
+    - label: AnimatorParameters
+      description: 
+      ID: 3
+      parameterType: 12
+      intValue: 0
+      constantID: 0
+      popUpID: 1
+      floatValue: 0
+      stringValue: 
+      gameObject: {fileID: 0}
+      objectValue: {fileID: 0}
+      vector3Value: {x: 0, y: 0, z: 0}
+      gameObjectParameterReferences: 0
+      variables: {fileID: 0}
+    - label: Animation Value
+      description: 
+      ID: 4
+      parameterType: 6
+      intValue: 5
+      constantID: 0
+      popUpID: 0
+      floatValue: 0
+      stringValue: 
+      gameObject: {fileID: 0}
+      objectValue: {fileID: 0}
+      vector3Value: {x: 0, y: 0, z: 0}
+      gameObjectParameterReferences: 0
+      variables: {fileID: 0}
+    parameterIDs: ffffffffffffffffffffffffffffffffffffffff
+  successiveGUIData: []
+  hotspot: {fileID: 2985930494990406718}
+  interactionType: 0
+  buttonIndex: 0
 --- !u!1 &3077969290601741051
 GameObject:
   m_ObjectHideFlags: 0
@@ -772,10 +841,11 @@ GameObject:
   - component: {fileID: 8945168870155855345}
   - component: {fileID: 6695352778550897295}
   - component: {fileID: 3123743069915317778}
+  - component: {fileID: 133244761682574607}
   m_Layer: 0
   m_Name: Paperboard
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: 5721338939258241955, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -926,3 +996,51 @@ MonoBehaviour:
     unityEvent:
       m_PersistentCalls:
         m_Calls: []
+--- !u!114 &133244761682574607
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8945168870158056241}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6973a3c06ca6d484494390d4f3bf8819, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  highlightWhenSelected: 1
+  brightenMaterials: 1
+  affectChildren: 1
+  fadeTime: 0.3
+  flashHoldTime: 1
+  highlightCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 1
+      outSlope: 1
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 2
+      inSlope: 1
+      outSlope: 1
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  callEvents: 0
+  onHighlightOn:
+    m_PersistentCalls:
+      m_Calls: []
+  onHighlightOff:
+    m_PersistentCalls:
+      m_Calls: []

@@ -175,6 +175,7 @@ GameObject:
   - component: {fileID: 3837923236963558888}
   - component: {fileID: 5162710212789135859}
   - component: {fileID: 8839198387817750466}
+  - component: {fileID: 417676247184030812}
   m_Layer: 0
   m_Name: CynderBlock
   m_TagString: Untagged
@@ -292,7 +293,7 @@ MonoBehaviour:
   interactiveBoundary: {fileID: 0}
   hotspotName: Block
   lineID: -1
-  highlight: {fileID: 0}
+  highlight: {fileID: 417676247184030812}
   walkToMarker: {fileID: 0}
   centrePoint: {fileID: 0}
   centrePointOverrides: 0
@@ -509,7 +510,7 @@ MonoBehaviour:
       description: 
       ID: 1
       parameterType: 1
-      intValue: 2
+      intValue: 1
       constantID: 0
       popUpID: 1
       floatValue: 0
@@ -566,6 +567,54 @@ MonoBehaviour:
   hotspot: {fileID: 3530593029781018340}
   interactionType: 0
   buttonIndex: 0
+--- !u!114 &417676247184030812
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1696808416756849162}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6973a3c06ca6d484494390d4f3bf8819, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  highlightWhenSelected: 1
+  brightenMaterials: 1
+  affectChildren: 1
+  fadeTime: 0.3
+  flashHoldTime: 1
+  highlightCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 1
+      outSlope: 1
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 2
+      inSlope: 1
+      outSlope: 1
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  callEvents: 0
+  onHighlightOn:
+    m_PersistentCalls:
+      m_Calls: []
+  onHighlightOff:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &2746324120664075851
 GameObject:
   m_ObjectHideFlags: 0

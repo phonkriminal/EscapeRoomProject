@@ -184,16 +184,16 @@ MonoBehaviour:
   walkToHotspotMarkers: 1
   dragThreshold: 0
   shareInventory: 0
-  inventoryDragDrop: 0
+  inventoryDragDrop: 1
   dragDropThreshold: 0
   allowInventoryInteractionsDuringConversations: 0
   inventoryDropLook: 0
   inventoryDropLookNoDrag: 0
   inventoryInteractions: 0
-  inventoryDisableLeft: 1
+  inventoryDisableLeft: 0
   allowDefaultInventoryInteractions: 0
-  inventoryDisableUnhandled: 1
-  inventoryDisableDefined: 1
+  inventoryDisableUnhandled: 0
+  inventoryDisableDefined: 0
   inventoryInteractionsHaltPlayer: 0
   activeWhenHover: 0
   inventoryActiveEffect: 1
@@ -201,10 +201,10 @@ MonoBehaviour:
   activeWhenUnhandled: 1
   canReorderItems: 0
   selectInventoryDisplay: 0
-  rightClickInventory: 0
+  rightClickInventory: 2
   reverseInventoryCombinations: 1
   canMoveWhenActive: 1
-  selectInvWithUnhandled: 0
+  selectInvWithUnhandled: 1
   selectInvWithIconID: 0
   giveInvWithUnhandled: 0
   giveInvWithIconID: 0

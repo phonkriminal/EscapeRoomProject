@@ -1,0 +1,194 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b2cd11e06e7fc41a595e0cccca50dae3, type: 3}
+  m_Name: WalkingDead_CursorManager
+  m_EditorClassIdentifier: 
+  cursorRendering: 0
+  cursorMode: 0
+  uiCursorPrefab: {fileID: 0}
+  cursorDisplay: 0
+  allowMainCursor: 0
+  lockSystemCursor: 1
+  keepCursorWithinScreen: 1
+  confineSystemCursor: 0
+  allowWalkCursor: 0
+  syncWalkCursorWithInteraction: 0
+  walkCursor_ID: 0
+  addWalkPrefix: 0
+  walkPrefix:
+    label: Walk to
+    lineID: 179
+  addHotspotPrefix: 1
+  allowInteractionCursor: 0
+  allowInteractionCursorForInventory: 0
+  cycleCursors: 0
+  onlyAnimateOverHotspots: 0
+  leftClickExamine: 0
+  onlyWalkWhenOverNavMesh: 0
+  onlyShowInventoryLabelOverHotspots: 0
+  inventoryCursorSize: 0.06
+  allowIconInput: 1
+  waitIcon:
+    texture: {fileID: 0}
+    isAnimated: 0
+    numFrames: 1
+    numRows: 1
+    numCols: 1
+    size: 0.04
+    animSpeed: 4
+    endAnimOnLastFrame: 0
+    skipFirstFrameWhenLooping: 0
+    clickOffset: {x: 0, y: 0}
+    frameSpeeds: []
+    alwaysAnimate: 0
+  pointerIcon:
+    texture: {fileID: 2800000, guid: 5c83780962ed843c0928648679746938, type: 3}
+    isAnimated: 0
+    numFrames: 1
+    numRows: 1
+    numCols: 1
+    size: 0.02
+    animSpeed: 4
+    endAnimOnLastFrame: 0
+    skipFirstFrameWhenLooping: 0
+    clickOffset: {x: 0, y: 0}
+    frameSpeeds: []
+    alwaysAnimate: 0
+  walkIcon:
+    texture: {fileID: 0}
+    isAnimated: 0
+    numFrames: 1
+    numRows: 1
+    numCols: 1
+    size: 0.04
+    animSpeed: 4
+    endAnimOnLastFrame: 0
+    skipFirstFrameWhenLooping: 0
+    clickOffset: {x: 0, y: 0}
+    frameSpeeds: []
+    alwaysAnimate: 0
+  mouseOverIcon:
+    texture: {fileID: 0}
+    isAnimated: 0
+    numFrames: 1
+    numRows: 1
+    numCols: 1
+    size: 0.04
+    animSpeed: 4
+    endAnimOnLastFrame: 0
+    skipFirstFrameWhenLooping: 0
+    clickOffset: {x: 0, y: 0}
+    frameSpeeds: []
+    alwaysAnimate: 0
+  cameraDragIcon:
+    texture: {fileID: 0}
+    isAnimated: 0
+    numFrames: 1
+    numRows: 1
+    numCols: 1
+    size: 0.04
+    animSpeed: 4
+    endAnimOnLastFrame: 0
+    skipFirstFrameWhenLooping: 0
+    clickOffset: {x: 0, y: 0}
+    frameSpeeds: []
+    alwaysAnimate: 0
+  inventoryHandling: 0
+  hotspotPrefix1:
+    label: Use
+    lineID: 175
+  hotspotPrefix2:
+    label: on
+    lineID: 176
+  hotspotPrefix3:
+    label: Give
+    lineID: 177
+  hotspotPrefix4:
+    label: to
+    lineID: 178
+  displayCountSize: 1.6
+  displayCountFont: {fileID: 0}
+  displayCountTextEffects: 0
+  displayCountColor: {r: 1, g: 1, b: 1, a: 1}
+  inventoryCursorOffset: {x: 0, y: 0}
+  cursorIcons:
+  - texture: {fileID: 2800000, guid: 8a7b4179732fa4e5ba89fd13007ef1fa, type: 3}
+    isAnimated: 1
+    numFrames: 6
+    numRows: 2
+    numCols: 3
+    size: 0.015
+    animSpeed: 10
+    endAnimOnLastFrame: 1
+    skipFirstFrameWhenLooping: 0
+    clickOffset: {x: 0, y: 0}
+    frameSpeeds:
+    - 1
+    - 1
+    - 1
+    - 1
+    - 1
+    - 1
+    alwaysAnimate: 0
+    dontCycle: 0
+    label: Use
+    lineID: 180
+    id: 0
+  - texture: {fileID: 2800000, guid: 6502784e0a0ce4b9b8fdc9ec9ce9b2a3, type: 3}
+    isAnimated: 1
+    numFrames: 6
+    numRows: 2
+    numCols: 3
+    size: 0.015
+    animSpeed: 10
+    endAnimOnLastFrame: 1
+    skipFirstFrameWhenLooping: 0
+    clickOffset: {x: 0, y: 0}
+    frameSpeeds:
+    - 1
+    - 1
+    - 1
+    - 1
+    - 1
+    - 1
+    alwaysAnimate: 0
+    dontCycle: 0
+    label: Talk to
+    lineID: 181
+    id: 1
+  - texture: {fileID: 2800000, guid: ede2fe51e273744bfbff6436cdf92509, type: 3}
+    isAnimated: 1
+    numFrames: 6
+    numRows: 2
+    numCols: 3
+    size: 0.015
+    animSpeed: 10
+    endAnimOnLastFrame: 1
+    skipFirstFrameWhenLooping: 0
+    clickOffset: {x: 0, y: 0}
+    frameSpeeds: []
+    alwaysAnimate: 0
+    dontCycle: 0
+    label: Look at
+    lineID: 182
+    id: 2
+  unhandledCursorInteractions:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  passUnhandledHotspotAsParameter: 0
+  onlyShowCursorLabelOverHotspots: 0
+  allowCursorCyclingWhenPaused: 0
+  lookUseCursorAction: 0
+  lookCursor_ID: 0
+  hideCursorWhenDraggingMoveables: 1
+  forceCursorInEditor: 0
