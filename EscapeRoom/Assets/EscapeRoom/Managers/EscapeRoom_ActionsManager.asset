@@ -926,4 +926,17 @@ MonoBehaviour:
     description: Starts playing a LipSyncData clip on a LipSync component
     isEnabled: 1
     color: {r: 1, g: 1, b: 1, a: 1}
+  - fileName: RogoLipSync_SetEmotion
+    category: 21
+    title: Rogo LipSync - Set Emotion
+    description: Blends a LipSync emotion on a LipSync component
+    isEnabled: 1
+    color: {r: 1, g: 1, b: 1, a: 1}
+  - fileName: RogoLipSync_Stop
+    category: 21
+    title: Rogo LipSync - Stop
+    description: Stops a LipSyncData clip on a LipSync component when a LipSync animation
+      is already playing.
+    isEnabled: 1
+    color: {r: 1, g: 1, b: 1, a: 1}
   defaultActionCategoryDatas: []

@@ -817,7 +817,9 @@ GameObject:
   - component: {fileID: 392863215028702442}
   - component: {fileID: 8777316913587184724}
   - component: {fileID: 6573851211456098961}
-  - component: {fileID: 3046255065963945261}
+  - component: {fileID: 2458268875523596642}
+  - component: {fileID: 3343088288379149749}
+  - component: {fileID: 4281892737289104188}
   m_Layer: 2
   m_Name: BiBo
   m_TagString: Untagged
@@ -1020,7 +1022,7 @@ MonoBehaviour:
   talkingAnimation: 0
   separateTalkingLayer: 0
   speechLabel: BiBo
-  lineID: 117
+  lineID: 190
   displayLineID: -1
   speechColor: {r: 0.09968895, g: 0.8679245, b: 0.012281928, a: 1}
   portraitIcon:
@@ -2415,7 +2417,37 @@ MonoBehaviour:
   constantID: 311320
   retainInPrefab: 1
   autoManual: 0
---- !u!114 &3046255065963945261
+--- !u!114 &2458268875523596642
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1171209387228142441}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a40bd5d46c9f4408cbe6468257a31be6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  constantID: 311320
+  retainInPrefab: 1
+  autoManual: 0
+--- !u!114 &3343088288379149749
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1171209387228142441}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a40bd5d46c9f4408cbe6468257a31be6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  constantID: 311320
+  retainInPrefab: 1
+  autoManual: 0
+--- !u!114 &4281892737289104188
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

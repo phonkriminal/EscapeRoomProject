@@ -13,31 +13,32 @@ MonoBehaviour:
   m_Name: EscapeRoom_SettingsManager
   m_EditorClassIdentifier: 
   separateEditorSaveFiles: 1
-  saveFileName: EscapeRoom
-  saveTimeDisplay: 1
+  saveFileName: Escape Room TEST
+  saveTimeDisplay: 0
   customSaveFormat: MMMM dd, yyyy
   takeSaveScreenshots: 0
-  saveScreenshots: 2
+  saveScreenshots: 0
   screenshotResolutionFactor: 1
   useProfiles: 0
   maxSaves: 5
-  orderSavesByUpdateTime: 1
+  orderSavesByUpdateTime: 0
   reloadSceneWhenLoading: 0
-  saveWithThreading: 1
+  saveWithThreading: 0
   saveAssetReferencesWithAddressables: 0
   saveLabels:
     defaultSaveLabel: Save
-    saveLabelID: 114
+    saveLabelID: 203
     defaultImportLabel: Import
-    importLabelID: 115
+    importLabelID: 204
     defaultAutosaveLabel: Autosave
-    autosaveLabelID: 116
-  referenceScenesInSave: 1
+    autosaveLabelID: 205
+  referenceScenesInSave: 0
   sceneAttributes: []
-  actionListOnStart: {fileID: 11400000, guid: ed2cca998f77198478daa3b6e2d5cb98, type: 2}
-  blackOutWhenSkipping: 1
+  actionListOnStart: {fileID: 0}
+  blackOutWhenSkipping: 0
   events:
-  - rid: 3660831061363654657
+  - rid: 3660831103094095872
+  - rid: 3660831103094095874
   savePlayerReferencesWithAddressables: 0
   playerSwitching: 1
   legacyPlayer: {fileID: 0}
@@ -158,18 +159,18 @@ MonoBehaviour:
   players: []
   movementMethod: 1
   inputMethod: 0
-  simulatedCursorMoveSpeed: 2
+  simulatedCursorMoveSpeed: 4
   interactionMethod: 2
   selectInteractions: 0
-  autoHideInteractionIcons: 0
-  cancelInteractions: 3
-  seeInteractions: 2
+  autoHideInteractionIcons: 1
+  cancelInteractions: 2
+  seeInteractions: 0
   closeInteractionMenuIfTapHotspot: 1
   stopPlayerOnClickHotspot: 0
   cycleInventoryCursors: 1
   scaleCursorSpeedWithScreen: 1
   autoCycleWhenInteract: 0
-  showHoverInteractionInHotspotLabel: 0
+  showHoverInteractionInHotspotLabel: 1
   allowDefaultinteractions: 0
   alwaysCloseInteractionMenus: 1
   whenReselectHotspot: 0
@@ -184,31 +185,31 @@ MonoBehaviour:
   walkToHotspotMarkers: 1
   dragThreshold: 0
   shareInventory: 0
-  inventoryDragDrop: 1
+  inventoryDragDrop: 0
   dragDropThreshold: 0
   allowInventoryInteractionsDuringConversations: 0
   inventoryDropLook: 0
   inventoryDropLookNoDrag: 0
-  inventoryInteractions: 0
+  inventoryInteractions: 1
   inventoryDisableLeft: 0
   allowDefaultInventoryInteractions: 0
-  inventoryDisableUnhandled: 0
+  inventoryDisableUnhandled: 1
   inventoryDisableDefined: 0
   inventoryInteractionsHaltPlayer: 0
   activeWhenHover: 0
   inventoryActiveEffect: 1
   inventoryPulseSpeed: 1
-  activeWhenUnhandled: 1
-  canReorderItems: 0
-  selectInventoryDisplay: 0
-  rightClickInventory: 2
+  activeWhenUnhandled: 0
+  canReorderItems: 1
+  selectInventoryDisplay: 3
+  rightClickInventory: 0
   reverseInventoryCombinations: 1
   canMoveWhenActive: 1
-  selectInvWithUnhandled: 1
+  selectInvWithUnhandled: 0
   selectInvWithIconID: 0
   giveInvWithUnhandled: 0
   giveInvWithIconID: 0
-  autoDisableUnhandledHotspots: 0
+  autoDisableUnhandledHotspots: 1
   clickPrefab: {fileID: 0}
   clickMarkerPosition: 0
   walkableClickRange: 0.5
@@ -223,14 +224,14 @@ MonoBehaviour:
   limitDirectMovement: 0
   cameraLockSnapAngleThreshold: 5
   directMovementPerspective: 0
-  destinationAccuracy: 0.905
+  destinationAccuracy: 0.8
   experimentalAccuracy: 0
   unityUIClicksAlwaysBlocks: 0
   pathfindUpdateFrequency: 0
   verticalReductionFactor: 0.7
   rotationsAffectedByVerticalReduction: 1
   alwaysPathfindInSpriteDirection: 0
-  jumpSpeed: 10
+  jumpSpeed: 4
   singleTapStraight: 0
   singleTapStraightPathfind: 0
   clickHoldSeparationStraight: 0.3
@@ -239,18 +240,7 @@ MonoBehaviour:
   freeAimSmoothSpeed: 50
   firstPersonMovementSmoothing: 1
   assumeInputsDefined: 0
-  activeInputs:
-  - label: Roll
-    ID: 1
-    inputName: Roll
-    enabledOnStart: 1
-    gameState: 0
-    gameStateFlags: 1
-    actionListAsset: {fileID: 11400000, guid: 1d667ca577f3d46c7b4ce29b08b8665c, type: 2}
-    inputType: 0
-    axisThreshold: 0
-    buttonType: 0
-    hasUpgraded: 1
+  activeInputs: []
   freeAimTouchSpeed: 0.01
   dragWalkThreshold: 5
   dragRunThreshold: 20
@@ -273,21 +263,21 @@ MonoBehaviour:
   cacheCameraMain: 0
   linearColorTextures: 0
   movingTurning: 3
-  hotspotDetection: 2
-  closeInteractionMenusIfPlayerLeavesVicinity: 0
-  placeDistantHotspotsOnSeparateLayer: 1
-  hotspotsInVicinity: 2
+  hotspotDetection: 1
+  closeInteractionMenusIfPlayerLeavesVicinity: 1
+  placeDistantHotspotsOnSeparateLayer: 0
+  hotspotsInVicinity: 0
   highlightAllHotspotsInVicinity: 1
-  hotspotIconDisplay: 0
+  hotspotIconDisplay: 2
   hotspotIcon: 0
   hotspotIconTexture: {fileID: 0}
   hotspotIconGraphic:
-    texture: {fileID: 0}
+    texture: {fileID: 2800000, guid: e36d12a3e96638149a8a494b514fed9d, type: 3}
     isAnimated: 0
     numFrames: 1
     numRows: 1
     numCols: 1
-    size: 0.04
+    size: 0.03
     animSpeed: 4
     endAnimOnLastFrame: 0
     skipFirstFrameWhenLooping: 0
@@ -295,10 +285,10 @@ MonoBehaviour:
     frameSpeeds: []
     alwaysAnimate: 0
   highlightMaterialPropertyOverride: 
-  hotspotIconSize: 0.04
+  hotspotIconSize: 0.025
   playerFacesHotspots: 0
   onlyFaceHotspotOnSelect: 0
-  scaleHighlightWithMouseProximity: 0
+  scaleHighlightWithMouseProximity: 1
   highlightProximityFactor: 4
   occludeIcons: 0
   hideIconUnderInteractionMenu: 0
@@ -308,7 +298,7 @@ MonoBehaviour:
   navMeshRaycastLength: 100
   hotspotRaycastLength: 100
   moveableRaycastLength: 30
-  hotspotLayer: Hotspot
+  hotspotLayer: Default
   distantHotspotLayer: DistantHotspot
   navMeshLayer: NavMesh
   backgroundImageLayer: BackgroundImage
@@ -319,7 +309,7 @@ MonoBehaviour:
   loadScenesFromAddressable: 0
   loadingSceneName: 
   loadingScene: 0
-  useAsyncLoading: 1
+  useAsyncLoading: 0
   loadingDelay: 0
   blackOutWhenInitialising: 1
   spawnPersistentEnginePrefab: 1
@@ -337,34 +327,41 @@ MonoBehaviour:
   autoEndOtherMusicWhenPlayed: 1
   musicPrefabOverride: {fileID: 0}
   ambiencePrefabOverride: {fileID: 0}
-  volumeControl: 1
-  musicMixerGroup: {fileID: -319120046316229051, guid: 6b8e38972fa924e2ba7326ab5ad56433,
-    type: 2}
-  sfxMixerGroup: {fileID: -6234938976133733039, guid: 6b8e38972fa924e2ba7326ab5ad56433,
-    type: 2}
-  speechMixerGroup: {fileID: -8251399961440296003, guid: 6b8e38972fa924e2ba7326ab5ad56433,
-    type: 2}
+  volumeControl: 0
+  musicMixerGroup: {fileID: 0}
+  sfxMixerGroup: {fileID: 0}
+  speechMixerGroup: {fileID: 0}
   musicAttentuationParameter: musicVolume
   sfxAttentuationParameter: sfxVolume
   speechAttentuationParameter: speechVolume
   defaultLanguage: 0
   defaultVoiceLanguage: 0
-  defaultShowSubtitles: 1
+  defaultShowSubtitles: 0
   defaultSfxVolume: 0.9
   defaultMusicVolume: 0.6
   defaultSpeechVolume: 1
-  showDebugLogs: 1
+  showDebugLogs: 0
   printActionCommentsInConsole: 0
   actionCommentLogging: 0
   showActiveActionLists: 0
   references:
     version: 2
     RefIds:
-    - rid: 3660831061363654657
+    - rid: 3660831103094095872
+      type: {class: EventInventoryAddRemove, ns: AC, asm: Assembly-CSharp}
+      data:
+        label: OnInventoryAddDiary
+        id: 0
+        actionListAsset: {fileID: 11400000, guid: 2dd44c82f5c4c44e0a47bfdd111a2176,
+          type: 2}
+        parameterIDs: 0000000001000000
+        addRemove: 0
+        itemID: 3
+    - rid: 3660831103094095874
       type: {class: EventInventoryAddRemove, ns: AC, asm: Assembly-CSharp}
       data:
         label: 
-        id: 0
+        id: 1
         actionListAsset: {fileID: 11400000, guid: f5eacea12337640f2b7c799d13276415,
           type: 2}
         parameterIDs: 0000000001000000

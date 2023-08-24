@@ -461,6 +461,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2985930494990406718, guid: 8d69caa2effde45de8bc204dcb78569a,
         type: 3}
+      propertyPath: lineID
+      value: 202
+      objectReference: {fileID: 0}
+    - target: {fileID: 2985930494990406718, guid: 8d69caa2effde45de8bc204dcb78569a,
+        type: 3}
       propertyPath: hotspotName
       value: Paper Bag
       objectReference: {fileID: 0}
@@ -862,6 +867,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2353324650443887268, guid: fcc917c2d0bc74805929d122ff2026f0,
+        type: 3}
+      propertyPath: lineID
+      value: 200
+      objectReference: {fileID: 0}
     - target: {fileID: 4698532705712256609, guid: fcc917c2d0bc74805929d122ff2026f0,
         type: 3}
       propertyPath: m_Name
@@ -926,6 +936,11 @@ PrefabInstance:
         type: 3}
       propertyPath: vars.Array.size
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6693220337829357684, guid: fcc917c2d0bc74805929d122ff2026f0,
+        type: 3}
+      propertyPath: lineID
+      value: 201
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fcc917c2d0bc74805929d122ff2026f0, type: 3}
@@ -1497,6 +1512,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: CynderBlock
+      objectReference: {fileID: 0}
+    - target: {fileID: 3530593029781018340, guid: 2c29a95d462c3415493d382f1e4edfd5,
+        type: 3}
+      propertyPath: lineID
+      value: 199
       objectReference: {fileID: 0}
     - target: {fileID: 7895631686685835753, guid: 2c29a95d462c3415493d382f1e4edfd5,
         type: 3}
@@ -2222,6 +2242,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1424740872840530571}
   - component: {fileID: 1424740872830329675}
+  - component: {fileID: 1424740872840566444}
   m_Layer: 2
   m_Name: BiBoCam
   m_TagString: Untagged
@@ -2229,6 +2250,21 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &1424740872840566444
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1424740872840566443}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f72e60470f1fa4fd1825cd67ce482cf6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  constantID: 503738
+  retainInPrefab: 0
+  autoManual: 0
 --- !u!4 &1429301025552753943
 Transform:
   m_ObjectHideFlags: 0
@@ -3465,6 +3501,11 @@ PrefabInstance:
         type: 3}
       propertyPath: initialGUIData.fromParameters.Array.data[5].gameObjectParameterReferences
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8066911269862559440, guid: 5bc592c24cfe64be8a9adfb022e1f8b7,
+        type: 3}
+      propertyPath: lineID
+      value: 198
       objectReference: {fileID: 0}
     - target: {fileID: 8066911269862559440, guid: 5bc592c24cfe64be8a9adfb022e1f8b7,
         type: 3}
@@ -5834,6 +5875,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: SM_Room_Commode
+      objectReference: {fileID: 0}
+    - target: {fileID: 7335716901137746913, guid: b18b4bc515d8b46f5b1f37ed5274a2bb,
+        type: 3}
+      propertyPath: lineID
+      value: 197
+      objectReference: {fileID: 0}
+    - target: {fileID: 8288573631675627922, guid: b18b4bc515d8b46f5b1f37ed5274a2bb,
+        type: 3}
+      propertyPath: lineID
+      value: 196
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b18b4bc515d8b46f5b1f37ed5274a2bb, type: 3}

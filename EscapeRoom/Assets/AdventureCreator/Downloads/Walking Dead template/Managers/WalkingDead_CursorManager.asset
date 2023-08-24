@@ -16,7 +16,7 @@ MonoBehaviour:
   cursorMode: 0
   uiCursorPrefab: {fileID: 0}
   cursorDisplay: 0
-  allowMainCursor: 1
+  allowMainCursor: 0
   lockSystemCursor: 1
   keepCursorWithinScreen: 1
   confineSystemCursor: 0
@@ -35,7 +35,7 @@ MonoBehaviour:
   leftClickExamine: 0
   onlyWalkWhenOverNavMesh: 0
   onlyShowInventoryLabelOverHotspots: 0
-  inventoryCursorSize: 0.004
+  inventoryCursorSize: 0.04
   allowIconInput: 1
   waitIcon:
     texture: {fileID: 0}
@@ -102,7 +102,7 @@ MonoBehaviour:
     clickOffset: {x: 0, y: 0}
     frameSpeeds: []
     alwaysAnimate: 0
-  inventoryHandling: 3
+  inventoryHandling: 0
   hotspotPrefix1:
     label: Use
     lineID: 175
@@ -116,7 +116,7 @@ MonoBehaviour:
     label: to
     lineID: 178
   displayCountSize: 1.6
-  displayCountFont: {fileID: 12800000, guid: dba1e4c73d89c44408244db5a01d693e, type: 3}
+  displayCountFont: {fileID: 0}
   displayCountTextEffects: 0
   displayCountColor: {r: 1, g: 1, b: 1, a: 1}
   inventoryCursorOffset: {x: 0, y: 0}

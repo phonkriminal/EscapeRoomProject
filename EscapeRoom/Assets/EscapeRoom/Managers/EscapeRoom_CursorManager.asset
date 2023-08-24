@@ -14,12 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cursorRendering: 0
   cursorMode: 0
-  uiCursorPrefab: {fileID: 1233823316936846, guid: 2038fac94c03a40c1acad824ff7b6c49,
+  uiCursorPrefab: {fileID: 1233823316936846, guid: 60ad3c19268d94aa492a5fbeabdcfa6f,
     type: 3}
   cursorDisplay: 0
   allowMainCursor: 1
   lockSystemCursor: 1
-  keepCursorWithinScreen: 0
+  keepCursorWithinScreen: 1
   confineSystemCursor: 0
   allowWalkCursor: 0
   syncWalkCursorWithInteraction: 0
@@ -27,7 +27,7 @@ MonoBehaviour:
   addWalkPrefix: 0
   walkPrefix:
     label: Walk to
-    lineID: 123
+    lineID: 211
   addHotspotPrefix: 1
   allowInteractionCursor: 0
   allowInteractionCursorForInventory: 0
@@ -52,12 +52,12 @@ MonoBehaviour:
     frameSpeeds: []
     alwaysAnimate: 0
   pointerIcon:
-    texture: {fileID: 2800000, guid: 375e15bb660f94560bcb21da905c8eb3, type: 3}
+    texture: {fileID: 2800000, guid: 5c83780962ed843c0928648679746938, type: 3}
     isAnimated: 0
     numFrames: 1
     numRows: 1
     numCols: 1
-    size: 0.05
+    size: 0.02
     animSpeed: 4
     endAnimOnLastFrame: 0
     skipFirstFrameWhenLooping: 0
@@ -106,16 +106,16 @@ MonoBehaviour:
   inventoryHandling: 0
   hotspotPrefix1:
     label: Use
-    lineID: 119
+    lineID: 207
   hotspotPrefix2:
     label: on
-    lineID: 120
+    lineID: 208
   hotspotPrefix3:
     label: Give
-    lineID: 121
+    lineID: 209
   hotspotPrefix4:
     label: to
-    lineID: 122
+    lineID: 210
   displayCountSize: 1.6
   displayCountFont: {fileID: 0}
   displayCountTextEffects: 0
@@ -136,7 +136,7 @@ MonoBehaviour:
     alwaysAnimate: 0
     dontCycle: 0
     label: Use
-    lineID: 124
+    lineID: 212
     id: 0
   - texture: {fileID: 2800000, guid: f03835de3da7f442f92582f0dd5e5863, type: 3}
     isAnimated: 0
@@ -152,7 +152,7 @@ MonoBehaviour:
     alwaysAnimate: 0
     dontCycle: 0
     label: Talk to
-    lineID: 125
+    lineID: 213
     id: 1
   - texture: {fileID: 2800000, guid: e0394f989f329496584e377a81d4031f, type: 3}
     isAnimated: 0
@@ -168,7 +168,7 @@ MonoBehaviour:
     alwaysAnimate: 0
     dontCycle: 0
     label: Look at
-    lineID: 126
+    lineID: 214
     id: 2
   unhandledCursorInteractions:
   - {fileID: 0}

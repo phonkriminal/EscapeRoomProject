@@ -250,14 +250,14 @@ MonoBehaviour:
   positionSmoothing: 0
   alignment: 8
   toggleKey: 
-  ignoreMouseClicks: 0
+  ignoreMouseClicks: 1
   pauseWhenEnabled: 0
   showWhenPaused: 0
   canClickInCutscene: 0
   enabledOnStart: 0
   actionListOnTurnOn: {fileID: 0}
   actionListOnTurnOff: {fileID: 0}
-  updateWhenFadeOut: 1
+  updateWhenFadeOut: 0
   hideDuringSaveScreenshots: 1
   fitWithinScreen: 1
   backgroundTexture: {fileID: 0}
@@ -359,8 +359,8 @@ MonoBehaviour:
   showWhenPaused: 0
   canClickInCutscene: 0
   enabledOnStart: 0
-  actionListOnTurnOn: {fileID: 11400000, guid: b84b8ccac5d83434585e550db832db24, type: 2}
-  actionListOnTurnOff: {fileID: 11400000, guid: cdb89428d31d34896a8c50512949cc75,
+  actionListOnTurnOn: {fileID: 11400000, guid: 3c762d0b849f7459d8cb38e4dd5f6465, type: 2}
+  actionListOnTurnOff: {fileID: 11400000, guid: c8ac9d205db3e403e9d366cce4258f36,
     type: 2}
   updateWhenFadeOut: 1
   hideDuringSaveScreenshots: 1
@@ -2045,9 +2045,8 @@ MonoBehaviour:
   showWhenPaused: 0
   canClickInCutscene: 0
   enabledOnStart: 0
-  actionListOnTurnOn: {fileID: 11400000, guid: b84b8ccac5d83434585e550db832db24, type: 2}
-  actionListOnTurnOff: {fileID: 11400000, guid: cdb89428d31d34896a8c50512949cc75,
-    type: 2}
+  actionListOnTurnOn: {fileID: 0}
+  actionListOnTurnOff: {fileID: 0}
   updateWhenFadeOut: 1
   hideDuringSaveScreenshots: 1
   fitWithinScreen: 1
@@ -2225,7 +2224,8 @@ MonoBehaviour:
   canClickInCutscene: 0
   enabledOnStart: 0
   actionListOnTurnOn: {fileID: 0}
-  actionListOnTurnOff: {fileID: 0}
+  actionListOnTurnOff: {fileID: 11400000, guid: efb80550911c24fd79b22ecf339d99ef,
+    type: 2}
   updateWhenFadeOut: 1
   hideDuringSaveScreenshots: 1
   fitWithinScreen: 1
@@ -2358,7 +2358,7 @@ MonoBehaviour:
   rectTransform: {fileID: 0}
   rectTransformID: 4771940
   uiTransitionType: 1
-  uiPositionType: 3
+  uiPositionType: 2
   _isLocked: 0
   id: 0
   title: Interaction
@@ -2722,7 +2722,7 @@ MonoBehaviour:
   positionSmoothing: 0
   alignment: 7
   toggleKey: 
-  ignoreMouseClicks: 0
+  ignoreMouseClicks: 1
   pauseWhenEnabled: 0
   showWhenPaused: 0
   canClickInCutscene: 0
@@ -3858,7 +3858,7 @@ MonoBehaviour:
   linkUIGraphic: 0
   autoCreate: 1
   inventoryItemCountDisplay: 0
-  containerSelectMode: 1
+  containerSelectMode: 2
   preventDefaultClicks: 0
   limitToCategory: 0
   categoryIDs: 
@@ -5134,7 +5134,7 @@ MonoBehaviour:
   updateHotspotLabelWhenHover: 0
   hoverSoundOverEmptySlots: 1
   containerSelectMode: 1
-  displayType: 2
+  displayType: 1
   uiHideStyle: 1
   autoOpenDocument: 1
   emptySlotTexture: {fileID: 0}
