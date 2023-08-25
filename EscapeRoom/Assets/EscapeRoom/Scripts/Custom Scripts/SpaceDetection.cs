@@ -16,7 +16,7 @@ public class SpaceDetection : MonoBehaviour
     private string menuInteraction = string.Empty;
 
     private Hotspot activeHotspot = null;
-    private AC.Menu activeMenu = null;
+//    private AC.Menu activeMenu = null;
 
     private void OnEnable()
     {
