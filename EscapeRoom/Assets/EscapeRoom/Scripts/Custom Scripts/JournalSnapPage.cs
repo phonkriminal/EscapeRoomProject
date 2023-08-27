@@ -11,7 +11,7 @@ public class JournalSnapPage : MonoBehaviour
     public string journalElementName = "PageLeft";
     public string shiftRightButtonName = "ShiftRight";
     public string shiftLeftButtonName = "ShiftLeft";
-
+   
     private void OnEnable()
     {
         EventManager.OnMenuElementShift += OnMenuElementShift;
