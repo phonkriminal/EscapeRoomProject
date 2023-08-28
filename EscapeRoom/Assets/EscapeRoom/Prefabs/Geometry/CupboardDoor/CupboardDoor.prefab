@@ -231,6 +231,9 @@ GameObject:
   - component: {fileID: 8066911269862559440}
   - component: {fileID: 7205541219449451908}
   - component: {fileID: 3046555416538985716}
+  - component: {fileID: 5811092753451562751}
+  - component: {fileID: 6456618325928668515}
+  - component: {fileID: 928665519341794849}
   m_Layer: 0
   m_Name: CupboardDoor
   m_TagString: Untagged
@@ -247,7 +250,7 @@ Transform:
   m_GameObject: {fileID: 4372920345999328689}
   m_LocalRotation: {x: -4.32978e-17, y: 0.7071067, z: 0.7071068, w: -4.3297806e-17}
   m_LocalPosition: {x: -18.292002, y: 0.05178018, z: 1.8700001}
-  m_LocalScale: {x: 2.2100003, y: 2.2099998, z: 2.2099998}
+  m_LocalScale: {x: 2.2100003, y: 2.2100003, z: 2.2100003}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4372920345386169367}
@@ -426,7 +429,7 @@ MonoBehaviour:
   interactiveBoundary: {fileID: 0}
   hotspotName: Door
   lineID: -1
-  highlight: {fileID: 0}
+  highlight: {fileID: 5811092753451562751}
   walkToMarker: {fileID: 3353515948589181312}
   centrePoint: {fileID: 0}
   centrePointOverrides: 0
@@ -662,6 +665,92 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.056922898, y: 0.9692305, z: 1.5999997}
   m_Center: {x: -0.028461449, y: 0.038461547, z: 0.79999983}
+--- !u!114 &5811092753451562751
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4372920345999328689}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6973a3c06ca6d484494390d4f3bf8819, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  highlightWhenSelected: 1
+  brightenMaterials: 0
+  affectChildren: 1
+  fadeTime: 0.3
+  flashHoldTime: 1
+  highlightCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 1
+      outSlope: 1
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 2
+      inSlope: 1
+      outSlope: 1
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  callEvents: 0
+  onHighlightOn:
+    m_PersistentCalls:
+      m_Calls: []
+  onHighlightOff:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!114 &6456618325928668515
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4372920345999328689}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6b591419ee344469da92bd1bb7e1a1bf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  constantID: 29712
+  retainInPrefab: 0
+  autoManual: 0
+  hotspotToSave: {fileID: 8066911269862559440}
+  startState: 0
+--- !u!114 &928665519341794849
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4372920345999328689}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 930cd2651ae4d46b29cf95185f455896, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  constantID: 29712
+  retainInPrefab: 0
+  autoManual: 0
+  saveParent: 0
+  saveScenePresence: 0
+  linkedPrefabID: 0
+  transformSpace: 0
+  loadOrder: 0
+  addressableName: 
 --- !u!1 &4372920346311564519
 GameObject:
   m_ObjectHideFlags: 0

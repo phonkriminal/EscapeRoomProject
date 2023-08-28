@@ -17,7 +17,7 @@ MonoBehaviour:
   saveTimeDisplay: 0
   customSaveFormat: MMMM dd, yyyy
   takeSaveScreenshots: 0
-  saveScreenshots: 0
+  saveScreenshots: 2
   screenshotResolutionFactor: 1
   useProfiles: 0
   maxSaves: 5
@@ -39,6 +39,7 @@ MonoBehaviour:
   events:
   - rid: 3660831103094095872
   - rid: 3660831103094095874
+  - rid: 3660831201124417536
   savePlayerReferencesWithAddressables: 0
   playerSwitching: 1
   legacyPlayer: {fileID: 0}
@@ -303,13 +304,13 @@ MonoBehaviour:
   navMeshLayer: NavMesh
   backgroundImageLayer: BackgroundImage
   deactivatedLayer: Ignore Raycast
-  useLoadingScreen: 0
+  useLoadingScreen: 1
   manualSceneActivation: 0
-  loadingSceneIs: 0
+  loadingSceneIs: 1
   loadScenesFromAddressable: 0
-  loadingSceneName: 
+  loadingSceneName: LoadingScene
   loadingScene: 0
-  useAsyncLoading: 0
+  useAsyncLoading: 1
   loadingDelay: 0
   blackOutWhenInitialising: 1
   spawnPersistentEnginePrefab: 1
@@ -367,3 +368,12 @@ MonoBehaviour:
         parameterIDs: 0000000001000000
         addRemove: 0
         itemID: -1
+    - rid: 3660831201124417536
+      type: {class: EventMenuJournalPage, ns: AC, asm: Assembly-CSharp}
+      data:
+        label: 
+        id: 2
+        actionListAsset: {fileID: 11400000, guid: 85e6740f40563495f97f1b64caeb7e5b,
+          type: 2}
+        parameterIDs: 
+        addRemove: 0

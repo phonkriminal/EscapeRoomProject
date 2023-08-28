@@ -285,6 +285,7 @@ GameObject:
   - component: {fileID: 11409426}
   - component: {fileID: 11409428}
   - component: {fileID: 11409430}
+  - component: {fileID: 8798094130973757252}
   m_Layer: 5
   m_Name: btnUse
   m_TagString: Untagged
@@ -409,6 +410,24 @@ MonoBehaviour:
   constantID: 15188550
   retainInPrefab: 1
   autoManual: 0
+--- !u!114 &8798094130973757252
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 109450}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe5c34b49a5b4524c85b907c56ad4845, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerId: 0
+  actionLookup: 0
+  updateType: 0
+  actionName: InteractionA
+  actionId: 0
+  notFoundSprite: {fileID: 0}
 --- !u!1 &109452
 GameObject:
   m_ObjectHideFlags: 0
@@ -422,6 +441,7 @@ GameObject:
   - component: {fileID: 11409432}
   - component: {fileID: 11409434}
   - component: {fileID: 11409436}
+  - component: {fileID: 74904166336565056}
   m_Layer: 5
   m_Name: btnTalk
   m_TagString: Untagged
@@ -546,6 +566,24 @@ MonoBehaviour:
   constantID: 15191042
   retainInPrefab: 1
   autoManual: 0
+--- !u!114 &74904166336565056
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 109452}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe5c34b49a5b4524c85b907c56ad4845, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerId: 0
+  actionLookup: 0
+  updateType: 0
+  actionName: InteractionB
+  actionId: 0
+  notFoundSprite: {fileID: 0}
 --- !u!1 &109454
 GameObject:
   m_ObjectHideFlags: 0
@@ -559,6 +597,7 @@ GameObject:
   - component: {fileID: 11409438}
   - component: {fileID: 11409440}
   - component: {fileID: 11409442}
+  - component: {fileID: 442023420870320546}
   m_Layer: 5
   m_Name: btnLook
   m_TagString: Untagged
@@ -683,6 +722,24 @@ MonoBehaviour:
   constantID: 15193404
   retainInPrefab: 1
   autoManual: 0
+--- !u!114 &442023420870320546
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 109454}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe5c34b49a5b4524c85b907c56ad4845, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerId: 0
+  actionLookup: 0
+  updateType: 0
+  actionName: InteractionC
+  actionId: 0
+  notFoundSprite: {fileID: 0}
 --- !u!1 &109456
 GameObject:
   m_ObjectHideFlags: 0
