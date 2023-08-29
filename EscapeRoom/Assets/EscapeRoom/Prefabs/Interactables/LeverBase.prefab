@@ -461,6 +461,7 @@ GameObject:
   - component: {fileID: 315680084769370561}
   - component: {fileID: 308834546336589917}
   - component: {fileID: 8166549935005726903}
+  - component: {fileID: 1023397658047426819}
   m_Layer: 0
   m_Name: LeverBase
   m_TagString: Untagged
@@ -619,7 +620,7 @@ MonoBehaviour:
       ID: 0
       parameterType: 11
       intValue: 0
-      constantID: 0
+      constantID: 93852
       popUpID: 0
       floatValue: 0
       stringValue: 
@@ -834,7 +835,7 @@ MonoBehaviour:
       ID: 0
       parameterType: 11
       intValue: 0
-      constantID: 0
+      constantID: 93852
       popUpID: 0
       floatValue: 0
       stringValue: 
@@ -983,7 +984,63 @@ MonoBehaviour:
       vector3Value: {x: 0, y: 0, z: 0}
       gameObjectParameterReferences: 0
       variables: {fileID: 0}
-    parameterIDs: ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
+    - label: IsLocked
+      description: 
+      ID: 11
+      parameterType: 11
+      intValue: 0
+      constantID: 0
+      popUpID: 0
+      floatValue: 0
+      stringValue: 
+      gameObject: {fileID: 0}
+      objectValue: {fileID: 0}
+      vector3Value: {x: 0, y: 0, z: 0}
+      gameObjectParameterReferences: 0
+      variables: {fileID: 0}
+    - label: LeverToReset
+      description: 
+      ID: 12
+      parameterType: 0
+      intValue: -1
+      constantID: 0
+      popUpID: 0
+      floatValue: 0
+      stringValue: 
+      gameObject: {fileID: 0}
+      objectValue: {fileID: 0}
+      vector3Value: {x: 0, y: 0, z: 0}
+      gameObjectParameterReferences: 0
+      variables: {fileID: 0}
+    - label: LevelerUpMarker
+      description: 
+      ID: 13
+      parameterType: 0
+      intValue: -1
+      constantID: 0
+      popUpID: 0
+      floatValue: 0
+      stringValue: 
+      gameObject: {fileID: 0}
+      objectValue: {fileID: 0}
+      vector3Value: {x: 0, y: 0, z: 0}
+      gameObjectParameterReferences: 0
+      variables: {fileID: 0}
+    - label: LevelerDownMarker
+      description: 
+      ID: 14
+      parameterType: 0
+      intValue: -1
+      constantID: 0
+      popUpID: 0
+      floatValue: 0
+      stringValue: 
+      gameObject: {fileID: 0}
+      objectValue: {fileID: 0}
+      vector3Value: {x: 0, y: 0, z: 0}
+      gameObjectParameterReferences: 0
+      variables: {fileID: 0}
+    parameterIDs: ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
   successiveGUIData: []
   hotspot: {fileID: 5279275706918752470}
   interactionType: 0
@@ -1036,6 +1093,23 @@ MonoBehaviour:
   onHighlightOff:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &1023397658047426819
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5607103717856744023}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6b591419ee344469da92bd1bb7e1a1bf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  constantID: 93852
+  retainInPrefab: 0
+  autoManual: 0
+  hotspotToSave: {fileID: 5279275706918752470}
+  startState: 0
 --- !u!1 &5819670369010519588
 GameObject:
   m_ObjectHideFlags: 0

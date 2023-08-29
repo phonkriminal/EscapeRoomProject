@@ -29,7 +29,7 @@ MonoBehaviour:
     linkedCutscene: {fileID: 0}
     linkedAsset: {fileID: 0}
   - resultAction: 2
-    skipAction: 5
+    skipAction: 4
     skipActionActual: {fileID: 6883184597582810318}
     linkedCutscene: {fileID: 0}
     linkedAsset: {fileID: 0}
@@ -39,7 +39,7 @@ MonoBehaviour:
   nodeRect:
     serializedVersion: 2
     x: 14
-    y: 720
+    y: 478
     width: 300
     height: 220
   overrideColor: {r: 1, g: 1, b: 1, a: 1}
@@ -104,7 +104,7 @@ MonoBehaviour:
   linkedAsset: {fileID: 0}
   endings:
   - resultAction: 2
-    skipAction: 2
+    skipAction: 1
     skipActionActual: {fileID: 7148310315425640353}
     linkedCutscene: {fileID: 0}
     linkedAsset: {fileID: 0}
@@ -114,7 +114,7 @@ MonoBehaviour:
   nodeRect:
     serializedVersion: 2
     x: 14
-    y: 256
+    y: 14
     width: 300
     height: 192
   overrideColor: {r: 1, g: 1, b: 1, a: 1}
@@ -160,7 +160,7 @@ MonoBehaviour:
   linkedCutscene: {fileID: 0}
   linkedAsset: {fileID: 0}
   endings:
-  - resultAction: 0
+  - resultAction: 2
     skipAction: 10
     skipActionActual: {fileID: 8093632912992670757}
     linkedCutscene: {fileID: 0}
@@ -171,9 +171,9 @@ MonoBehaviour:
   nodeRect:
     serializedVersion: 2
     x: 364
-    y: 2032
+    y: 1810
     width: 300
-    height: 92
+    height: 112
   overrideColor: {r: 1, g: 1, b: 1, a: 1}
   showOutputSockets: 1
   parentActionListInEditor: {fileID: 0}
@@ -192,7 +192,6 @@ MonoBehaviour:
   m_Name: LeverUse
   m_EditorClassIdentifier: 
   actions:
-  - {fileID: 4865091418406386172}
   - {fileID: -5632601060198493638}
   - {fileID: 7148310315425640353}
   - {fileID: -8597565115604845385}
@@ -203,14 +202,13 @@ MonoBehaviour:
   - {fileID: 7079350955184647134}
   - {fileID: 6475665971914815760}
   - {fileID: -2326242690206576129}
-  - {fileID: 3803555593569671861}
   - {fileID: 8093632912992670757}
   isSkippable: 1
-  actionListType: 0
+  actionListType: 1
   unfreezePauseMenus: 1
   useParameters: 1
   canRunMultipleInstances: 0
-  canSurviveSceneChanges: 0
+  canSurviveSceneChanges: 1
   revertToDefaultParametersAfterRunning: 0
   parameters:
   - label: Lever variable
@@ -367,6 +365,76 @@ MonoBehaviour:
     vector3Value: {x: 0, y: 0, z: 0}
     gameObjectParameterReferences: 0
     variables: {fileID: 0}
+  - label: IsLocked
+    description: 
+    ID: 11
+    parameterType: 11
+    intValue: 0
+    constantID: 0
+    popUpID: 0
+    floatValue: 0
+    stringValue: 
+    gameObject: {fileID: 0}
+    objectValue: {fileID: 0}
+    vector3Value: {x: 0, y: 0, z: 0}
+    gameObjectParameterReferences: 0
+    variables: {fileID: 0}
+  - label: LevelerToCheck
+    description: 
+    ID: 15
+    parameterType: 11
+    intValue: 0
+    constantID: 0
+    popUpID: 0
+    floatValue: 0
+    stringValue: 
+    gameObject: {fileID: 0}
+    objectValue: {fileID: 0}
+    vector3Value: {x: 0, y: 0, z: 0}
+    gameObjectParameterReferences: 0
+    variables: {fileID: 0}
+  - label: LeverToReset
+    description: 
+    ID: 12
+    parameterType: 0
+    intValue: -1
+    constantID: 0
+    popUpID: 0
+    floatValue: 0
+    stringValue: 
+    gameObject: {fileID: 0}
+    objectValue: {fileID: 0}
+    vector3Value: {x: 0, y: 0, z: 0}
+    gameObjectParameterReferences: 0
+    variables: {fileID: 0}
+  - label: LevelerUpMarker
+    description: 
+    ID: 13
+    parameterType: 0
+    intValue: -1
+    constantID: 0
+    popUpID: 0
+    floatValue: 0
+    stringValue: 
+    gameObject: {fileID: 0}
+    objectValue: {fileID: 0}
+    vector3Value: {x: 0, y: 0, z: 0}
+    gameObjectParameterReferences: 0
+    variables: {fileID: 0}
+  - label: LevelerDownMarker
+    description: 
+    ID: 14
+    parameterType: 0
+    intValue: -1
+    constantID: 0
+    popUpID: 0
+    floatValue: 0
+    stringValue: 
+    gameObject: {fileID: 0}
+    objectValue: {fileID: 0}
+    vector3Value: {x: 0, y: 0, z: 0}
+    gameObjectParameterReferences: 0
+    variables: {fileID: 0}
   tagID: 0
   backupData: []
 --- !u!114 &3143151776248236320
@@ -393,7 +461,7 @@ MonoBehaviour:
   linkedAsset: {fileID: 0}
   endings:
   - resultAction: 2
-    skipAction: 6
+    skipAction: 5
     skipActionActual: {fileID: 5295469929799819963}
     linkedCutscene: {fileID: 0}
     linkedAsset: {fileID: 0}
@@ -403,7 +471,7 @@ MonoBehaviour:
   nodeRect:
     serializedVersion: 2
     x: 14
-    y: 970
+    y: 728
     width: 300
     height: 192
   overrideColor: {r: 1, g: 1, b: 1, a: 1}
@@ -440,152 +508,6 @@ MonoBehaviour:
   variablesConstantID: 0
   placeholderType: 0
   placeholderPopUpLabelDataID: -1
---- !u!114 &3803555593569671861
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a23cea76e14804ca49ce03fec05afd8f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  id: 0
-  isDisplayed: 1
-  showComment: 0
-  comment: 
-  willWait: 0
-  endAction: 0
-  skipAction: -1
-  skipActionActual: {fileID: 0}
-  linkedCutscene: {fileID: 0}
-  linkedAsset: {fileID: 0}
-  endings:
-  - resultAction: 2
-    skipAction: 12
-    skipActionActual: {fileID: 8093632912992670757}
-    linkedCutscene: {fileID: 0}
-    linkedAsset: {fileID: 0}
-  isEnabled: 1
-  isAssetFile: 1
-  isBreakPoint: 0
-  nodeRect:
-    serializedVersion: 2
-    x: 364
-    y: 2154
-    width: 300
-    height: 192
-  overrideColor: {r: 1, g: 1, b: 1, a: 1}
-  showOutputSockets: 1
-  parentActionListInEditor: {fileID: 0}
-  constantID: 0
-  parameterID: -1
-  linkedCamera: {fileID: 0}
-  transitionTime: 0.2
-  transitionTimeParameterID: -1
-  timeCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    - serializedVersion: 3
-      time: 1
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  moveMethod: 1
-  returnToLast: 1
-  retainPreviousSpeed: 0
-  waitForAnimation: 0
---- !u!114 &4865091418406386172
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a23cea76e14804ca49ce03fec05afd8f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  id: 0
-  isDisplayed: 1
-  showComment: 0
-  comment: 
-  willWait: 1
-  endAction: 0
-  skipAction: -1
-  skipActionActual: {fileID: 0}
-  linkedCutscene: {fileID: 0}
-  linkedAsset: {fileID: 0}
-  endings:
-  - resultAction: 2
-    skipAction: 1
-    skipActionActual: {fileID: -5632601060198493638}
-    linkedCutscene: {fileID: 0}
-    linkedAsset: {fileID: 0}
-  isEnabled: 1
-  isAssetFile: 1
-  isBreakPoint: 0
-  nodeRect:
-    serializedVersion: 2
-    x: 14
-    y: 14
-    width: 300
-    height: 212
-  overrideColor: {r: 1, g: 1, b: 1, a: 1}
-  showOutputSockets: 1
-  parentActionListInEditor: {fileID: 0}
-  constantID: 0
-  parameterID: 10
-  linkedCamera: {fileID: 0}
-  transitionTime: 0.2
-  transitionTimeParameterID: -1
-  timeCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    - serializedVersion: 3
-      time: 1
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  moveMethod: 1
-  returnToLast: 0
-  retainPreviousSpeed: 0
-  waitForAnimation: 0
 --- !u!114 &5295469929799819963
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -610,7 +532,7 @@ MonoBehaviour:
   linkedAsset: {fileID: 0}
   endings:
   - resultAction: 2
-    skipAction: 8
+    skipAction: 7
     skipActionActual: {fileID: 7079350955184647134}
     linkedCutscene: {fileID: 0}
     linkedAsset: {fileID: 0}
@@ -620,7 +542,7 @@ MonoBehaviour:
   nodeRect:
     serializedVersion: 2
     x: 364
-    y: 1172
+    y: 930
     width: 300
     height: 172
   overrideColor: {r: 1, g: 1, b: 1, a: 1}
@@ -672,7 +594,7 @@ MonoBehaviour:
   nodeRect:
     serializedVersion: 2
     x: 364
-    y: 1718
+    y: 1496
     width: 300
     height: 284
   overrideColor: {r: 1, g: 1, b: 1, a: 1}
@@ -689,7 +611,7 @@ MonoBehaviour:
   jumpToActionParameterID: -1
   jumpToActionActual: {fileID: 0}
   runInParallel: 1
-  isSkippable: 1
+  isSkippable: 0
   localParameters:
   - label: Lever variable
     description: 
@@ -717,7 +639,7 @@ MonoBehaviour:
     gameObject: {fileID: 0}
     objectValue: {fileID: 0}
     vector3Value: {x: 0, y: 0, z: 0}
-    gameObjectParameterReferences: 1
+    gameObjectParameterReferences: 0
     variables: {fileID: 0}
   - label: Up marker
     description: 
@@ -731,7 +653,7 @@ MonoBehaviour:
     gameObject: {fileID: 0}
     objectValue: {fileID: 0}
     vector3Value: {x: 0, y: 0, z: 0}
-    gameObjectParameterReferences: 1
+    gameObjectParameterReferences: 0
     variables: {fileID: 0}
   - label: Down marker
     description: 
@@ -745,7 +667,7 @@ MonoBehaviour:
     gameObject: {fileID: 0}
     objectValue: {fileID: 0}
     vector3Value: {x: 0, y: 0, z: 0}
-    gameObjectParameterReferences: 1
+    gameObjectParameterReferences: 0
     variables: {fileID: 0}
   parameterIDs: 00000000010000000200000003000000
   setParameters: 0
@@ -785,7 +707,7 @@ MonoBehaviour:
   nodeRect:
     serializedVersion: 2
     x: 364
-    y: 970
+    y: 728
     width: 300
     height: 172
   overrideColor: {r: 1, g: 1, b: 1, a: 1}
@@ -846,7 +768,7 @@ MonoBehaviour:
   linkedAsset: {fileID: 0}
   endings:
   - resultAction: 2
-    skipAction: 7
+    skipAction: 6
     skipActionActual: {fileID: 7806255151438841475}
     linkedCutscene: {fileID: 0}
     linkedAsset: {fileID: 0}
@@ -856,7 +778,7 @@ MonoBehaviour:
   nodeRect:
     serializedVersion: 2
     x: 364
-    y: 1374
+    y: 1132
     width: 300
     height: 192
   overrideColor: {r: 1, g: 1, b: 1, a: 1}
@@ -903,7 +825,7 @@ MonoBehaviour:
   linkedAsset: {fileID: 0}
   endings:
   - resultAction: 2
-    skipAction: 3
+    skipAction: 2
     skipActionActual: {fileID: -8597565115604845385}
     linkedCutscene: {fileID: 0}
     linkedAsset: {fileID: 0}
@@ -913,7 +835,7 @@ MonoBehaviour:
   nodeRect:
     serializedVersion: 2
     x: 14
-    y: 478
+    y: 236
     width: 300
     height: 212
   overrideColor: {r: 1, g: 1, b: 1, a: 1}
@@ -960,7 +882,7 @@ MonoBehaviour:
   linkedAsset: {fileID: 0}
   endings:
   - resultAction: 2
-    skipAction: 9
+    skipAction: 8
     skipActionActual: {fileID: 6475665971914815760}
     linkedCutscene: {fileID: 0}
     linkedAsset: {fileID: 0}
@@ -970,7 +892,7 @@ MonoBehaviour:
   nodeRect:
     serializedVersion: 2
     x: 364
-    y: 1576
+    y: 1354
     width: 300
     height: 112
   overrideColor: {r: 1, g: 1, b: 1, a: 1}
@@ -994,7 +916,7 @@ MonoBehaviour:
   isDisplayed: 1
   showComment: 0
   comment: 
-  willWait: 0
+  willWait: 1
   endAction: 0
   skipAction: -1
   skipActionActual: {fileID: 0}
@@ -1012,9 +934,9 @@ MonoBehaviour:
   nodeRect:
     serializedVersion: 2
     x: 364
-    y: 2376
+    y: 2154
     width: 300
-    height: 590
+    height: 780
   overrideColor: {r: 1, g: 1, b: 1, a: 1}
   showOutputSockets: 1
   parentActionListInEditor: {fileID: 0}
@@ -1029,7 +951,7 @@ MonoBehaviour:
   jumpToActionParameterID: -1
   jumpToActionActual: {fileID: 0}
   runInParallel: 1
-  isSkippable: 1
+  isSkippable: 0
   localParameters:
   - label: Lever 1
     description: 
@@ -1071,7 +993,7 @@ MonoBehaviour:
     gameObject: {fileID: 0}
     objectValue: {fileID: 0}
     vector3Value: {x: 0, y: 0, z: 0}
-    gameObjectParameterReferences: 1
+    gameObjectParameterReferences: 0
     variables: {fileID: 0}
   - label: Open marker
     description: 
@@ -1085,7 +1007,7 @@ MonoBehaviour:
     gameObject: {fileID: 0}
     objectValue: {fileID: 0}
     vector3Value: {x: 0, y: 0, z: 0}
-    gameObjectParameterReferences: 1
+    gameObjectParameterReferences: 0
     variables: {fileID: 0}
   - label: Shut marker
     description: 
@@ -1099,7 +1021,7 @@ MonoBehaviour:
     gameObject: {fileID: 0}
     objectValue: {fileID: 0}
     vector3Value: {x: 0, y: 0, z: 0}
-    gameObjectParameterReferences: 1
+    gameObjectParameterReferences: 0
     variables: {fileID: 0}
   - label: LightBase
     description: 
@@ -1113,7 +1035,7 @@ MonoBehaviour:
     gameObject: {fileID: 0}
     objectValue: {fileID: 0}
     vector3Value: {x: 0, y: 0, z: 0}
-    gameObjectParameterReferences: 1
+    gameObjectParameterReferences: 0
     variables: {fileID: 0}
   - label: Audio
     description: 
@@ -1127,7 +1049,7 @@ MonoBehaviour:
     gameObject: {fileID: 0}
     objectValue: {fileID: 0}
     vector3Value: {x: 0, y: 0, z: 0}
-    gameObjectParameterReferences: 1
+    gameObjectParameterReferences: 0
     variables: {fileID: 0}
   - label: Hotspot 1
     description: 
@@ -1171,7 +1093,91 @@ MonoBehaviour:
     vector3Value: {x: 0, y: 0, z: 0}
     gameObjectParameterReferences: 1
     variables: {fileID: 0}
-  parameterIDs: 00000000040000000500000006000000070000000900000008000000ffffffffffffffffffffffff
+  - label: LevelerCam
+    description: 
+    ID: 15
+    parameterType: 0
+    intValue: 0
+    constantID: 0
+    popUpID: 0
+    floatValue: 0
+    stringValue: 
+    gameObject: {fileID: 0}
+    objectValue: {fileID: 0}
+    vector3Value: {x: 0, y: 0, z: 0}
+    gameObjectParameterReferences: 0
+    variables: {fileID: 0}
+  - label: Parameter 11
+    description: 
+    ID: 10
+    parameterType: 11
+    intValue: 0
+    constantID: 0
+    popUpID: 0
+    floatValue: 0
+    stringValue: 
+    gameObject: {fileID: 0}
+    objectValue: {fileID: 0}
+    vector3Value: {x: 0, y: 0, z: 0}
+    gameObjectParameterReferences: 0
+    variables: {fileID: 0}
+  - label: LevelerToCheck
+    description: 
+    ID: 14
+    parameterType: 11
+    intValue: 0
+    constantID: 0
+    popUpID: 0
+    floatValue: 0
+    stringValue: 
+    gameObject: {fileID: 0}
+    objectValue: {fileID: 0}
+    vector3Value: {x: 0, y: 0, z: 0}
+    gameObjectParameterReferences: 0
+    variables: {fileID: 0}
+  - label: LeverToMove
+    description: 
+    ID: 11
+    parameterType: 0
+    intValue: -1
+    constantID: 0
+    popUpID: 0
+    floatValue: 0
+    stringValue: 
+    gameObject: {fileID: 0}
+    objectValue: {fileID: 0}
+    vector3Value: {x: 0, y: 0, z: 0}
+    gameObjectParameterReferences: 0
+    variables: {fileID: 0}
+  - label: LevelerUpMarker
+    description: 
+    ID: 12
+    parameterType: 0
+    intValue: -1
+    constantID: 0
+    popUpID: 0
+    floatValue: 0
+    stringValue: 
+    gameObject: {fileID: 0}
+    objectValue: {fileID: 0}
+    vector3Value: {x: 0, y: 0, z: 0}
+    gameObjectParameterReferences: 0
+    variables: {fileID: 0}
+  - label: LevelerDownMarker
+    description: 
+    ID: 13
+    parameterType: 0
+    intValue: -1
+    constantID: 0
+    popUpID: 0
+    floatValue: 0
+    stringValue: 
+    gameObject: {fileID: 0}
+    objectValue: {fileID: 0}
+    vector3Value: {x: 0, y: 0, z: 0}
+    gameObjectParameterReferences: 0
+    variables: {fileID: 0}
+  parameterIDs: 00000000040000000500000006000000070000000900000008000000ffffffffffffffffffffffffffffffff0b0000000f0000000c0000000d0000000e000000
   setParameters: 0
   runMode: 1
   hasUpgradedAgain: 1

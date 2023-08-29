@@ -21,7 +21,7 @@ MonoBehaviour:
   unfreezePauseMenus: 1
   useParameters: 1
   canRunMultipleInstances: 0
-  canSurviveSceneChanges: 0
+  canSurviveSceneChanges: 1
   revertToDefaultParametersAfterRunning: 0
   parameters:
   - label: Lever variable
@@ -275,8 +275,8 @@ MonoBehaviour:
   linkedAsset: {fileID: 0}
   endings:
   - resultAction: 1
-    skipAction: -1
-    skipActionActual: {fileID: 0}
+    skipAction: 2
+    skipActionActual: {fileID: 494578970699742709}
     linkedCutscene: {fileID: 0}
     linkedAsset: {fileID: 0}
   isEnabled: 1

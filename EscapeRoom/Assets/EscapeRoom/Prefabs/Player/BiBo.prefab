@@ -819,7 +819,9 @@ GameObject:
   - component: {fileID: 6573851211456098961}
   - component: {fileID: 2458268875523596642}
   - component: {fileID: 3343088288379149749}
-  - component: {fileID: 4281892737289104188}
+  - component: {fileID: 2882916993889192955}
+  - component: {fileID: 5769564298895140547}
+  - component: {fileID: 966374838231208484}
   m_Layer: 2
   m_Name: BiBo
   m_TagString: Untagged
@@ -2447,7 +2449,37 @@ MonoBehaviour:
   constantID: 311320
   retainInPrefab: 1
   autoManual: 0
---- !u!114 &4281892737289104188
+--- !u!114 &2882916993889192955
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1171209387228142441}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a40bd5d46c9f4408cbe6468257a31be6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  constantID: 311320
+  retainInPrefab: 1
+  autoManual: 0
+--- !u!114 &5769564298895140547
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1171209387228142441}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a40bd5d46c9f4408cbe6468257a31be6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  constantID: 311320
+  retainInPrefab: 1
+  autoManual: 0
+--- !u!114 &966374838231208484
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
