@@ -91,6 +91,8 @@ namespace AC
 		
 		public override bool CheckCondition ()
 		{
+			Debug.DrawRay (runtimeOrigin, runtimeDirection * distance, Color.red, 1f);
+			
 			if (SceneSettings.IsUnity2D ())
 			{
 				RaycastHit2D hitInfo2D = UnityVersionHandler.Perform2DRaycast (runtimeOrigin, runtimeDirection, distance, layerMask);
@@ -189,7 +191,7 @@ namespace AC
 
 		public override void AssignConstantIDs (bool saveScriptsToo, bool fromAssetFile)
 		{
-			AssignConstantID (originTransform, originConstantID, originParameterID);
+			originConstantID = AssignConstantID (originTransform, originConstantID, originParameterID);
 		}
 		
 		

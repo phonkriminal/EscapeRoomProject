@@ -281,9 +281,9 @@ namespace AC
 
 			if (!isPlayer)
 			{
-				AssignConstantID <Char> (_char, _charID, 0);
+				_charID = AssignConstantID<Char> (_char, _charID, 0);
 			}
-			AssignConstantID (objectToHold, objectToHoldID, objectToHoldParameterID);
+			objectToHoldID = AssignConstantID (objectToHold, objectToHoldID, objectToHoldParameterID);
 		}
 
 		

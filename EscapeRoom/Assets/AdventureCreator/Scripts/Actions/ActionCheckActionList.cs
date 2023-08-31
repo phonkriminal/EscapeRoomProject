@@ -136,7 +136,7 @@ namespace AC
 		{
 			if (listSource == ListSource.InScene)
 			{
-				AssignConstantID <ActionList> (actionList, constantID, parameterID);
+				constantID = AssignConstantID<ActionList> (actionList, constantID, parameterID);
 			}
 		}
 

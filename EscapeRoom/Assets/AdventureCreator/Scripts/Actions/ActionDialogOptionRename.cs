@@ -127,7 +127,7 @@ namespace AC
 			{
 				AddSaveScript <RememberConversation> (linkedConversation);
 			}
-			AssignConstantID <Conversation> (linkedConversation, constantID, 0);
+			constantID = AssignConstantID<Conversation> (linkedConversation, constantID, 0);
 		}
 
 

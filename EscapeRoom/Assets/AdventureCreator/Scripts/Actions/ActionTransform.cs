@@ -494,14 +494,14 @@ namespace AC
 					AddSaveScript<RememberMoveable> (linkedProp);
 				}
 			}
-			AssignConstantID<Moveable> (linkedProp, constantID, parameterID);
-			AssignConstantID<Marker> (marker, markerID, markerParameterID);
+			constantID = AssignConstantID<Moveable> (linkedProp, constantID, parameterID);
+			markerID = AssignConstantID<Marker> (marker, markerID, markerParameterID);
 
 			if (transformType != TransformType.CopyMarker &&
 				setVectorMethod == SetVectorMethod.FromVector3Variable &&
 				variableLocation == VariableLocation.Component)
 			{
-				AssignConstantID<Variables> (variables, variablesConstantID, vectorVarParameterID);
+				variablesConstantID = AssignConstantID<Variables> (variables, variablesConstantID, vectorVarParameterID);
 			}
 		}
 

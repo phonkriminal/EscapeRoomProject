@@ -131,11 +131,11 @@ namespace AC
 		public override void AssignConstantIDs (bool saveScriptsToo, bool fromAssetFile)
 		{
 			#if CinemaDirectorIsPresent
-			AssignConstantID <CinemaDirector.Cutscene> (cdCutscene, constantID, parameterID);
+			constantID = AssignConstantID <CinemaDirector.Cutscene> (cdCutscene, constantID, parameterID);
 			#endif
 		}
 
-		
+
 		public override string SetLabel ()
 		{
 			#if CinemaDirectorIsPresent

@@ -1012,6 +1012,13 @@ namespace AC
 					{
 						newSaveSlot = !SaveSystem.DoesSaveExist (optionToShow);
 					}
+					else if (saveListType == AC_SaveListType.Load)
+					{
+						if (hideIfNotValid && !SaveSystem.DoesSaveExist (optionToShow))
+						{
+							numSlots = 0;
+						}
+					}
 				}
 				else if (allowEmptySlots)
 				{

@@ -171,7 +171,7 @@ namespace AC
 					AddSaveScript <RememberNPC> (charToMove);
 				}
 
-				AssignConstantID <Char> (charToMove, charToMoveID, charToMoveParameterID);
+				charToMoveID = AssignConstantID<Char> (charToMove, charToMoveID, charToMoveParameterID);
 			}
 		}
 

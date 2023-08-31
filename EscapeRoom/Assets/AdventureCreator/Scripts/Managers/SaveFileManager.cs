@@ -223,6 +223,7 @@ namespace AC
 			EditorGUILayout.Space ();
 
 			foundSaveFiles = saveFileHandler.GatherSaveFiles (selectedProfileID);
+			SaveSystem.UpdateSaveFileLabels (ref foundSaveFiles);
 
 			EditorGUILayout.BeginVertical (CustomStyles.thinBox);
 			showSaves = CustomGUILayout.ToggleHeader (showSaves, "Save game files");

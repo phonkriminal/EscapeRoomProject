@@ -139,7 +139,7 @@ namespace AC
 		{
 			if (!isPlayer)
 			{
-				AssignConstantID (linkedObject, constantID, parameterID);
+				constantID = AssignConstantID (linkedObject, constantID, parameterID);
 			}
 		}
 

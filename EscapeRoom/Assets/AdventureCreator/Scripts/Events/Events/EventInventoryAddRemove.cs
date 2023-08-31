@@ -32,6 +32,7 @@ namespace AC
 
 		private void OnInventoryAdd (InvCollection invCollection, InvInstance invInstance, int amount)
 		{
+			if (!KickStarter.kickStarter.HasInitialisedAC) return;
 			if (addRemove == AddRemove.Add && (itemID < 0 || itemID == invInstance.ItemID))
 			{
 				Run (new object[] { invInstance.ItemID, amount });

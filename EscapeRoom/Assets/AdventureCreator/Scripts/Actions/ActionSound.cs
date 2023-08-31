@@ -250,7 +250,7 @@ namespace AC
 			{
 				AddSaveScript <RememberSound> (soundObject);
 			}
-			AssignConstantID <Sound> (soundObject, constantID, parameterID);
+			constantID = AssignConstantID<Sound> (soundObject, constantID, parameterID);
 		}
 		
 		

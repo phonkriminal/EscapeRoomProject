@@ -197,7 +197,7 @@ namespace AC
 
 		public override void AssignConstantIDs (bool saveScriptsToo, bool fromAssetFile)
 		{
-			AssignConstantID (relativeMarker, relativeMarkerID, relativeMarkerParameterID);
+			relativeMarkerID = AssignConstantID (relativeMarker, relativeMarkerID, relativeMarkerParameterID);
 		}
 
 

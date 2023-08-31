@@ -708,7 +708,7 @@ namespace AC
 
 		public override void AssignConstantIDs (bool saveScriptsToo, bool fromAssetFile)
 		{
-			AssignConstantID <ActionList> (actionList, constantID, parameterID);
+			constantID = AssignConstantID<ActionList> (actionList, constantID, parameterID);
 		}
 
 
@@ -847,6 +847,18 @@ namespace AC
 		public int UpdateDocumentReferences (int oldDocumentID, int newDocumentID, List<ActionParameter> parameters)
 		{
 			return GetParameterReferences (parameters, oldDocumentID, ParameterType.Document, true, newDocumentID);
+		}
+
+
+		public int GetNumObjectiveReferences (int _objectiveID, List<ActionParameter> parameters)
+		{
+			return GetParameterReferences (parameters, _objectiveID, ParameterType.Objective);
+		}
+
+
+		public int UpdateObjectiveReferences (int oldObjectiveID, int newObjectiveID, List<ActionParameter> parameters)
+		{
+			return GetParameterReferences (parameters, oldObjectiveID, ParameterType.Objective, true, newObjectiveID);
 		}
 
 

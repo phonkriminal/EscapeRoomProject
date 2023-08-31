@@ -185,7 +185,7 @@ namespace AC
 			{
 				AddSaveScript <RememberFootstepSounds> (obToUpdate);
 			}
-			AssignConstantID <FootstepSounds> (obToUpdate, constantID, parameterID);
+			constantID = AssignConstantID<FootstepSounds> (obToUpdate, constantID, parameterID);
 		}
 		
 		

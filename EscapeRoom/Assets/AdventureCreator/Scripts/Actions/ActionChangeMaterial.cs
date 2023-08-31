@@ -137,7 +137,7 @@ namespace AC
 			{
 				AddSaveScript <RememberMaterial> (obToUpdate);
 			}
-			AssignConstantID (obToUpdate, constantID, parameterID);
+			constantID = AssignConstantID (obToUpdate, constantID, parameterID);
 		}
 
 

@@ -220,7 +220,7 @@ namespace AC
 
 		public override void AssignConstantIDs (bool saveScriptsToo, bool fromAssetFile)
 		{
-			AssignConstantID <PlayerStart> (newTransform, newTransformConstantID, newTransformParameterID);
+			newTransformConstantID = AssignConstantID<PlayerStart> (newTransform, newTransformConstantID, newTransformParameterID);
 		}
 		
 

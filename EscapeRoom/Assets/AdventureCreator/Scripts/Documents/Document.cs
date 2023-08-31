@@ -251,11 +251,8 @@ namespace AC
 				Undo.RecordObject (KickStarter.inventoryManager, "Add Document page");
 				pages.Add (new JournalPage ());
 
-				if (pages.Count == 1)
-				{
-					selectedPage = 0;
-					EditorGUIUtility.editingTextField = false;
-				}
+				selectedPage = pages.Count - 1;
+				EditorGUIUtility.editingTextField = false;
 			}
 			CustomGUILayout.EndVertical ();
 

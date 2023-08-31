@@ -1386,6 +1386,16 @@ namespace AC
 		{
 			int totalNumReferences = 0;
 
+			if ((source == ActionListSource.InScene && NumParameters > 0) ||
+				(source == ActionListSource.AssetFile && assetFile && assetFile.NumParameters > 0 && !syncParamValues && useParameters))
+			{
+				int thisNumReferences = GetParameterReferences (parameters, objectiveID, ParameterType.Objective);
+				if (thisNumReferences > 0)
+				{
+					totalNumReferences += thisNumReferences;
+				}
+			}
+
 			foreach (Action action in actions)
 			{
 				if (action != null && action is IObjectiveReferencerAction)
@@ -1407,6 +1417,16 @@ namespace AC
 		public int UpdateObjectiveReferences (int oldObjectiveID, int newObjectiveID)
 		{
 			int totalNumReferences = 0;
+
+			if ((source == ActionListSource.InScene && NumParameters > 0) ||
+				(source == ActionListSource.AssetFile && assetFile && assetFile.NumParameters > 0 && !syncParamValues && useParameters))
+			{
+				int thisNumReferences = GetParameterReferences (parameters, oldObjectiveID, ParameterType.Objective, null, 0, true, newObjectiveID);
+				if (thisNumReferences > 0)
+				{
+					totalNumReferences += thisNumReferences;
+				}
+			}
 
 			foreach (Action action in actions)
 			{

@@ -361,7 +361,7 @@ namespace AC
 					AddSaveScript<RememberVariables> (variables);
 				}
 
-				AssignConstantID <Variables> (variables, variablesConstantID, parameterID);
+				variablesConstantID = AssignConstantID<Variables> (variables, variablesConstantID, parameterID);
 			}
 		}
 

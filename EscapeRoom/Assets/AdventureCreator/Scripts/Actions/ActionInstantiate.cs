@@ -634,18 +634,18 @@ namespace AC
 
 			if (invAction == InvAction.Replace)
 			{
-				AssignConstantID (replaceGameObject, replaceConstantID, replaceParameterID);
+				replaceConstantID = AssignConstantID (replaceGameObject, replaceConstantID, replaceParameterID);
 			}
 			else if (invAction == InvAction.Remove)
 			{
-				AssignConstantID (gameObject, constantID, parameterID);
+				constantID = AssignConstantID (gameObject, constantID, parameterID);
 			}
 
 			if (invAction == InvAction.Add &&
 				positionRelativeTo == PositionRelativeTo.VectorVariable &&
 				variableLocation == VariableLocation.Component)
 			{
-				AssignConstantID <Variables> (variables, variablesConstantID, vectorVarParameterID);
+				variablesConstantID = AssignConstantID<Variables> (variables, variablesConstantID, vectorVarParameterID);
 			}
 		}
 

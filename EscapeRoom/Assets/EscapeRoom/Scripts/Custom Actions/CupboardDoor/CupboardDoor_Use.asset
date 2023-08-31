@@ -1,5 +1,80 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-8096625778755475692
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e71317434ca91481a8e97d91e89df8c0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  id: 0
+  isDisplayed: 1
+  showComment: 0
+  comment: 
+  willWait: 0
+  endAction: 0
+  skipAction: -1
+  skipActionActual: {fileID: 0}
+  linkedCutscene: {fileID: 0}
+  linkedAsset: {fileID: 0}
+  endings:
+  - resultAction: 0
+    skipAction: -1
+    skipActionActual: {fileID: 0}
+    linkedCutscene: {fileID: 0}
+    linkedAsset: {fileID: 0}
+  isEnabled: 1
+  isAssetFile: 1
+  isBreakPoint: 0
+  nodeRect:
+    serializedVersion: 2
+    x: 364
+    y: 264
+    width: 300
+    height: 172
+  overrideColor: {r: 1, g: 1, b: 1, a: 1}
+  showOutputSockets: 1
+  parentActionListInEditor: {fileID: 0}
+  parameterID: -1
+  constantID: 0
+  isPlayer: 1
+  playerID: -1
+  animChar: {fileID: 0}
+  clip: {fileID: 0}
+  clipParameterID: -1
+  clip2D: 
+  clip2DParameterID: -1
+  method: 0
+  blendMode: 0
+  layer: 0
+  standard: 0
+  includeDirection: 0
+  changeSound: 0
+  newSound: {fileID: 0}
+  newSoundParameterID: -1
+  newSpeedParameterID: -1
+  layerInt: 0
+  idleAfter: 1
+  idleAfterCustom: 0
+  playMode: 0
+  playModeBase: 1
+  fadeTime: 0
+  changeSpeed: 0
+  newSpeed: 0
+  methodMecanim: 0
+  mecanimCharParameter: 0
+  mecanimParameterType: 1
+  parameterName: ActionID
+  parameterNameID: -1
+  parameterValue: 6
+  parameterValueParameterID: -1
+  hideHead: 0
+  doLoop: 0
 --- !u!114 &-6331891153736027941
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -34,7 +109,7 @@ MonoBehaviour:
   nodeRect:
     serializedVersion: 2
     x: 14
-    y: 486
+    y: 466
     width: 300
     height: 304
   overrideColor: {r: 1, g: 1, b: 1, a: 1}
@@ -113,6 +188,48 @@ MonoBehaviour:
   setParameters: 0
   runMode: 1
   hasUpgradedAgain: 1
+--- !u!114 &-4064403541478507310
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9289eb0ca58ef471f9062a5f77161403, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  id: 2
+  isDisplayed: 1
+  showComment: 0
+  comment: 
+  willWait: 0
+  endAction: 0
+  skipAction: -1
+  skipActionActual: {fileID: 0}
+  linkedCutscene: {fileID: 0}
+  linkedAsset: {fileID: 0}
+  endings:
+  - resultAction: 2
+    skipAction: 3
+    skipActionActual: {fileID: -2868478220687919498}
+    linkedCutscene: {fileID: 0}
+    linkedAsset: {fileID: 0}
+  isEnabled: 1
+  isAssetFile: 1
+  isBreakPoint: 0
+  nodeRect:
+    serializedVersion: 2
+    x: 364
+    y: 870
+    width: 300
+    height: 112
+  overrideColor: {r: 1, g: 1, b: 1, a: 1}
+  showOutputSockets: 1
+  parentActionListInEditor: {fileID: 0}
+  parameterID: -1
+  timeToPause: 1
 --- !u!114 &-2868478220687919498
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -147,9 +264,9 @@ MonoBehaviour:
   nodeRect:
     serializedVersion: 2
     x: 364
-    y: 284
+    y: 1012
     width: 300
-    height: 212
+    height: 232
   overrideColor: {r: 1, g: 1, b: 1, a: 1}
   showOutputSockets: 1
   parentActionListInEditor: {fileID: 0}
@@ -173,6 +290,81 @@ MonoBehaviour:
   mouthClip2D: 
   mouthLayer: 0
   waitTimeOffset: 0
+--- !u!114 &-988192787307986870
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e71317434ca91481a8e97d91e89df8c0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  id: 0
+  isDisplayed: 1
+  showComment: 0
+  comment: 
+  willWait: 0
+  endAction: 0
+  skipAction: -1
+  skipActionActual: {fileID: 0}
+  linkedCutscene: {fileID: 0}
+  linkedAsset: {fileID: 0}
+  endings:
+  - resultAction: 2
+    skipAction: 6
+    skipActionActual: {fileID: 5172230785443522996}
+    linkedCutscene: {fileID: 0}
+    linkedAsset: {fileID: 0}
+  isEnabled: 1
+  isAssetFile: 1
+  isBreakPoint: 0
+  nodeRect:
+    serializedVersion: 2
+    x: 364
+    y: 466
+    width: 300
+    height: 192
+  overrideColor: {r: 1, g: 1, b: 1, a: 1}
+  showOutputSockets: 1
+  parentActionListInEditor: {fileID: 0}
+  parameterID: -1
+  constantID: 0
+  isPlayer: 1
+  playerID: -1
+  animChar: {fileID: 0}
+  clip: {fileID: 0}
+  clipParameterID: -1
+  clip2D: 
+  clip2DParameterID: -1
+  method: 0
+  blendMode: 0
+  layer: 0
+  standard: 0
+  includeDirection: 0
+  changeSound: 0
+  newSound: {fileID: 0}
+  newSoundParameterID: -1
+  newSpeedParameterID: -1
+  layerInt: 0
+  idleAfter: 1
+  idleAfterCustom: 0
+  playMode: 0
+  playModeBase: 1
+  fadeTime: 0
+  changeSpeed: 0
+  newSpeed: 0
+  methodMecanim: 0
+  mecanimCharParameter: 0
+  mecanimParameterType: 3
+  parameterName: IsAction
+  parameterNameID: -1
+  parameterValue: 0
+  parameterValueParameterID: -1
+  hideHead: 0
+  doLoop: 0
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -192,12 +384,16 @@ MonoBehaviour:
   - {fileID: -2868478220687919498}
   - {fileID: 8595948920888008853}
   - {fileID: 5067492922595413631}
-  isSkippable: 1
-  actionListType: 1
+  - {fileID: 5172230785443522996}
+  - {fileID: -4064403541478507310}
+  - {fileID: -8096625778755475692}
+  - {fileID: -988192787307986870}
+  isSkippable: 0
+  actionListType: 0
   unfreezePauseMenus: 1
   useParameters: 1
   canRunMultipleInstances: 0
-  canSurviveSceneChanges: 0
+  canSurviveSceneChanges: 1
   revertToDefaultParametersAfterRunning: 0
   parameters:
   - label: Is Locked
@@ -284,6 +480,20 @@ MonoBehaviour:
     vector3Value: {x: 0, y: 0, z: 0}
     gameObjectParameterReferences: 0
     variables: {fileID: 0}
+  - label: Interaction Object
+    description: 
+    ID: 7
+    parameterType: 0
+    intValue: -1
+    constantID: 0
+    popUpID: 0
+    floatValue: 0
+    stringValue: 
+    gameObject: {fileID: 0}
+    objectValue: {fileID: 0}
+    vector3Value: {x: 0, y: 0, z: 0}
+    gameObjectParameterReferences: 0
+    variables: {fileID: 0}
   tagID: 0
   backupData: []
 --- !u!114 &641455708491505500
@@ -315,8 +525,8 @@ MonoBehaviour:
     linkedCutscene: {fileID: 0}
     linkedAsset: {fileID: 0}
   - resultAction: 2
-    skipAction: 3
-    skipActionActual: {fileID: -2868478220687919498}
+    skipAction: 8
+    skipActionActual: {fileID: -8096625778755475692}
     linkedCutscene: {fileID: 0}
     linkedAsset: {fileID: 0}
   isEnabled: 1
@@ -399,8 +609,8 @@ MonoBehaviour:
   isBreakPoint: 0
   nodeRect:
     serializedVersion: 2
-    x: 12
-    y: 825.40967
+    x: 14
+    y: 800
     width: 300
     height: 132
   overrideColor: {r: 1, g: 1, b: 1, a: 1}
@@ -411,6 +621,57 @@ MonoBehaviour:
   hotspot: {fileID: 0}
   affectChildren: 0
   changeType: 1
+--- !u!114 &5172230785443522996
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ddc21d3f7c817495f9365e3407945485, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  id: 0
+  isDisplayed: 1
+  showComment: 0
+  comment: 
+  willWait: 0
+  endAction: 0
+  skipAction: -1
+  skipActionActual: {fileID: 0}
+  linkedCutscene: {fileID: 0}
+  linkedAsset: {fileID: 0}
+  endings:
+  - resultAction: 0
+    skipAction: 3
+    skipActionActual: {fileID: -2868478220687919498}
+    linkedCutscene: {fileID: 0}
+    linkedAsset: {fileID: 0}
+  isEnabled: 1
+  isAssetFile: 1
+  isBreakPoint: 0
+  nodeRect:
+    serializedVersion: 2
+    x: 364
+    y: 688
+    width: 300
+    height: 152
+  overrideColor: {r: 1, g: 1, b: 1, a: 1}
+  showOutputSockets: 1
+  parentActionListInEditor: {fileID: 0}
+  interactionSystem: {fileID: 0}
+  isPlayer: 1
+  playerID: -1
+  playerParameterID: -1
+  effector: 6
+  interactionObject: {fileID: 0}
+  interrupt: 0
+  constantID_is: 0
+  constantID_io: 0
+  parameterID_is: -1
+  parameterID_io: 7
 --- !u!114 &8595948920888008853
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -445,7 +706,7 @@ MonoBehaviour:
   nodeRect:
     serializedVersion: 2
     x: 364
-    y: 526
+    y: 1274
     width: 300
     height: 92
   overrideColor: {r: 1, g: 1, b: 1, a: 1}
@@ -487,7 +748,7 @@ MonoBehaviour:
   nodeRect:
     serializedVersion: 2
     x: 14
-    y: 284
+    y: 264
     width: 300
     height: 172
   overrideColor: {r: 1, g: 1, b: 1, a: 1}

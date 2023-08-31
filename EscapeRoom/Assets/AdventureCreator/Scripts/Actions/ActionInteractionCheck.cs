@@ -166,7 +166,7 @@ namespace AC
 
 		public override void AssignConstantIDs (bool saveScriptsToo, bool fromAssetFile)
 		{
-			AssignConstantID <Hotspot> (hotspot, constantID, parameterID);
+			constantID = AssignConstantID<Hotspot> (hotspot, constantID, parameterID);
 		}
 
 		

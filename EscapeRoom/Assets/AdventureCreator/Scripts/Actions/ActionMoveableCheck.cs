@@ -72,7 +72,7 @@ namespace AC
 
 		public override void AssignConstantIDs (bool saveScriptsToo, bool fromAssetFile)
 		{
-			AssignConstantID <DragBase> (dragObject, constantID, parameterID);
+			constantID = AssignConstantID<DragBase> (dragObject, constantID, parameterID);
 		}
 
 

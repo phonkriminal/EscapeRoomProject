@@ -124,7 +124,7 @@ namespace AC
 					}
 				}
 
-				AssignConstantID <Char> (_char, constantID, parameterID);
+				constantID = AssignConstantID<Char> (_char, constantID, parameterID);
 			}
 		}
 

@@ -385,14 +385,14 @@ namespace AC
 
 			if (!isPlayer)
 			{
-				AssignConstantID (obToMove, obToMoveID, obToMoveParameterID);
+				obToMoveID = AssignConstantID (obToMove, obToMoveID, obToMoveParameterID);
 			}
-			AssignConstantID <Marker> (teleporter, markerID, markerParameterID);
+			markerID = AssignConstantID<Marker> (teleporter, markerID, markerParameterID);
 
 			if (positionRelativeTo == PositionRelativeTo.VectorVariable &&
 				variableLocation == VariableLocation.Component)
 			{
-				AssignConstantID <Variables> (variables, variablesConstantID, vectorVarParameterID);
+				variablesConstantID = AssignConstantID<Variables> (variables, variablesConstantID, vectorVarParameterID);
 			}
 		}
 		

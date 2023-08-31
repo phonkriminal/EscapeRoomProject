@@ -667,6 +667,61 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2676951208750835317, guid: 5bc592c24cfe64be8a9adfb022e1f8b7,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.138
+      objectReference: {fileID: 0}
+    - target: {fileID: 2676951208750835317, guid: 5bc592c24cfe64be8a9adfb022e1f8b7,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.204
+      objectReference: {fileID: 0}
+    - target: {fileID: 2676951208750835317, guid: 5bc592c24cfe64be8a9adfb022e1f8b7,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.872
+      objectReference: {fileID: 0}
+    - target: {fileID: 2676951208750835317, guid: 5bc592c24cfe64be8a9adfb022e1f8b7,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: -0.053517025
+      objectReference: {fileID: 0}
+    - target: {fileID: 2676951208750835317, guid: 5bc592c24cfe64be8a9adfb022e1f8b7,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.05879607
+      objectReference: {fileID: 0}
+    - target: {fileID: 2676951208750835317, guid: 5bc592c24cfe64be8a9adfb022e1f8b7,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.6709968
+      objectReference: {fileID: 0}
+    - target: {fileID: 2676951208750835317, guid: 5bc592c24cfe64be8a9adfb022e1f8b7,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.73718536
+      objectReference: {fileID: 0}
+    - target: {fileID: 2676951208750835317, guid: 5bc592c24cfe64be8a9adfb022e1f8b7,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -259.422
+      objectReference: {fileID: 0}
+    - target: {fileID: 2676951208750835317, guid: 5bc592c24cfe64be8a9adfb022e1f8b7,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 239.703
+      objectReference: {fileID: 0}
+    - target: {fileID: 2676951208750835317, guid: 5bc592c24cfe64be8a9adfb022e1f8b7,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 59.273003
+      objectReference: {fileID: 0}
+    - target: {fileID: 4285761067921807188, guid: 5bc592c24cfe64be8a9adfb022e1f8b7,
+        type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4372920345999328689, guid: 5bc592c24cfe64be8a9adfb022e1f8b7,
         type: 3}
       propertyPath: m_Name
@@ -727,6 +782,207 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4655733113106193152, guid: 5bc592c24cfe64be8a9adfb022e1f8b7,
+        type: 3}
+      propertyPath: events.Array.data[0].animations.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4655733113106193152, guid: 5bc592c24cfe64be8a9adfb022e1f8b7,
+        type: 3}
+      propertyPath: events.Array.data[0].animations.Array.data[0].layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4655733113106193152, guid: 5bc592c24cfe64be8a9adfb022e1f8b7,
+        type: 3}
+      propertyPath: weightCurves.Array.data[0].curve.m_Curve.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 4655733113106193152, guid: 5bc592c24cfe64be8a9adfb022e1f8b7,
+        type: 3}
+      propertyPath: events.Array.data[0].animations.Array.data[0].animator
+      value: 
+      objectReference: {fileID: 5614586597700508585, guid: cefbf7e873ea24b329f8c3ef1aef43a2,
+        type: 3}
+    - target: {fileID: 4655733113106193152, guid: 5bc592c24cfe64be8a9adfb022e1f8b7,
+        type: 3}
+      propertyPath: events.Array.data[0].animations.Array.data[0].crossfadeTime
+      value: 0.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 4655733113106193152, guid: 5bc592c24cfe64be8a9adfb022e1f8b7,
+        type: 3}
+      propertyPath: weightCurves.Array.data[0].curve.m_Curve.Array.data[1].time
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4655733113106193152, guid: 5bc592c24cfe64be8a9adfb022e1f8b7,
+        type: 3}
+      propertyPath: weightCurves.Array.data[0].curve.m_Curve.Array.data[2].time
+      value: 2.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4655733113106193152, guid: 5bc592c24cfe64be8a9adfb022e1f8b7,
+        type: 3}
+      propertyPath: weightCurves.Array.data[0].curve.m_Curve.Array.data[3].time
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4655733113106193152, guid: 5bc592c24cfe64be8a9adfb022e1f8b7,
+        type: 3}
+      propertyPath: events.Array.data[0].animations.Array.data[0].animationState
+      value: Opening_Attemp
+      objectReference: {fileID: 0}
+    - target: {fileID: 4655733113106193152, guid: 5bc592c24cfe64be8a9adfb022e1f8b7,
+        type: 3}
+      propertyPath: weightCurves.Array.data[0].curve.m_Curve.Array.data[1].value
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4655733113106193152, guid: 5bc592c24cfe64be8a9adfb022e1f8b7,
+        type: 3}
+      propertyPath: weightCurves.Array.data[0].curve.m_Curve.Array.data[2].value
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4655733113106193152, guid: 5bc592c24cfe64be8a9adfb022e1f8b7,
+        type: 3}
+      propertyPath: weightCurves.Array.data[0].curve.m_Curve.Array.data[3].value
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4655733113106193152, guid: 5bc592c24cfe64be8a9adfb022e1f8b7,
+        type: 3}
+      propertyPath: weightCurves.Array.data[0].curve.m_Curve.Array.data[0].inSlope
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4655733113106193152, guid: 5bc592c24cfe64be8a9adfb022e1f8b7,
+        type: 3}
+      propertyPath: weightCurves.Array.data[0].curve.m_Curve.Array.data[1].inSlope
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4655733113106193152, guid: 5bc592c24cfe64be8a9adfb022e1f8b7,
+        type: 3}
+      propertyPath: weightCurves.Array.data[0].curve.m_Curve.Array.data[2].inSlope
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4655733113106193152, guid: 5bc592c24cfe64be8a9adfb022e1f8b7,
+        type: 3}
+      propertyPath: weightCurves.Array.data[0].curve.m_Curve.Array.data[3].inSlope
+      value: -2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4655733113106193152, guid: 5bc592c24cfe64be8a9adfb022e1f8b7,
+        type: 3}
+      propertyPath: weightCurves.Array.data[0].curve.m_Curve.Array.data[0].outSlope
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4655733113106193152, guid: 5bc592c24cfe64be8a9adfb022e1f8b7,
+        type: 3}
+      propertyPath: weightCurves.Array.data[0].curve.m_Curve.Array.data[1].outSlope
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4655733113106193152, guid: 5bc592c24cfe64be8a9adfb022e1f8b7,
+        type: 3}
+      propertyPath: weightCurves.Array.data[0].curve.m_Curve.Array.data[2].inWeight
+      value: 0.33333334
+      objectReference: {fileID: 0}
+    - target: {fileID: 4655733113106193152, guid: 5bc592c24cfe64be8a9adfb022e1f8b7,
+        type: 3}
+      propertyPath: weightCurves.Array.data[0].curve.m_Curve.Array.data[2].outSlope
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4655733113106193152, guid: 5bc592c24cfe64be8a9adfb022e1f8b7,
+        type: 3}
+      propertyPath: weightCurves.Array.data[0].curve.m_Curve.Array.data[3].inWeight
+      value: 0.33333334
+      objectReference: {fileID: 0}
+    - target: {fileID: 4655733113106193152, guid: 5bc592c24cfe64be8a9adfb022e1f8b7,
+        type: 3}
+      propertyPath: weightCurves.Array.data[0].curve.m_Curve.Array.data[3].outSlope
+      value: -2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4655733113106193152, guid: 5bc592c24cfe64be8a9adfb022e1f8b7,
+        type: 3}
+      propertyPath: weightCurves.Array.data[0].curve.m_Curve.Array.data[0].outWeight
+      value: 0.33333334
+      objectReference: {fileID: 0}
+    - target: {fileID: 4655733113106193152, guid: 5bc592c24cfe64be8a9adfb022e1f8b7,
+        type: 3}
+      propertyPath: weightCurves.Array.data[0].curve.m_Curve.Array.data[1].outWeight
+      value: 0.33333334
+      objectReference: {fileID: 0}
+    - target: {fileID: 4655733113106193152, guid: 5bc592c24cfe64be8a9adfb022e1f8b7,
+        type: 3}
+      propertyPath: weightCurves.Array.data[0].curve.m_Curve.Array.data[2].outWeight
+      value: 0.33333334
+      objectReference: {fileID: 0}
+    - target: {fileID: 4655733113106193152, guid: 5bc592c24cfe64be8a9adfb022e1f8b7,
+        type: 3}
+      propertyPath: weightCurves.Array.data[0].curve.m_Curve.Array.data[0].tangentMode
+      value: 34
+      objectReference: {fileID: 0}
+    - target: {fileID: 4655733113106193152, guid: 5bc592c24cfe64be8a9adfb022e1f8b7,
+        type: 3}
+      propertyPath: weightCurves.Array.data[0].curve.m_Curve.Array.data[1].tangentMode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4655733113106193152, guid: 5bc592c24cfe64be8a9adfb022e1f8b7,
+        type: 3}
+      propertyPath: weightCurves.Array.data[0].curve.m_Curve.Array.data[2].tangentMode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4655733113106193152, guid: 5bc592c24cfe64be8a9adfb022e1f8b7,
+        type: 3}
+      propertyPath: weightCurves.Array.data[0].curve.m_Curve.Array.data[3].tangentMode
+      value: 34
+      objectReference: {fileID: 0}
+    - target: {fileID: 6164344492618300807, guid: 5bc592c24cfe64be8a9adfb022e1f8b7,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.456
+      objectReference: {fileID: 0}
+    - target: {fileID: 6164344492618300807, guid: 5bc592c24cfe64be8a9adfb022e1f8b7,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.409
+      objectReference: {fileID: 0}
+    - target: {fileID: 6164344492618300807, guid: 5bc592c24cfe64be8a9adfb022e1f8b7,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7205541219449451908, guid: 5bc592c24cfe64be8a9adfb022e1f8b7,
+        type: 3}
+      propertyPath: initialGUIData.fromParameters.Array.data[2].intValue
+      value: 32412
+      objectReference: {fileID: 0}
+    - target: {fileID: 7205541219449451908, guid: 5bc592c24cfe64be8a9adfb022e1f8b7,
+        type: 3}
+      propertyPath: initialGUIData.fromParameters.Array.data[3].intValue
+      value: 32452
+      objectReference: {fileID: 0}
+    - target: {fileID: 7205541219449451908, guid: 5bc592c24cfe64be8a9adfb022e1f8b7,
+        type: 3}
+      propertyPath: initialGUIData.fromParameters.Array.data[4].intValue
+      value: 32584
+      objectReference: {fileID: 0}
+    - target: {fileID: 7205541219449451908, guid: 5bc592c24cfe64be8a9adfb022e1f8b7,
+        type: 3}
+      propertyPath: initialGUIData.fromParameters.Array.data[5].intValue
+      value: 29712
+      objectReference: {fileID: 0}
+    - target: {fileID: 7205541219449451908, guid: 5bc592c24cfe64be8a9adfb022e1f8b7,
+        type: 3}
+      propertyPath: initialGUIData.fromParameters.Array.data[6].intValue
+      value: 503408
+      objectReference: {fileID: 0}
+    - target: {fileID: 7205541219449451908, guid: 5bc592c24cfe64be8a9adfb022e1f8b7,
+        type: 3}
+      propertyPath: initialGUIData.fromParameters.Array.data[7].intValue
+      value: 503408
+      objectReference: {fileID: 0}
+    - target: {fileID: 7205541219449451908, guid: 5bc592c24cfe64be8a9adfb022e1f8b7,
+        type: 3}
+      propertyPath: initialGUIData.fromParameters.Array.data[7].gameObject
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 7205541219449451908, guid: 5bc592c24cfe64be8a9adfb022e1f8b7,
+        type: 3}
+      propertyPath: initialGUIData.fromParameters.Array.data[7].gameObjectParameterReferences
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8066911269862559440, guid: 5bc592c24cfe64be8a9adfb022e1f8b7,
         type: 3}
       propertyPath: lineID
@@ -736,6 +992,31 @@ PrefabInstance:
         type: 3}
       propertyPath: hotspotName
       value: Door Closed
+      objectReference: {fileID: 0}
+    - target: {fileID: 9189766331119192342, guid: 5bc592c24cfe64be8a9adfb022e1f8b7,
+        type: 3}
+      propertyPath: m_Size.x
+      value: 0.013795911
+      objectReference: {fileID: 0}
+    - target: {fileID: 9189766331119192342, guid: 5bc592c24cfe64be8a9adfb022e1f8b7,
+        type: 3}
+      propertyPath: m_Size.z
+      value: 1.5999992
+      objectReference: {fileID: 0}
+    - target: {fileID: 9189766331119192342, guid: 5bc592c24cfe64be8a9adfb022e1f8b7,
+        type: 3}
+      propertyPath: m_Center.x
+      value: -0.0068979557
+      objectReference: {fileID: 0}
+    - target: {fileID: 9189766331119192342, guid: 5bc592c24cfe64be8a9adfb022e1f8b7,
+        type: 3}
+      propertyPath: m_Center.y
+      value: 0.038461555
+      objectReference: {fileID: 0}
+    - target: {fileID: 9189766331119192342, guid: 5bc592c24cfe64be8a9adfb022e1f8b7,
+        type: 3}
+      propertyPath: m_Center.z
+      value: 0.8000003
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5bc592c24cfe64be8a9adfb022e1f8b7, type: 3}
@@ -902,7 +1183,7 @@ MonoBehaviour:
   syncParamValues: 1
   backupData:
   - className: AC.ActionRunActionList
-    jsonData: '{"id":0,"isDisplayed":true,"showComment":false,"comment":"","willWait":false,"endAction":0,"skipAction":-1,"skipActionActual":{"instanceID":0},"linkedCutscene":{"instanceID":0},"linkedAsset":{"instanceID":0},"endings":[{"resultAction":1,"skipAction":-1,"skipActionActual":{"instanceID":0},"linkedCutscene":{"instanceID":0},"linkedAsset":{"instanceID":0}}],"isEnabled":true,"isAssetFile":false,"isBreakPoint":false,"nodeRect":{"serializedVersion":"2","x":14.0,"y":14.0,"width":300.0,"height":258.0},"overrideColor":{"r":1.0,"g":1.0,"b":1.0,"a":1.0},"showOutputSockets":true,"parentActionListInEditor":{"instanceID":519534875_0},"listSource":0,"actionList":{"instanceID":3819755005987040078_0},"constantID":0,"parameterID":-1,"invActionList":{"instanceID":42598},"assetParameterID":-1,"runFromStart":true,"jumpToAction":0,"jumpToActionParameterID":-1,"jumpToActionActual":{"instanceID":0},"runInParallel":true,"isSkippable":false,"localParameters":[{"label":"New
+    jsonData: '{"id":0,"isDisplayed":true,"showComment":false,"comment":"","willWait":false,"endAction":0,"skipAction":-1,"skipActionActual":{"instanceID":0},"linkedCutscene":{"instanceID":0},"linkedAsset":{"instanceID":0},"endings":[{"resultAction":1,"skipAction":-1,"skipActionActual":{"instanceID":0},"linkedCutscene":{"instanceID":0},"linkedAsset":{"instanceID":0}}],"isEnabled":true,"isAssetFile":false,"isBreakPoint":false,"nodeRect":{"serializedVersion":"2","x":14.0,"y":14.0,"width":300.0,"height":258.0},"overrideColor":{"r":1.0,"g":1.0,"b":1.0,"a":1.0},"showOutputSockets":true,"parentActionListInEditor":{"instanceID":519534875_0},"listSource":0,"actionList":{"instanceID":3819755005987040078_0},"constantID":0,"parameterID":-1,"invActionList":{"instanceID":153818},"assetParameterID":-1,"runFromStart":true,"jumpToAction":0,"jumpToActionParameterID":-1,"jumpToActionActual":{"instanceID":0},"runInParallel":true,"isSkippable":false,"localParameters":[{"label":"New
       Page Text","description":"","ID":0,"parameterType":4,"intValue":-1,"constantID":0,"popUpID":0,"floatValue":0.0,"stringValue":"<b>This
       is page <color=red>Four</color></b>","gameObject":{"instanceID":0},"objectValue":{"instanceID":0},"vector3Value":{"x":0.0,"y":0.0,"z":0.0},"gameObjectParameterReferences":0,"variables":{"instanceID":0}},{"label":"Page
       Index","description":"","ID":1,"parameterType":6,"intValue":4,"constantID":0,"popUpID":0,"floatValue":0.0,"stringValue":"","gameObject":{"instanceID":0},"objectValue":{"instanceID":0},"vector3Value":{"x":0.0,"y":0.0,"z":0.0},"gameObjectParameterReferences":0,"variables":{"instanceID":0}},{"label":"Trigger","description":"","ID":2,"parameterType":0,"intValue":0,"constantID":0,"popUpID":0,"floatValue":0.0,"stringValue":"","gameObject":{"instanceID":519534870_0},"objectValue":{"instanceID":0},"vector3Value":{"x":0.0,"y":0.0,"z":0.0},"gameObjectParameterReferences":0,"variables":{"instanceID":0}}],"parameterIDs":[-1,-1,-1],"setParameters":false,"runMode":1,"hasUpgradedAgain":false}'
@@ -1450,7 +1731,6 @@ MonoBehaviour:
   elementToChange: Journal
   elementToChangeParameterID: -1
   journalText: Page 2
-  textToChangeParameterID: -1
   onlyAddNewJournal: 1
   doFade: 0
   lineID: 234
@@ -1666,7 +1946,6 @@ MonoBehaviour:
   elementToChange: Journal
   elementToChangeParameterID: -1
   journalText: Page 3
-  textToChangeParameterID: -1
   onlyAddNewJournal: 1
   doFade: 0
   lineID: 233
@@ -1796,7 +2075,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1321121793
 Transform:
   m_ObjectHideFlags: 0
@@ -2628,7 +2907,6 @@ MonoBehaviour:
   elementToChange: Journal
   elementToChangeParameterID: -1
   journalText: <b>This is page <color=brown>ONE</color></b>
-  textToChangeParameterID: -1
   onlyAddNewJournal: 1
   doFade: 0
   lineID: 230
@@ -2877,6 +3155,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a9aed79b329f74b479397892dc49c27f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hotspotsPreventCameraDragging: 0
 --- !u!114 &1383553313207085989
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5693,7 +5972,7 @@ MonoBehaviour:
     endingReferencesBuffer: 00
     endingOverrideIndex: 00000000
   - className: AC.ActionRunActionList
-    jsonData: '{"id":0,"isDisplayed":true,"showComment":false,"comment":"","willWait":false,"endAction":0,"skipAction":-1,"skipActionActual":{"instanceID":0},"linkedCutscene":{"instanceID":0},"linkedAsset":{"instanceID":0},"endings":[{"resultAction":1,"skipAction":-1,"skipActionActual":{"instanceID":0},"linkedCutscene":{"instanceID":0},"linkedAsset":{"instanceID":0}}],"isEnabled":true,"isAssetFile":false,"isBreakPoint":false,"nodeRect":{"serializedVersion":"2","x":336.0,"y":122.0,"width":300.0,"height":200.0},"overrideColor":{"r":1.0,"g":1.0,"b":1.0,"a":1.0},"showOutputSockets":true,"parentActionListInEditor":{"instanceID":3819755005987040078_0},"listSource":1,"actionList":{"instanceID":0},"constantID":0,"parameterID":-1,"invActionList":{"instanceID":42586},"assetParameterID":-1,"runFromStart":true,"jumpToAction":0,"jumpToActionParameterID":-1,"jumpToActionActual":{"instanceID":0},"runInParallel":true,"isSkippable":false,"localParameters":[{"label":"Trigger","description":"","ID":0,"parameterType":0,"intValue":0,"constantID":0,"popUpID":0,"floatValue":0.0,"stringValue":"","gameObject":{"instanceID":519534870_0},"objectValue":{"instanceID":0},"vector3Value":{"x":0.0,"y":0.0,"z":0.0},"gameObjectParameterReferences":0,"variables":{"instanceID":0}}],"parameterIDs":[-1],"setParameters":false,"runMode":1,"hasUpgradedAgain":false}'
+    jsonData: '{"id":0,"isDisplayed":true,"showComment":false,"comment":"","willWait":false,"endAction":0,"skipAction":-1,"skipActionActual":{"instanceID":0},"linkedCutscene":{"instanceID":0},"linkedAsset":{"instanceID":0},"endings":[{"resultAction":1,"skipAction":-1,"skipActionActual":{"instanceID":0},"linkedCutscene":{"instanceID":0},"linkedAsset":{"instanceID":0}}],"isEnabled":true,"isAssetFile":false,"isBreakPoint":false,"nodeRect":{"serializedVersion":"2","x":336.0,"y":122.0,"width":300.0,"height":200.0},"overrideColor":{"r":1.0,"g":1.0,"b":1.0,"a":1.0},"showOutputSockets":true,"parentActionListInEditor":{"instanceID":3819755005987040078_0},"listSource":1,"actionList":{"instanceID":0},"constantID":0,"parameterID":-1,"invActionList":{"instanceID":134792},"assetParameterID":-1,"runFromStart":true,"jumpToAction":0,"jumpToActionParameterID":-1,"jumpToActionActual":{"instanceID":0},"runInParallel":true,"isSkippable":false,"localParameters":[{"label":"Trigger","description":"","ID":0,"parameterType":0,"intValue":0,"constantID":0,"popUpID":0,"floatValue":0.0,"stringValue":"","gameObject":{"instanceID":519534870_0},"objectValue":{"instanceID":0},"vector3Value":{"x":0.0,"y":0.0,"z":0.0},"gameObjectParameterReferences":0,"variables":{"instanceID":0}}],"parameterIDs":[-1],"setParameters":false,"runMode":1,"hasUpgradedAgain":false}'
     endingReferencesBuffer: 00
     endingOverrideIndex: 00000000
 --- !u!114 &4490681641385420174
@@ -5842,7 +6121,7 @@ MonoBehaviour:
     endingReferencesBuffer: 00
     endingOverrideIndex: 00000000
   - className: AC.ActionRunActionList
-    jsonData: '{"id":0,"isDisplayed":true,"showComment":false,"comment":"","willWait":false,"endAction":0,"skipAction":-1,"skipActionActual":{"instanceID":0},"linkedCutscene":{"instanceID":0},"linkedAsset":{"instanceID":0},"endings":[{"resultAction":1,"skipAction":-1,"skipActionActual":{"instanceID":0},"linkedCutscene":{"instanceID":0},"linkedAsset":{"instanceID":0}}],"isEnabled":true,"isAssetFile":false,"isBreakPoint":false,"nodeRect":{"serializedVersion":"2","x":33.0,"y":291.0,"width":300.0,"height":200.0},"overrideColor":{"r":1.0,"g":1.0,"b":1.0,"a":1.0},"showOutputSockets":true,"parentActionListInEditor":{"instanceID":4577846404994786215_0},"listSource":1,"actionList":{"instanceID":0},"constantID":0,"parameterID":-1,"invActionList":{"instanceID":42586},"assetParameterID":-1,"runFromStart":true,"jumpToAction":0,"jumpToActionParameterID":-1,"jumpToActionActual":{"instanceID":0},"runInParallel":true,"isSkippable":false,"localParameters":[{"label":"Trigger","description":"","ID":0,"parameterType":0,"intValue":0,"constantID":0,"popUpID":0,"floatValue":0.0,"stringValue":"","gameObject":{"instanceID":5716342099908201988_0},"objectValue":{"instanceID":0},"vector3Value":{"x":0.0,"y":0.0,"z":0.0},"gameObjectParameterReferences":0,"variables":{"instanceID":0}}],"parameterIDs":[-1],"setParameters":false,"runMode":1,"hasUpgradedAgain":false}'
+    jsonData: '{"id":0,"isDisplayed":true,"showComment":false,"comment":"","willWait":false,"endAction":0,"skipAction":-1,"skipActionActual":{"instanceID":0},"linkedCutscene":{"instanceID":0},"linkedAsset":{"instanceID":0},"endings":[{"resultAction":1,"skipAction":-1,"skipActionActual":{"instanceID":0},"linkedCutscene":{"instanceID":0},"linkedAsset":{"instanceID":0}}],"isEnabled":true,"isAssetFile":false,"isBreakPoint":false,"nodeRect":{"serializedVersion":"2","x":33.0,"y":291.0,"width":300.0,"height":200.0},"overrideColor":{"r":1.0,"g":1.0,"b":1.0,"a":1.0},"showOutputSockets":true,"parentActionListInEditor":{"instanceID":4577846404994786215_0},"listSource":1,"actionList":{"instanceID":0},"constantID":0,"parameterID":-1,"invActionList":{"instanceID":134792},"assetParameterID":-1,"runFromStart":true,"jumpToAction":0,"jumpToActionParameterID":-1,"jumpToActionActual":{"instanceID":0},"runInParallel":true,"isSkippable":false,"localParameters":[{"label":"Trigger","description":"","ID":0,"parameterType":0,"intValue":0,"constantID":0,"popUpID":0,"floatValue":0.0,"stringValue":"","gameObject":{"instanceID":5716342099908201988_0},"objectValue":{"instanceID":0},"vector3Value":{"x":0.0,"y":0.0,"z":0.0},"gameObjectParameterReferences":0,"variables":{"instanceID":0}}],"parameterIDs":[-1],"setParameters":false,"runMode":1,"hasUpgradedAgain":false}'
     endingReferencesBuffer: 00
     endingOverrideIndex: 00000000
 --- !u!4 &4577846405005609575
@@ -6304,7 +6583,7 @@ MonoBehaviour:
   syncParamValues: 0
   backupData:
   - className: AC.ActionRunActionList
-    jsonData: '{"id":0,"isDisplayed":true,"showComment":false,"comment":"","willWait":false,"endAction":0,"skipAction":-1,"skipActionActual":{"instanceID":0},"linkedCutscene":{"instanceID":0},"linkedAsset":{"instanceID":0},"endings":[{"resultAction":1,"skipAction":-1,"skipActionActual":{"instanceID":0},"linkedCutscene":{"instanceID":0},"linkedAsset":{"instanceID":0}}],"isEnabled":true,"isAssetFile":false,"isBreakPoint":false,"nodeRect":{"serializedVersion":"2","x":14.0,"y":14.0,"width":300.0,"height":152.0},"overrideColor":{"r":1.0,"g":1.0,"b":1.0,"a":1.0},"showOutputSockets":true,"parentActionListInEditor":{"instanceID":5716342099898530790_0},"listSource":0,"actionList":{"instanceID":4577846404994786215_0},"constantID":0,"parameterID":-1,"invActionList":{"instanceID":42598},"assetParameterID":-1,"runFromStart":true,"jumpToAction":0,"jumpToActionParameterID":-1,"jumpToActionActual":{"instanceID":0},"runInParallel":true,"isSkippable":false,"localParameters":[{"label":"New
+    jsonData: '{"id":0,"isDisplayed":true,"showComment":false,"comment":"","willWait":false,"endAction":0,"skipAction":-1,"skipActionActual":{"instanceID":0},"linkedCutscene":{"instanceID":0},"linkedAsset":{"instanceID":0},"endings":[{"resultAction":1,"skipAction":-1,"skipActionActual":{"instanceID":0},"linkedCutscene":{"instanceID":0},"linkedAsset":{"instanceID":0}}],"isEnabled":true,"isAssetFile":false,"isBreakPoint":false,"nodeRect":{"serializedVersion":"2","x":14.0,"y":14.0,"width":300.0,"height":152.0},"overrideColor":{"r":1.0,"g":1.0,"b":1.0,"a":1.0},"showOutputSockets":true,"parentActionListInEditor":{"instanceID":5716342099898530790_0},"listSource":0,"actionList":{"instanceID":4577846404994786215_0},"constantID":0,"parameterID":-1,"invActionList":{"instanceID":153818},"assetParameterID":-1,"runFromStart":true,"jumpToAction":0,"jumpToActionParameterID":-1,"jumpToActionActual":{"instanceID":0},"runInParallel":true,"isSkippable":false,"localParameters":[{"label":"New
       Page Text","description":"","ID":0,"parameterType":4,"intValue":-1,"constantID":0,"popUpID":0,"floatValue":0.0,"stringValue":"[var:3]","gameObject":{"instanceID":0},"objectValue":{"instanceID":0},"vector3Value":{"x":0.0,"y":0.0,"z":0.0},"gameObjectParameterReferences":0,"variables":{"instanceID":0}},{"label":"Page
       Index","description":"","ID":1,"parameterType":6,"intValue":-1,"constantID":0,"popUpID":0,"floatValue":0.0,"stringValue":"","gameObject":{"instanceID":0},"objectValue":{"instanceID":0},"vector3Value":{"x":0.0,"y":0.0,"z":0.0},"gameObjectParameterReferences":0,"variables":{"instanceID":0}},{"label":"Trigger","description":"","ID":2,"parameterType":0,"intValue":0,"constantID":0,"popUpID":0,"floatValue":0.0,"stringValue":"","gameObject":{"instanceID":5716342099908201988_0},"objectValue":{"instanceID":0},"vector3Value":{"x":0.0,"y":0.0,"z":0.0},"gameObjectParameterReferences":0,"variables":{"instanceID":0}}],"parameterIDs":[-1,-1,-1],"setParameters":false,"runMode":1,"hasUpgradedAgain":false}'
     endingReferencesBuffer: 00

@@ -396,14 +396,11 @@ namespace AC
 			if (uiSlots != null && _slot < uiSlots.Length && !uiSlots[_slot].CanOverrideHotspotLabel) return string.Empty;
 
 			InvInstance invInstance = GetInstance (_slot);
-
-			//if (!InvInstance.IsValid (invInstance))  Fixed by Andrea Salvadori
-
-			if (InvInstance.IsValid(invInstance))
-            {
+			if (!InvInstance.IsValid (invInstance))
+			{
 				if (_language == Options.GetLanguage ())
 				{
-					return invInstance.GetFullLabel();
+					return invInstance.ItemLabel;
 				}
 				return invInstance.InvItem.GetLabel (_language);
 			}

@@ -100,6 +100,7 @@ namespace AC
 		{
 			isOn = false;
 			variable = null;
+			unlinkedValue = updateIncreaseAmount > 0f ? minValue : maxValue;
 		}
 
 

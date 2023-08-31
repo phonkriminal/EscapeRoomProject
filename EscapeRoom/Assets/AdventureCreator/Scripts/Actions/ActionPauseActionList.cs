@@ -202,7 +202,7 @@ namespace AC
 		{
 			if (listSource == ActionRunActionList.ListSource.InScene)
 			{
-				AssignConstantID <ActionList> (actionList, constantID, parameterID);
+				constantID = AssignConstantID<ActionList> (actionList, constantID, parameterID);
 			}
 		}
 		

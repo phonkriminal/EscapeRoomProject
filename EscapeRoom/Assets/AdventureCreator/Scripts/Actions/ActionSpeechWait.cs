@@ -188,7 +188,7 @@ namespace AC
 		{
 			if (!isPlayer)
 			{
-				AssignConstantID<Char> (speaker, constantID, parameterID);
+				constantID = AssignConstantID<Char> (speaker, constantID, parameterID);
 			}
 		}
 		

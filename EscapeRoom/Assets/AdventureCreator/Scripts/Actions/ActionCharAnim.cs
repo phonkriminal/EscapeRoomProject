@@ -266,7 +266,7 @@ namespace AC
 					editingAnimEngine.AddSaveScript (this, EditorAnimChar.gameObject);
 				}
 
-				AssignConstantID <Char> (EditorAnimChar, constantID, parameterID);
+				constantID = AssignConstantID<Char> (EditorAnimChar, constantID, parameterID);
 			}
 		}
 

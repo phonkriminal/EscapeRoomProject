@@ -174,8 +174,8 @@ namespace AC
 
 		override public void AssignConstantIDs (bool saveScriptsToo = false, bool fromAssetFile = false)
 		{
-			AssignConstantID (lookAtOverride, lookAtOverrideConstantID, lookAtOverrideParameterID);
-			AssignConstantID<GameCameraThirdPerson> (thirdPersonCamera, thirdPersonCameraConstantID, thirdPersonCameraParameterID);
+			lookAtOverrideConstantID = AssignConstantID (lookAtOverride, lookAtOverrideConstantID, lookAtOverrideParameterID);
+			thirdPersonCameraConstantID = AssignConstantID<GameCameraThirdPerson> (thirdPersonCamera, thirdPersonCameraConstantID, thirdPersonCameraParameterID);
 		}
 
 

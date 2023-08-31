@@ -189,6 +189,10 @@ namespace AC
 						intValue = AssignDocumentID (parameters, ownParamID, intValue);
 						break;
 
+					case ParameterType.Objective:
+						intValue = AssignObjectiveID (parameters, ownParamID, intValue);
+						break;
+
 					case ParameterType.String:
 						stringValue = AssignString (parameters, ownParamID, stringValue);
 						break;
@@ -264,6 +268,7 @@ namespace AC
 					case ParameterType.LocalVariable:
 					case ParameterType.InventoryItem:
 					case ParameterType.Document:
+					case ParameterType.Objective:
 					case ParameterType.PopUp:
 						_parameter.intValue = intValue;
 						break;
@@ -431,13 +436,14 @@ namespace AC
 						break;
 
 					case ParameterType.Document:
+					case ParameterType.Objective:
 						if (gVar.type == VariableType.Integer)
 						{
 							_parameter.SetValue (gVar.IntegerValue);
 						}
 						else
 						{
-							LogWarning ("Only variables of type Integer can update a Document parameter");
+							LogWarning ("Only variables of type Integer can update a " + _parameter.parameterType + " parameter");
 						}
 						break;
 
@@ -621,6 +627,10 @@ namespace AC
 						intValue = ShowDocSelectorGUI (intValue);
 						break;
 
+					case ParameterType.Objective:
+						intValue = ShowObjectiveSelectorGUI (intValue);
+						break;
+
 					case ParameterType.LocalVariable:
 						if (isAssetFile)
 						{
@@ -721,6 +731,7 @@ namespace AC
 								break;
 
 							case ParameterType.Document:
+							case ParameterType.Objective:
 								{
 									globalVariableID = AdvGame.GlobalVariableGUI ("Variable:", globalVariableID, VariableType.Integer);
 									GVar _gVar = KickStarter.variablesManager.GetVariable (globalVariableID);
@@ -728,7 +739,7 @@ namespace AC
 									{
 										if (_gVar.type == VariableType.Integer)
 										{
-											EditorGUILayout.HelpBox ("The Integer value will refer to the Document's ID.", MessageType.Info);
+											EditorGUILayout.HelpBox ("The Integer value will refer to the " + _parameter.parameterType + "'s ID.", MessageType.Info);
 										}
 									}
 								}
@@ -809,14 +820,15 @@ namespace AC
 								break;
 
 							case ParameterType.Document:
+							case ParameterType.Objective:
 								{
-									globalVariableID = AdvGame.ComponentVariableGUI ("Document variable:", globalVariableID, VariableType.Integer, variables);
+									globalVariableID = AdvGame.ComponentVariableGUI (_parameter.parameterType + " variable:", globalVariableID, VariableType.Integer, variables);
 									GVar _gVar = variables.GetVariable (globalVariableID);
 									if (_gVar != null)
 									{
 										if (_gVar.type == VariableType.Integer)
 										{
-											EditorGUILayout.HelpBox ("The Integer value will refer to the Document's ID.", MessageType.Info);
+											EditorGUILayout.HelpBox ("The Integer value will refer to the " + _parameter.parameterType + "'s ID.", MessageType.Info);
 										}
 									}
 								}
@@ -905,7 +917,7 @@ namespace AC
 		
 		public override void AssignConstantIDs (bool saveScriptsToo, bool fromAssetFile)
 		{
-			AssignConstantID (gameobjectValue, gameObjectConstantID, 0);
+			gameObjectConstantID = AssignConstantID (gameobjectValue, gameObjectConstantID, 0);
 		}
 		
 		
@@ -1017,6 +1029,46 @@ namespace AC
 			
 			docNumber = EditorGUILayout.Popup ("Document:", docNumber, labelList.ToArray());
 			ID = inventoryManager.documents[docNumber].ID;
+			
+			return ID;
+		}
+
+
+		private int ShowObjectiveSelectorGUI (int ID)
+		{
+			InventoryManager inventoryManager = AdvGame.GetReferences ().inventoryManager;
+			if (inventoryManager == null)
+			{
+				return ID;
+			}
+			
+			int objNumber = -1;
+			List<string> labelList = new List<string>();
+			int i=0;
+			foreach (Objective _objective in inventoryManager.objectives)
+			{
+				labelList.Add (_objective.Title);
+				
+				// If an item has been removed, make sure selected variable is still valid
+				if (_objective.ID == ID)
+				{
+					objNumber = i;
+				}
+				
+				i++;
+			}
+			
+			if (objNumber == -1)
+			{
+				// Wasn't found (item was possibly deleted), so revert to zero
+				if (ID > 0) LogWarning ("Previously chosen Objective no longer exists!");
+				
+				objNumber = 0;
+				ID = 0;
+			}
+			
+			objNumber = EditorGUILayout.Popup ("Objective:", objNumber, labelList.ToArray());
+			ID = inventoryManager.objectives[objNumber].ID;
 			
 			return ID;
 		}
@@ -1184,6 +1236,18 @@ namespace AC
 		public int UpdateDocumentReferences (int oldDocumentID, int newDocumentID, List<ActionParameter> parameters)
 		{
 			return GetParamReferences (parameters, oldDocumentID, ParameterType.Document, true, newDocumentID);
+		}
+
+
+		public int GetNumObjectiveReferences (int _objectiveID, List<ActionParameter> parameters)
+		{
+			return GetParamReferences (parameters, _objectiveID, ParameterType.Objective);
+		}
+
+
+		public int UpdateObjectiveReferences (int oldObjectiveID, int newObjectiveID, List<ActionParameter> parameters)
+		{
+			return GetParamReferences (parameters, oldObjectiveID, ParameterType.Objective, true, newObjectiveID);
 		}
 
 

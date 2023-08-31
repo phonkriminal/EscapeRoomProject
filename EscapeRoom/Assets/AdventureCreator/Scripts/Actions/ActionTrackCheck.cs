@@ -212,7 +212,7 @@ namespace AC
 
 		public override void AssignConstantIDs (bool saveScriptsToo, bool fromAssetFile)
 		{
-			AssignConstantID <Moveable_Drag> (dragObject, dragConstantID, dragParameterID);
+			dragConstantID = AssignConstantID<Moveable_Drag> (dragObject, dragConstantID, dragParameterID);
 		}
 
 

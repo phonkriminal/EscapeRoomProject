@@ -46,6 +46,9 @@ namespace AC
 
 		private Color originalNormalColour;
 		private Color originalHighlightedColour;
+		#if UNITY_2019_4_OR_NEWER
+		private Color originalSelectedColour;
+		#endif
 		private UnityEngine.Sprite emptySprite;
 		private Texture cacheTexture;
 		private Sprite originalSprite;
@@ -169,6 +172,9 @@ namespace AC
 
 				originalNormalColour = uiButton.colors.normalColor;
 				originalHighlightedColour = uiButton.colors.highlightedColor;
+				#if UNITY_2019_4_OR_NEWER
+				originalSelectedColour = uiButton.colors.selectedColor;
+				#endif
 				originalSprite = (uiImage) ? uiImage.sprite : null;
 			}
 
@@ -377,6 +383,9 @@ namespace AC
 				ColorBlock colorBlock = uiButton.colors;
 				colorBlock.normalColor = newNormalColour;
 				colorBlock.highlightedColor = newHighlightedColour;
+				#if UNITY_2019_4_OR_NEWER
+				colorBlock.selectedColor = newHighlightedColour;
+				#endif
 				uiButton.colors = colorBlock;
 			}
 		}
@@ -392,6 +401,9 @@ namespace AC
 				ColorBlock colorBlock = uiButton.colors;
 				colorBlock.normalColor = originalNormalColour;
 				colorBlock.highlightedColor = originalHighlightedColour;
+				#if UNITY_2019_4_OR_NEWER
+				colorBlock.selectedColor = originalSelectedColour;
+				#endif
 				uiButton.colors = colorBlock;
 			}
 		}

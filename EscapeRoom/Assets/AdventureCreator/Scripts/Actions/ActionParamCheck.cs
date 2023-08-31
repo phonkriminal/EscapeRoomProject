@@ -131,6 +131,7 @@ namespace AC
 			GVar compareVar = null;
 			InvItem compareItem = null;
 			Document compareDoc = null;
+			Objective compareObjective = null;
 
 			switch (_parameter.parameterType)
 			{
@@ -165,14 +166,19 @@ namespace AC
 					if (compareVariableID == -1) return -1;
 					compareDoc = KickStarter.inventoryManager.GetDocument (compareVariableID);
 					break;
+
+				case ParameterType.Objective:
+					if (compareVariableID == -1) return -1;
+					compareObjective = KickStarter.inventoryManager.GetObjective (compareVariableID);
+					break;
 			}
 
-			bool result = CheckCondition (compareItem, compareVar, compareDoc);
+			bool result = CheckCondition (compareItem, compareVar, compareDoc, compareObjective);
 			return (result) ? 0 : 1;
 		}
 		
 		
-		protected bool CheckCondition (InvItem _compareItem, GVar _compareVar, Document _compareDoc)
+		protected bool CheckCondition (InvItem _compareItem, GVar _compareVar, Document _compareDoc, Objective _compareObjective)
 		{
 			if (_parameter == null)
 			{
@@ -395,6 +401,19 @@ namespace AC
 				}
 
 				if (_compareDoc != null && _parameter.intValue == _compareDoc.ID)
+				{
+					return true;
+				}
+			}
+
+			else if (_parameter.parameterType == ParameterType.Objective)
+			{
+				if (_compareParameter != null && _compareParameter.parameterType == _parameter.parameterType)
+				{
+					return (_compareParameter.intValue == _parameter.intValue);
+				}
+
+				if (_compareObjective != null && _parameter.intValue == _compareObjective.ID)
 				{
 					return true;
 				}
@@ -691,6 +710,16 @@ namespace AC
 					compareVariableID = ShowDocSelectorGUI (compareVariableID);
 				}
 			}
+			else if (parameter.parameterType == ParameterType.Objective)
+			{
+				compareParameterID = Action.ChooseParameterGUI ("Is objective:", parameters, compareParameterID, parameter.parameterType, parameter.ID);
+				EditorGUILayout.EndHorizontal ();
+				EditorGUILayout.BeginHorizontal ();
+				if (compareParameterID < 0)
+				{
+					compareVariableID = ShowObjectiveSelectorGUI (compareVariableID);
+				}
+			}
 			else if (parameter.parameterType == ParameterType.LocalVariable)
 			{
 				compareParameterID = Action.ChooseParameterGUI ("Is local variable:", parameters, compareParameterID, parameter.parameterType, parameter.ID);
@@ -719,7 +748,7 @@ namespace AC
 
 		public override void AssignConstantIDs (bool saveScriptsToo, bool fromAssetFile)
 		{
-			AssignConstantID (compareObject, compareObjectConstantID, 0);
+			compareObjectConstantID = AssignConstantID (compareObject, compareObjectConstantID, 0);
 		}
 		
 		
@@ -831,6 +860,46 @@ namespace AC
 			
 			docNumber = EditorGUILayout.Popup ("Is document:", docNumber, labelList.ToArray());
 			ID = inventoryManager.documents[docNumber].ID;
+			
+			return ID;
+		}
+
+
+		private int ShowObjectiveSelectorGUI (int ID)
+		{
+			InventoryManager inventoryManager = AdvGame.GetReferences ().inventoryManager;
+			if (inventoryManager == null)
+			{
+				return ID;
+			}
+			
+			int objNumber = -1;
+			List<string> labelList = new List<string>();
+			int i=0;
+			foreach (Objective _objective in inventoryManager.objectives)
+			{
+				labelList.Add (_objective.Title);
+				
+				// If an item has been removed, make sure selected variable is still valid
+				if (_objective.ID == ID)
+				{
+					objNumber = i;
+				}
+				
+				i++;
+			}
+			
+			if (objNumber == -1)
+			{
+				// Wasn't found (item was possibly deleted), so revert to zero
+				if (ID > 0) LogWarning ("Previously chosen Objective no longer exists!");
+				
+				objNumber = 0;
+				ID = 0;
+			}
+			
+			objNumber = EditorGUILayout.Popup ("Is objective:", objNumber, labelList.ToArray());
+			ID = inventoryManager.objectives[objNumber].ID;
 			
 			return ID;
 		}
@@ -981,6 +1050,18 @@ namespace AC
 		public int UpdateDocumentReferences (int oldDocumentID, int newDocumentID, List<ActionParameter> parameters)
 		{
 			return GetParamReferences (parameters, oldDocumentID, ParameterType.Document, true, newDocumentID);
+		}
+
+
+		public int GetNumObjectiveReferences (int _objectiveID, List<ActionParameter> parameters)
+		{
+			return GetParamReferences (parameters, _objectiveID, ParameterType.Objective);
+		}
+
+
+		public int UpdateObjectiveReferences (int oldObjectiveID, int newObjectiveID, List<ActionParameter> parameters)
+		{
+			return GetParamReferences (parameters, oldObjectiveID, ParameterType.Objective, true, newObjectiveID);
 		}
 
 

@@ -185,7 +185,7 @@ namespace AC
 			{
 				AddSaveScript <RememberMoveable> (dragObject);
 			}
-			AssignConstantID <Moveable_Drag> (dragObject, dragConstantID, dragParameterID);
+			dragConstantID = AssignConstantID<Moveable_Drag> (dragObject, dragConstantID, dragParameterID);
 		}
 		
 

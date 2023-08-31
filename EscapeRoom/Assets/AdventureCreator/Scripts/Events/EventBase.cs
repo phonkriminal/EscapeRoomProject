@@ -76,6 +76,7 @@ namespace AC
 						case ParameterType.Integer:
 						case ParameterType.InventoryItem:
 						case ParameterType.Document:
+						case ParameterType.Objective:
 						case ParameterType.GlobalVariable:
 						case ParameterType.LocalVariable:
 							if (arg is int)

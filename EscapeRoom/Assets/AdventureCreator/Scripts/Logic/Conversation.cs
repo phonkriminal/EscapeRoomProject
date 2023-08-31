@@ -484,6 +484,28 @@ namespace AC
 
 
 		/**
+		 * <summary>Un-marks a specific dialogue option as having been chosen by the player.</summary>
+		 * <param name="ID">The ID of the dialogue option</param>
+		 */
+		public void UnmarkAsChosen (int ID)
+		{
+			ButtonDialog buttonDialog = GetOptionWithID (ID);
+			if (buttonDialog == null) return;
+			buttonDialog.hasBeenChosen = false;
+		}
+
+
+		/** Un-marks all dialogue options as having been chosen by the player. */
+		public void UnmarkAllAsChosen ()
+		{
+			foreach (ButtonDialog buttonDialog in options)
+			{
+				buttonDialog.hasBeenChosen = false;
+			}
+		}
+
+
+		/**
 		 * <summary>Checks if a dialogue option with a specific ID has been chosen at least once by the player.</summary>
 		 * <param name = "ID">The ID of the dialogue option to find</param>
 		 * <returns>True if the dialogue option has been chosen at least once by the player.</returns>

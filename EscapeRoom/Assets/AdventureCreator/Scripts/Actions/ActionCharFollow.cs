@@ -240,11 +240,11 @@ namespace AC
 
 			if (!followPlayer)
 			{
-				AssignConstantID <Char> (charToFollow, charToFollowID, charToFollowParameterID);
+				charToFollowID = AssignConstantID<Char> (charToFollow, charToFollowID, charToFollowParameterID);
 			}
 			if (!movePlayer || (KickStarter.settingsManager == null && KickStarter.settingsManager.playerSwitching == PlayerSwitching.DoNotAllow))
 			{
-				AssignConstantID<NPC> (npcToMove, npcToMoveID, npcToMoveParameterID);
+				npcToMoveID = AssignConstantID<NPC> (npcToMove, npcToMoveID, npcToMoveParameterID);
 			}
 		}
 

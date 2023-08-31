@@ -85,6 +85,15 @@ namespace AC
 									runtimeLineID = document.titleLineID;
 								}
 							}
+							else if (parameter != null && parameter.parameterType == ParameterType.Objective)
+							{
+								newLabelLineID = -1;
+								Objective objective = KickStarter.inventoryManager.GetObjective (parameter.intValue);
+								if (objective != null)
+								{
+									runtimeLineID = objective.titleLineID;
+								}
+							}
 						}
 					}
 					break;
@@ -112,6 +121,15 @@ namespace AC
 								if (document != null)
 								{
 									runtimeNewTexture = document.texture;
+								}
+							}
+							else if (parameter != null && parameter.parameterType == ParameterType.Objective)
+							{
+								int objectiveID = parameter.intValue;
+								Objective objective = KickStarter.inventoryManager.GetObjective (objectiveID);
+								if (objective != null)
+								{
+									runtimeNewTexture = objective.texture;
 								}
 							}
 						}
@@ -209,7 +227,7 @@ namespace AC
 						setMenuInputBoxSource = (SetMenuInputBoxSource) EditorGUILayout.EnumPopup ("New label is:", setMenuInputBoxSource);
 						if (setMenuInputBoxSource == SetMenuInputBoxSource.EnteredHere)
 						{
-							newLabelParameterID = Action.ChooseParameterGUI ("New label:", parameters, newLabelParameterID, new ParameterType[4] { ParameterType.String, ParameterType.PopUp, ParameterType.InventoryItem, ParameterType.Document });
+							newLabelParameterID = Action.ChooseParameterGUI ("New label:", parameters, newLabelParameterID, new ParameterType[5] { ParameterType.String, ParameterType.PopUp, ParameterType.InventoryItem, ParameterType.Document, ParameterType.Objective });
 							if (newLabelParameterID < 0)
 							{
 								newLabel = TextField ("New label:", newLabel);
@@ -227,7 +245,7 @@ namespace AC
 					break;
 
 				case ElementContentType.Texture:
-					newTextureParameterID = Action.ChooseParameterGUI ("New texture:", parameters, newTextureParameterID, new ParameterType[3] { ParameterType.UnityObject, ParameterType.InventoryItem, ParameterType.Document });
+					newTextureParameterID = Action.ChooseParameterGUI ("New texture:", parameters, newTextureParameterID, new ParameterType[4] { ParameterType.UnityObject, ParameterType.InventoryItem, ParameterType.Document, ParameterType.Objective });
 					if (newTextureParameterID < 0)
 					{
 						newTexture = (Texture) EditorGUILayout.ObjectField ("New texture:", newTexture, typeof (Texture), true);

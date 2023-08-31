@@ -100,15 +100,12 @@ namespace AC
 			}
 
 			string newSaveLabel = string.Empty;
-			if (customLabel && ((updateLabel && saveHandling == SaveHandling.OverwriteExistingSave) || saveHandling == AC.SaveHandling.SaveNewGame))
+			if (customLabel && ((updateLabel && saveHandling == SaveHandling.OverwriteExistingSave && selectSaveType != SelectSaveType.Autosave) || saveHandling == AC.SaveHandling.SaveNewGame))
 			{
-				if (selectSaveType != SelectSaveType.Autosave)
+				newSaveLabel = customLabelText;
+				if (preProcessTokens)
 				{
-					newSaveLabel = customLabelText;
-					if (preProcessTokens)
-					{
-						newSaveLabel = AdvGame.ConvertTokens (newSaveLabel);
-					}
+					newSaveLabel = AdvGame.ConvertTokens (newSaveLabel);
 				}
 			}
 

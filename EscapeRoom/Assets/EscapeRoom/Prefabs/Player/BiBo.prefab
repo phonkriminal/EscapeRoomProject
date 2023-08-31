@@ -1232,7 +1232,7 @@ MonoBehaviour:
   soundChild: {fileID: 4107694854652890705}
   speechAudioSource: {fileID: 5614586597700508582}
   headIKTurnFactor: 1
-  bodyIKTurnFactor: 0.086
+  bodyIKTurnFactor: 0
   eyesIKTurnFactor: 1
   headTurnTarget: {fileID: 0}
   headTurnTargetOffset: {x: 0, y: 0, z: 0}
@@ -1313,9 +1313,7 @@ MonoBehaviour:
     spine:
     - {fileID: 6405779301130552117}
     - {fileID: 518341419034506067}
-    eyes:
-    - {fileID: 261487268204805896}
-    - {fileID: 1603399204149817605}
+    eyes: []
   solver:
     executedInEditor: 0
     IKPosition: {x: 0, y: 0, z: 0}
@@ -1423,7 +1421,7 @@ MonoBehaviour:
       pull: 1
       push: 0
       pushParent: 0
-      reach: 0.1
+      reach: 0.5
       reachSmoothing: 1
       pushSmoothing: 1
       nodes:
@@ -1868,7 +1866,7 @@ MonoBehaviour:
     layers:
       serializedVersion: 2
       m_Bits: 1
-    maxStep: 0.5
+    maxStep: 0.3
     heightOffset: 0
     footSpeed: 2.5
     footRadius: 0.15

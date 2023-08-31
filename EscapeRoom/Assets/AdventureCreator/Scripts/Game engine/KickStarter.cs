@@ -1088,9 +1088,10 @@ namespace AC
 			}
 		}
 
-
+		private bool isInitialised;
 		public void Initialise ()
 		{
+			isInitialised = false;
 			if (settingsManager.IsInLoadingScene ())
 			{
 				ACDebug.Log ("Bypassing regular AC startup because the current scene is the 'Loading' scene.");
@@ -1120,8 +1121,13 @@ namespace AC
 			playerInput.OnInitGameEngine ();
 			localVariables.OnInitGameEngine ();
 			sceneSettings.OnInitGameEngine ();
+
+			isInitialised = true;
 		}
 
+
+		/** Returns True if AC has been initialised by this component */
+		public bool HasInitialisedAC { get { return isInitialised; } }
 
 
 		/** Turns Adventure Creator off. */

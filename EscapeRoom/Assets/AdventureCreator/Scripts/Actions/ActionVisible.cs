@@ -126,7 +126,7 @@ namespace AC
 			{
 				AddSaveScript <RememberVisibility> (obToAffect);
 			}
-			AssignConstantID (obToAffect, constantID, parameterID);
+			constantID = AssignConstantID (obToAffect, constantID, parameterID);
 		}
 		
 		

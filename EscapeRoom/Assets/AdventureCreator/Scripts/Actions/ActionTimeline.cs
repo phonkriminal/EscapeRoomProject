@@ -429,7 +429,7 @@ namespace AC
 			{
 				AddSaveScript <RememberTimeline> (director);
 			}
-			AssignConstantID <PlayableDirector> (director, directorConstantID, directorParameterID);
+			directorConstantID = AssignConstantID<PlayableDirector> (director, directorConstantID, directorParameterID);
 
 			if (updateBindings && newBindings != null && newBindings.Length > 0)
 			{
@@ -441,7 +441,7 @@ namespace AC
 						{
 							AddSaveScript <ConstantID> (newBindings[i].gameObject);
 						}
-						AssignConstantID (newBindings[i].gameObject, newBindings[i].constantID, newBindings[i].parameterID);
+						newBindings[i].constantID = AssignConstantID (newBindings[i].gameObject, newBindings[i].constantID, newBindings[i].parameterID);
 					}
 				}
 			}

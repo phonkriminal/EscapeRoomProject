@@ -196,8 +196,8 @@ namespace AC
 				}
 			}
 
-			AssignConstantID (obToAffect, obToAffectID, obToAffectParameterID);
-			AssignConstantID (parentTransform, parentTransformID, parentTransformParameterID);
+			obToAffectID = AssignConstantID (obToAffect, obToAffectID, obToAffectParameterID);
+			parentTransformID = AssignConstantID (parentTransform, parentTransformID, parentTransformParameterID);
 		}
 		
 		

@@ -745,7 +745,7 @@ namespace AC
 		{
 			if (varLocation == VariableLocation.Component)
 			{
-				AssignConstantID <Variables> (variables, variablesConstantID, varParameterID);
+				variablesConstantID = AssignConstantID<Variables> (variables, variablesConstantID, varParameterID);
 			}
 		}
 

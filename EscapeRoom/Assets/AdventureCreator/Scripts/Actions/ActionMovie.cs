@@ -417,7 +417,7 @@ namespace AC
 					AddSaveScript <RememberVideoPlayer> (videoPlayer);
 				}
 
-				AssignConstantID (videoPlayer, videoPlayerConstantID, videoPlayerParameterID);
+				videoPlayerConstantID = AssignConstantID (videoPlayer, videoPlayerConstantID, videoPlayerParameterID);
 			}
 			#endif
 		}

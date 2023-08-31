@@ -206,6 +206,7 @@ namespace AC
 				case ParameterType.Boolean:
 				case ParameterType.InventoryItem:
 				case ParameterType.Document:
+				case ParameterType.Objective:
 				case ParameterType.LocalVariable:
 				case ParameterType.ComponentVariable:
 				case ParameterType.PopUp:
@@ -409,6 +410,17 @@ namespace AC
 																			document.titleLineID,
 																			Options.GetLanguage (),
 																			AC_TextType.Document);
+					}
+					break;
+
+				case ParameterType.Objective:
+					Objective objective = KickStarter.inventoryManager.GetObjective (intValue);
+					if (objective != null)
+					{
+						return KickStarter.runtimeLanguages.GetTranslation (objective.Title,
+																			objective.titleLineID,
+																			Options.GetLanguage (),
+																			AC_TextType.Objective);
 					}
 					break;
 
@@ -713,6 +725,18 @@ namespace AC
 						{
 							InventoryManager inventoryManager = AdvGame.GetReferences ().inventoryManager;
 							intValue = ActionRunActionList.ShowDocumentSelectorGUI ("Default value:", inventoryManager.documents, intValue);
+						}
+						else
+						{
+							EditorGUILayout.HelpBox ("An Inventory Manager is required.", MessageType.Warning);
+						}
+						break;
+
+					case ParameterType.Objective:
+						if (AdvGame.GetReferences () && AdvGame.GetReferences ().inventoryManager)
+						{
+							InventoryManager inventoryManager = AdvGame.GetReferences ().inventoryManager;
+							intValue = ActionRunActionList.ShowObjectiveSelectorGUI ("Default value:", inventoryManager.objectives, intValue);
 						}
 						else
 						{

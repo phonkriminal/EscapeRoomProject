@@ -248,12 +248,12 @@ namespace AC
 		{
 			if (!isPlayer)
 			{
-				AssignConstantID (obToRead, obToReadConstantID, obToReadParameterID);
+				obToReadConstantID = AssignConstantID (obToRead, obToReadConstantID, obToReadParameterID);
 			}
 
 			if (variableLocation == VariableLocation.Component)
 			{
-				AssignConstantID <Variables> (variables, variablesConstantID, variableParameterID);
+				variablesConstantID = AssignConstantID<Variables> (variables, variablesConstantID, variableParameterID);
 			}
 		}
 

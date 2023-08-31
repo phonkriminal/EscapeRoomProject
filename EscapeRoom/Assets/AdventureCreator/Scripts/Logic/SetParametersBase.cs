@@ -508,6 +508,24 @@ namespace AC
 						}
 						break;
 
+					case ParameterType.Objective:
+						{
+							if (AdvGame.GetReferences () && AdvGame.GetReferences ().inventoryManager)
+							{
+								linkedID = Action.ChooseParameterGUI (label + ":", ownParameters, linkedID, ParameterType.Objective, -1, tooltip);
+								if (linkedID < 0)
+								{
+									InventoryManager inventoryManager = AdvGame.GetReferences ().inventoryManager;
+									guiData.fromParameters[i].intValue = ActionRunActionList.ShowObjectiveSelectorGUI (label + ":", inventoryManager.objectives, guiData.fromParameters[i].intValue, tooltip);
+								}
+							}
+							else
+							{
+								EditorGUILayout.HelpBox ("An Inventory Manager is required to pass Objectives.", MessageType.Warning);
+							}
+						}
+						break;
+
 					case ParameterType.LocalVariable:
 						{
 							if (KickStarter.localVariables)

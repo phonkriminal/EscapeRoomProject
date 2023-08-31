@@ -23,6 +23,9 @@ namespace AC
 	public class PlayerInteraction : MonoBehaviour
 	{
 
+		/** If True, then camera-dragging will never be possible if a Hotspot is selected first */
+		public bool hotspotsPreventCameraDragging = false;
+
 		protected bool inPreInteractionCutscene = false;
 		protected HotspotLabelData hotspotLabelData = new HotspotLabelData ();
 

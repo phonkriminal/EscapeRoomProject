@@ -484,6 +484,12 @@ namespace AC
 						{
 							uiSlots[_slot].SetText (labels[_slot]);
 						}
+
+						if (KickStarter.settingsManager.SelectInteractionMethod () == SelectInteractions.CyclingMenuAndClickingHotspot &&
+						cursorIcon.id == KickStarter.playerInteraction.GetActiveUseButtonIconID ())
+						{
+							uiSlots[_slot].uiButton.Select ();
+						}
 					}
 				}
 			}
@@ -893,7 +899,7 @@ namespace AC
 				return iconID;
 			}
 
-			if ((_slot + offset) < iconIDs.Length)
+			if (iconIDs != null && (_slot + offset) < iconIDs.Length)
 				return iconIDs[_slot+offset];
 			return -1;
 		}

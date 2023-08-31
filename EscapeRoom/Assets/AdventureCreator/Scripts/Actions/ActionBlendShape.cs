@@ -341,7 +341,7 @@ namespace AC
 			{
 				AddSaveScript <RememberShapeable> (obToUpdate);
 			}
-			AssignConstantID <Shapeable> (obToUpdate, constantID, parameterID);
+			constantID = AssignConstantID<Shapeable> (obToUpdate, constantID, parameterID);
 		}
 
 

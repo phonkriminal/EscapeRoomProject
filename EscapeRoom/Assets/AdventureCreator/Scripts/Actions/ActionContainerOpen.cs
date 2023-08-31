@@ -159,7 +159,7 @@ namespace AC
 			{
 				AddSaveScript <RememberContainer> (container);
 			}
-			AssignConstantID <Container> (container, constantID, parameterID);
+			constantID = AssignConstantID<Container> (container, constantID, parameterID);
 		}
 
 		

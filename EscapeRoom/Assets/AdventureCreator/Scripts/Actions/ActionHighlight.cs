@@ -220,7 +220,7 @@ namespace AC
 		{
 			if (whatToHighlight == WhatToHighlight.SceneObject)
 			{
-				AssignConstantID <Highlight> (highlightObject, constantID, parameterID);
+				constantID = AssignConstantID<Highlight> (highlightObject, constantID, parameterID);
 			}
 		}
 		

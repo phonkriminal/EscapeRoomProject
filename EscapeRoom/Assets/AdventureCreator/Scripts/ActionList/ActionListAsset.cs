@@ -447,13 +447,13 @@ namespace AC
 					}
 
 					duplicatedAction.isAssetFile = true;
-					duplicatedAction.AssignConstantIDs ();
+					duplicatedAction.AssignConstantIDs (false, true);
 					duplicatedAction.isMarked = false;
 					duplicatedAction.ClearIDs ();
 					duplicatedAction.parentActionListInEditor = null;
 
 					duplicatedAction.hideFlags = HideFlags.HideInHierarchy;
-				
+
 					AssetDatabase.AddObjectToAsset (duplicatedAction, asset);
 					AssetDatabase.ImportAsset (AssetDatabase.GetAssetPath (duplicatedAction));
 					AssetDatabase.SaveAssets ();
@@ -999,6 +999,15 @@ namespace AC
 		{
 			int totalNumReferences = 0;
 
+			if (NumParameters > 0)
+			{
+				int thisNumReferences = GetParameterReferences (parameters, objectiveID, ParameterType.Objective);
+				if (thisNumReferences > 0)
+				{
+					totalNumReferences += thisNumReferences;
+				}
+			}
+
 			foreach (Action action in actions)
 			{
 				if (action != null && action is IObjectiveReferencerAction)
@@ -1020,6 +1029,15 @@ namespace AC
 		public int UpdateObjectiveReferences (int oldObjectiveID, int newObjectiveID)
 		{
 			int totalNumReferences = 0;
+
+			if (NumParameters > 0)
+			{
+				int thisNumReferences = GetParameterReferences (parameters, oldObjectiveID, ParameterType.Objective, null, 0, true, newObjectiveID);
+				if (thisNumReferences > 0)
+				{
+					totalNumReferences += thisNumReferences;
+				}
+			}
 
 			foreach (Action action in actions)
 			{

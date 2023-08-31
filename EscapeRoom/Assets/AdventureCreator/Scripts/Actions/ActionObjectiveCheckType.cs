@@ -1,4 +1,5 @@
-﻿#if UNITY_EDITOR
+﻿using System.Collections.Generic;
+#if UNITY_EDITOR
 using UnityEditor;
 #endif
 
@@ -10,6 +11,8 @@ namespace AC
 	{
 
 		public int objectiveID;
+		public int objectiveParameterID = -1;
+
 		public int playerID;
 		public bool setPlayer;
 		public int numSockets = 4;
@@ -19,6 +22,12 @@ namespace AC
 		public override string Title { get { return "Check state type"; }}
 		public override string Description { get { return "Queries the current state type of an objective."; }}
 		public override int NumSockets { get { return numSockets; }}
+
+
+		public override void AssignValues (List<ActionParameter> parameters)
+		{
+			objectiveID = AssignObjectiveID (parameters, objectiveParameterID, objectiveID);
+		}
 
 
 		public override int GetNextOutputIndex ()
@@ -40,7 +49,7 @@ namespace AC
 		
 		#if UNITY_EDITOR
 
-		public override void ShowGUI ()
+		public override void ShowGUI (List<ActionParameter> parameters)
 		{
 			if (KickStarter.inventoryManager == null)
 			{
@@ -49,27 +58,34 @@ namespace AC
 				return;
 			}
 
-			objectiveID = InventoryManager.ObjectiveSelectorList (objectiveID);
-
-			if (KickStarter.inventoryManager.ObjectiveIsPerPlayer (objectiveID))
+			objectiveParameterID = Action.ChooseParameterGUI ("Objective:", parameters, objectiveParameterID, ParameterType.Objective);
+			if (objectiveParameterID < 0)
 			{
-				setPlayer = EditorGUILayout.Toggle ("Check specific Player?", setPlayer);
-				if (setPlayer)
+				objectiveID = InventoryManager.ObjectiveSelectorList (objectiveID);
+
+				if (KickStarter.inventoryManager.ObjectiveIsPerPlayer (objectiveID))
 				{
-					playerID = ChoosePlayerGUI (playerID, false);
+					setPlayer = EditorGUILayout.Toggle ("Check specific Player?", setPlayer);
+					if (setPlayer)
+					{
+						playerID = ChoosePlayerGUI (playerID, false);
+					}
 				}
 			}
-
+			
 			numSockets = 4;
 		}
 		
 
 		public override string SetLabel ()
 		{
-			Objective objective = KickStarter.inventoryManager.GetObjective (objectiveID);
-			if (objective != null)
+			if (objectiveParameterID < 0)
 			{
-				return objective.Title;
+				Objective objective = KickStarter.inventoryManager.GetObjective (objectiveID);
+				if (objective != null)
+				{
+					return objective.Title;
+				}
 			}			
 			return string.Empty;
 		}
@@ -99,13 +115,13 @@ namespace AC
 
 		public int GetNumObjectiveReferences (int _objectiveID)
 		{
-			return (objectiveID == _objectiveID) ? 1 : 0;
+			return (objectiveParameterID < 0 && objectiveID == _objectiveID) ? 1 : 0;
 		}
 
 
 		public int UpdateObjectiveReferences (int oldObjectiveID, int newObjectiveID)
 		{
-			if (objectiveID == oldObjectiveID)
+			if (objectiveParameterID < 0 && objectiveID == oldObjectiveID)
 			{
 				objectiveID = newObjectiveID;
 				return 1;

@@ -424,9 +424,9 @@ namespace AC
 
 			if (!isPlayer)
 			{
-				AssignConstantID <Char> (charToMove, charToMoveID, charToMoveParameterID);
+				charToMoveID = AssignConstantID<Char> (charToMove, charToMoveID, charToMoveParameterID);
 			}
-			AssignConstantID <Paths> (movePath, movePathID, movePathParameterID);
+			movePathID = AssignConstantID<Paths> (movePath, movePathID, movePathParameterID);
 		}
 				
 		

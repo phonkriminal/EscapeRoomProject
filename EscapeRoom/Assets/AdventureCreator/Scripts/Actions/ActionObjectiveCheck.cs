@@ -1,4 +1,5 @@
-﻿#if UNITY_EDITOR
+﻿using System.Collections.Generic;
+#if UNITY_EDITOR
 using UnityEditor;
 #endif
 
@@ -10,6 +11,8 @@ namespace AC
 	{
 
 		public int objectiveID;
+		public int objectiveParameterID = -1;
+
 		public int playerID;
 		public bool setPlayer;
 
@@ -19,6 +22,12 @@ namespace AC
 		public override string Title { get { return "Check state"; }}
 		public override string Description { get { return "Queries the current state of an objective."; }}
 		public override int NumSockets { get { return numSockets; }}
+
+
+		public override void AssignValues (List<ActionParameter> parameters)
+		{
+			objectiveID = AssignObjectiveID (parameters, objectiveParameterID, objectiveID);
+		}
 
 
 		public override int GetNextOutputIndex ()
@@ -50,7 +59,7 @@ namespace AC
 		
 		#if UNITY_EDITOR
 
-		public override void ShowGUI ()
+		public override void ShowGUI (List<ActionParameter> parameters)
 		{
 			if (KickStarter.inventoryManager == null)
 			{
@@ -59,35 +68,46 @@ namespace AC
 				return;
 			}
 
-			objectiveID = InventoryManager.ObjectiveSelectorList (objectiveID);
-
-			Objective objective = KickStarter.inventoryManager.GetObjective (objectiveID);
-			if (objective != null)
+			objectiveParameterID = Action.ChooseParameterGUI ("Objective:", parameters, objectiveParameterID, ParameterType.Objective);
+			if (objectiveParameterID < 0)
 			{
-				numSockets = objective.NumStates + 1;
+				objectiveID = InventoryManager.ObjectiveSelectorList (objectiveID);
 
-				if (KickStarter.inventoryManager.ObjectiveIsPerPlayer (objectiveID))
+				Objective objective = KickStarter.inventoryManager.GetObjective (objectiveID);
+				if (objective != null)
 				{
-					setPlayer = EditorGUILayout.Toggle ("Check specific Player?", setPlayer);
-					if (setPlayer)
+					numSockets = objective.NumStates + 1;
+
+					if (KickStarter.inventoryManager.ObjectiveIsPerPlayer (objectiveID))
 					{
-						playerID = ChoosePlayerGUI (playerID, false);
+						setPlayer = EditorGUILayout.Toggle ("Check specific Player?", setPlayer);
+						if (setPlayer)
+						{
+							playerID = ChoosePlayerGUI (playerID, false);
+						}
 					}
+				}
+				else
+				{
+					numSockets = 1;
 				}
 			}
 			else
 			{
-				numSockets = 1;
+				numSockets = EditorGUILayout.DelayedIntField ("# of states:", numSockets);
 			}
 		}
 		
 
 		public override string SetLabel ()
 		{
-			Objective objective = KickStarter.inventoryManager.GetObjective (objectiveID);
-			if (objective != null)
+			if (objectiveParameterID < 0)
 			{
-				return objective.Title;
+				Objective objective = KickStarter.inventoryManager.GetObjective (objectiveID);
+				if (objective != null)
+				{
+					return objective.Title;
+				}
 			}			
 			return string.Empty;
 		}
@@ -102,7 +122,7 @@ namespace AC
 
 			if (KickStarter.inventoryManager)
 			{
-				Objective objective = KickStarter.inventoryManager.GetObjective (objectiveID);
+				Objective objective = objectiveParameterID < 0 ? KickStarter.inventoryManager.GetObjective (objectiveID) : null;
 				if (objective != null)
 				{
 					string[] popUpLabels = objective.GenerateEditorStateLabels ();
@@ -119,13 +139,13 @@ namespace AC
 
 		public int GetNumObjectiveReferences (int _objectiveID)
 		{
-			return (objectiveID == _objectiveID) ? 1 : 0;
+			return (objectiveParameterID < 0 && objectiveID == _objectiveID) ? 1 : 0;
 		}
 
 
 		public int UpdateObjectiveReferences (int oldObjectiveID, int newObjectiveID)
 		{
-			if (objectiveID == oldObjectiveID)
+			if (objectiveParameterID < 0 && objectiveID == oldObjectiveID)
 			{
 				objectiveID = newObjectiveID;
 				return 1;

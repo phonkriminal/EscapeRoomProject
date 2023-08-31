@@ -820,7 +820,7 @@ namespace AC
 		}
 
 
-		protected void AssignConstantID <T> (T field, int _constantID, int _parameterID) where T : Behaviour
+		protected int AssignConstantID <T> (T field, int _constantID, int _parameterID) where T : Behaviour
 		{
 			if (_parameterID >= 0)
 			{
@@ -830,10 +830,11 @@ namespace AC
 			{
 				_constantID = FieldToID <T> (field, _constantID);
 			}
+			return _constantID;
 		}
 
 
-		protected void AssignConstantID (Collider field, int _constantID, int _parameterID)
+		protected int AssignConstantID (Collider field, int _constantID, int _parameterID)
 		{
 			if (_parameterID >= 0)
 			{
@@ -843,10 +844,11 @@ namespace AC
 			{
 				_constantID = FieldToID (field, _constantID);
 			}
+			return _constantID;
 		}
 
 
-		protected void AssignConstantID (Transform field, int _constantID, int _parameterID)
+		protected int AssignConstantID (Transform field, int _constantID, int _parameterID)
 		{
 			if (_parameterID >= 0)
 			{
@@ -856,10 +858,11 @@ namespace AC
 			{
 				_constantID = FieldToID (field, _constantID);
 			}
+			return _constantID;
 		}
 
 
-		protected void AssignConstantID (GameObject field, int _constantID, int _parameterID)
+		protected int AssignConstantID (GameObject field, int _constantID, int _parameterID)
 		{
 			if (_parameterID >= 0)
 			{
@@ -869,6 +872,7 @@ namespace AC
 			{
 				_constantID = FieldToID (field, _constantID);
 			}
+			return _constantID;
 		}
 		
 		
@@ -1508,6 +1512,14 @@ namespace AC
 						}
 						break;
 
+					case ParameterType.Objective:
+						Objective objective = KickStarter.inventoryManager.GetObjective (parameter.intValue);
+						if (objective != null)
+						{
+							return objective.GetTitle ();
+						}
+						break;
+
 					default:
 						break;
 				}
@@ -1645,6 +1657,17 @@ namespace AC
 		{
 			ActionParameter parameter = GetParameterWithID (parameters, _parameterID);
 			if (parameter != null && parameter.parameterType == ParameterType.Document)
+			{
+				return (parameter.intValue);
+			}
+			return field;
+		}
+
+
+		protected int AssignObjectiveID (List<ActionParameter> parameters, int _parameterID, int field)
+		{
+			ActionParameter parameter = GetParameterWithID (parameters, _parameterID);
+			if (parameter != null && parameter.parameterType == ParameterType.Objective)
 			{
 				return (parameter.intValue);
 			}

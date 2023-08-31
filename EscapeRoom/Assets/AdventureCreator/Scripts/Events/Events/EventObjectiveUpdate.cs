@@ -30,8 +30,17 @@ namespace AC
 		{
 			if (objectiveID < 0 || objectiveID == objective.ID)
 			{
-				Run ();
+				Run (new object[] { objective.ID });
 			}
+		}
+
+
+		protected override ParameterReference[] GetParameterReferences ()
+		{
+			return new ParameterReference[]
+			{
+				new ParameterReference (ParameterType.Objective, "Objective")
+			};
 		}
 
 

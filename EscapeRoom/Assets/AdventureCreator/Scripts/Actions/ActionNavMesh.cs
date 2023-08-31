@@ -423,8 +423,8 @@ namespace AC
 						AddSaveScript <ConstantID> (hole);
 						AddSaveScript <ConstantID> (replaceHole);
 					}
-					AssignConstantID <PolygonCollider2D> (hole, constantID, parameterID);
-					AssignConstantID <PolygonCollider2D> (replaceHole, replaceConstantID, replaceParameterID);
+					constantID = AssignConstantID<PolygonCollider2D> (hole, constantID, parameterID);
+					replaceConstantID = AssignConstantID<PolygonCollider2D> (replaceHole, replaceConstantID, replaceParameterID);
 				}
 				else
 				{
@@ -432,7 +432,7 @@ namespace AC
 					{
 						AddSaveScript <ConstantID> (newNavMesh);
 					}
-					AssignConstantID <NavigationMesh> (newNavMesh, constantID, parameterID);
+					constantID = AssignConstantID<NavigationMesh> (newNavMesh, constantID, parameterID);
 				}
 			}
 			else if (sceneSetting == SceneSetting.DefaultPlayerStart)
@@ -441,7 +441,7 @@ namespace AC
 				{
 					AddSaveScript <ConstantID> (playerStart);
 				}
-				AssignConstantID <PlayerStart> (playerStart, constantID, parameterID);
+				constantID = AssignConstantID<PlayerStart> (playerStart, constantID, parameterID);
 			}
 			else if (sceneSetting == SceneSetting.SortingMap)
 			{
@@ -449,7 +449,7 @@ namespace AC
 				{
 					AddSaveScript <ConstantID> (sortingMap);
 				}
-				AssignConstantID <SortingMap> (sortingMap, constantID, parameterID);
+				constantID = AssignConstantID<SortingMap> (sortingMap, constantID, parameterID);
 			}
 			else if (sceneSetting == SceneSetting.TintMap)
 			{
@@ -457,11 +457,11 @@ namespace AC
 				{
 					AddSaveScript <ConstantID> (tintMap);
 				}
-				AssignConstantID <TintMap> (tintMap, constantID, parameterID);
+				constantID = AssignConstantID<TintMap> (tintMap, constantID, parameterID);
 			}
 			else if (sceneSetting == SceneSetting.OnLoadCutscene || sceneSetting == SceneSetting.OnStartCutscene)
 			{
-				AssignConstantID <Cutscene> (cutscene, constantID, parameterID);
+				constantID = AssignConstantID<Cutscene> (cutscene, constantID, parameterID);
 			}
 		}
 		

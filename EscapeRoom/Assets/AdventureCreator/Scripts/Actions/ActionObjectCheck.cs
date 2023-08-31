@@ -83,7 +83,7 @@ namespace AC
 
 		public override void AssignConstantIDs (bool saveScriptsToo, bool fromAssetFile)
 		{
-			AssignConstantID (gameObject, constantID, parameterID);
+			constantID = AssignConstantID (gameObject, constantID, parameterID);
 		}
 
 

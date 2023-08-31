@@ -1651,7 +1651,7 @@ namespace AC
 		 */
 		public float InputGetAxis (string axis)
 		{
-			if (string.IsNullOrEmpty (axis))
+			if (string.IsNullOrEmpty (axis) || !KickStarter.stateHandler.CanReceiveInput ())
 			{
 				return 0f;
 			}
@@ -1817,7 +1817,7 @@ namespace AC
 		 */
 		public bool InputGetButton (string axis)
 		{
-			if (string.IsNullOrEmpty (axis))
+			if (string.IsNullOrEmpty (axis) || !KickStarter.stateHandler.CanReceiveInput ())
 			{
 				return false;
 			}
@@ -1870,7 +1870,7 @@ namespace AC
 		 */
 		public bool InputGetButtonDown (string axis, bool showError = false)
 		{
-			if (string.IsNullOrEmpty (axis))
+			if (string.IsNullOrEmpty (axis) || !KickStarter.stateHandler.CanReceiveInput ())
 			{
 				return false;
 			}
@@ -1928,7 +1928,7 @@ namespace AC
 		 */
 		public bool InputGetButtonUp (string axis)
 		{
-			if (string.IsNullOrEmpty (axis))
+			if (string.IsNullOrEmpty (axis) || !KickStarter.stateHandler.CanReceiveInput ())
 			{
 				return false;
 			}
@@ -2054,7 +2054,7 @@ namespace AC
 					if (!KickStarter.playerInteraction.IsMouseOverHotspot () ||
 						!KickStarter.stateHandler.CanInteract () ||
 						!KickStarter.stateHandler.IsInGameplay () ||
-						(KickStarter.playerInteraction.GetActiveHotspot () && 
+						(KickStarter.playerInteraction.GetActiveHotspot () && !KickStarter.playerInteraction.hotspotsPreventCameraDragging &&
 							(KickStarter.settingsManager.interactionMethod == AC_InteractionMethod.ContextSensitive || 
 							(KickStarter.playerInteraction.GetActiveHotspot ().IsSingleInteraction () && KickStarter.settingsManager.interactionMethod == AC_InteractionMethod.ChooseHotspotThenInteraction))))
 					{

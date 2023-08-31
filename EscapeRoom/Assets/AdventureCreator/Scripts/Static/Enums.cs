@@ -150,7 +150,7 @@ namespace AC
 	public enum InputCheckType { Button, Axis, SingleTapOrClick, DoubleTapOrClick };
 	public enum IntCondition { EqualTo, NotEqualTo, LessThan, MoreThan };
 	public enum RightClickInventory { DeselectsItem, ExaminesItem, DoesNothing, ExaminesHotspot };
-	public enum ParameterType { GameObject, InventoryItem, GlobalVariable, LocalVariable, String, Float, Integer, Boolean, UnityObject, Vector3, Document, ComponentVariable, PopUp };
+	public enum ParameterType { GameObject, InventoryItem, GlobalVariable, LocalVariable, String, Float, Integer, Boolean, UnityObject, Vector3, Document, ComponentVariable, PopUp, Objective };
 	
 	public enum ChangeNavMeshMethod { ChangeNavMesh, ChangeNumberOfHoles };
 	public enum InvAction { Add, Remove, Replace };

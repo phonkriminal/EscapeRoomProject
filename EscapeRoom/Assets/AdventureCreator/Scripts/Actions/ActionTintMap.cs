@@ -226,7 +226,7 @@ namespace AC
 
 				AddSaveScript <RememberVisibility> (obToUpdate);
 			}
-			AssignConstantID <TintMap> (newTintMap, newTintMapConstantID, newTintMapParameterID);
+			newTintMapConstantID = AssignConstantID<TintMap> (newTintMap, newTintMapConstantID, newTintMapParameterID);
 		}
 
 

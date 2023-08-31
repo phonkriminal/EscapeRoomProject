@@ -208,19 +208,19 @@ namespace AC
 					isAutoSave = true;
 				}
 
-				if (KickStarter.settingsManager.saveTimeDisplay != SaveTimeDisplay.None)
+				DirectoryInfo dir = new DirectoryInfo (saveDirectory);
+				FileInfo[] info = dir.GetFiles (filenameWithExtention);
+
+				if (info != null && info.Length > 0)
 				{
-					DirectoryInfo dir = new DirectoryInfo (saveDirectory);
-					FileInfo[] info = dir.GetFiles (filenameWithExtention);
-
-					if (info != null && info.Length > 0)
+					if (!isAutoSave)
 					{
-						if (!isAutoSave)
-						{
-							System.TimeSpan t = info[0].LastWriteTime - new System.DateTime (2015, 1, 1);
-							updateTime = (int) t.TotalSeconds;
-						}
+						System.TimeSpan t = info[0].LastWriteTime - new System.DateTime (2015, 1, 1);
+						updateTime = (int) t.TotalSeconds;
+					}
 
+					if (KickStarter.settingsManager.saveTimeDisplay != SaveTimeDisplay.None)
+					{
 						label += GetTimeString (info[0].LastWriteTime);
 					}
 				}

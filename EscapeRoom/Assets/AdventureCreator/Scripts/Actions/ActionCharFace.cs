@@ -434,9 +434,9 @@ namespace AC
 
 			if (!isPlayer)
 			{
-				AssignConstantID <Char> (charToMove, charToMoveID, charToMoveParameterID);
+				charToMoveID = AssignConstantID<Char> (charToMove, charToMoveID, charToMoveParameterID);
 			}
-			AssignConstantID (faceObject, faceObjectID, faceObjectParameterID);
+			faceObjectID = AssignConstantID (faceObject, faceObjectID, faceObjectParameterID);
 		}
 
 		

@@ -685,6 +685,10 @@ namespace AC
 							Addressables.Release (goHandle);
 						}
 					}
+					else
+					{
+						saveObject.LoadTransformData (transformData);
+					}
 				}
 			}
 			else

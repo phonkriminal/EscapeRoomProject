@@ -507,7 +507,7 @@ namespace AC
 
 		public override void AssignConstantIDs (bool saveScriptsToo, bool fromAssetFile)
 		{
-			AssignConstantID <Char> (speaker, constantID, parameterID);
+			constantID = AssignConstantID<Char> (speaker, constantID, parameterID);
 		}
 		
 		

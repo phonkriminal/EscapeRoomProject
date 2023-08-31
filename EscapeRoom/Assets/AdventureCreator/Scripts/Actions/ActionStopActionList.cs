@@ -99,7 +99,7 @@ namespace AC
 
 		public override void AssignConstantIDs (bool saveScriptsToo, bool fromAssetFile)
 		{
-			AssignConstantID <ActionList> (actionList, constantID, parameterID);
+			constantID = AssignConstantID<ActionList> (actionList, constantID, parameterID);
 		}
 
 

@@ -539,7 +539,7 @@ namespace AC
 			}
 			else if (method == Method.SceneToItem)
 			{
-				AssignConstantID (sceneItem, sceneItemConstantID, sceneItemParameterID);
+				sceneItemConstantID = AssignConstantID (sceneItem, sceneItemConstantID, sceneItemParameterID);
 
 			}
 
@@ -549,7 +549,7 @@ namespace AC
 				{
 					AddSaveScript<RememberContainer> (container);
 				}
-				AssignConstantID<Container> (container, containerConstantID, containerParameterID);
+				containerConstantID = AssignConstantID<Container> (container, containerConstantID, containerParameterID);
 			}
 		}
 

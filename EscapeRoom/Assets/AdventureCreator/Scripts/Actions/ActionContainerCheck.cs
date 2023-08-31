@@ -207,7 +207,7 @@ namespace AC
 
 		public override void AssignConstantIDs (bool saveScriptsToo, bool fromAssetFile)
 		{
-			AssignConstantID <Container> (container, constantID, parameterID);
+			constantID = AssignConstantID<Container> (container, constantID, parameterID);
 		}
 
 		

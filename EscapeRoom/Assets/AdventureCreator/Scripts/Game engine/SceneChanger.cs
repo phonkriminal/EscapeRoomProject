@@ -254,8 +254,7 @@ namespace AC
 
 					PrepareSceneForExit (!KickStarter.settingsManager.useAsyncLoading, saveRoomData, doOverlay);
 					KickStarter.eventManager.Call_OnBeforeChangeScene (IndexToName (nextSceneIndex));
-					LoadLevel (nextSceneIndex, KickStarter.settingsManager.useLoadingScreen, KickStarter.settingsManager.useAsyncLoading, forceReload, doOverlay);
-					return true;
+					return LoadLevel (nextSceneIndex, KickStarter.settingsManager.useLoadingScreen, KickStarter.settingsManager.useAsyncLoading, forceReload, doOverlay);
 				}
 			}
 			else
@@ -302,8 +301,7 @@ namespace AC
 
 					PrepareSceneForExit (!KickStarter.settingsManager.useAsyncLoading, saveRoomData, doOverlay);
 					KickStarter.eventManager.Call_OnBeforeChangeScene (nextSceneName);
-					LoadLevel (nextSceneName, KickStarter.settingsManager.useLoadingScreen, KickStarter.settingsManager.useAsyncLoading, forceReload, doOverlay);
-					return true;
+					return LoadLevel (nextSceneName, KickStarter.settingsManager.useLoadingScreen, KickStarter.settingsManager.useAsyncLoading, forceReload, doOverlay);
 				}
 			}
 			else
@@ -557,7 +555,7 @@ namespace AC
 		}
 
 
-		protected void LoadLevel (int nextSceneIndex, bool useLoadingScreen, bool useAsyncLoading, bool forceReload, bool doOverlay)
+		protected bool LoadLevel (int nextSceneIndex, bool useLoadingScreen, bool useAsyncLoading, bool forceReload, bool doOverlay)
 		{
 			previousGlobalSceneIndex = CurrentSceneIndex;
 			previousGlobalSceneName = CurrentSceneName;
@@ -565,23 +563,23 @@ namespace AC
 			if (useLoadingScreen)
 			{
 				int loadingSceneIndex = (KickStarter.settingsManager.loadingSceneIs == ChooseSceneBy.Name) ? NameToIndex (KickStarter.settingsManager.loadingSceneName) : KickStarter.settingsManager.loadingScene;
-				LoadLoadingScreen (nextSceneIndex, loadingSceneIndex, useAsyncLoading, doOverlay);
+				return LoadLoadingScreen (nextSceneIndex, loadingSceneIndex, useAsyncLoading, doOverlay);
 			}
 			else
 			{
 				if (useAsyncLoading && !forceReload)
 				{
-					LoadLevelAsync (nextSceneIndex, doOverlay);
+					return LoadLevelAsync (nextSceneIndex, doOverlay);
 				}
 				else
 				{
-					LoadLevelCo (nextSceneIndex, forceReload, doOverlay);
+					return LoadLevelCo (nextSceneIndex, forceReload, doOverlay);
 				}
 			}
 		}
 
 
-		protected void LoadLevel (string nextSceneName, bool useLoadingScreen, bool useAsyncLoading, bool forceReload, bool doOverlay)
+		protected bool LoadLevel (string nextSceneName, bool useLoadingScreen, bool useAsyncLoading, bool forceReload, bool doOverlay)
 		{
 			previousGlobalSceneIndex = CurrentSceneIndex;
 			previousGlobalSceneName = CurrentSceneName;
@@ -589,23 +587,23 @@ namespace AC
 			if (useLoadingScreen)
 			{
 				string loadingSceneName = (KickStarter.settingsManager.loadingSceneIs == ChooseSceneBy.Name) ? KickStarter.settingsManager.loadingSceneName : IndexToName (KickStarter.settingsManager.loadingScene);
-				LoadLoadingScreen (nextSceneName, loadingSceneName, useAsyncLoading, doOverlay);
+				return LoadLoadingScreen (nextSceneName, loadingSceneName, useAsyncLoading, doOverlay);
 			}
 			else
 			{
 				if (useAsyncLoading && !forceReload)
 				{
-					LoadLevelAsync (nextSceneName, doOverlay);
+					return LoadLevelAsync (nextSceneName, doOverlay);
 				}
 				else
 				{
-					LoadLevelCo (nextSceneName, forceReload, doOverlay);
+					return LoadLevelCo (nextSceneName, forceReload, doOverlay);
 				}
 			}
 		}
 
 
-		protected void LoadLoadingScreen (int nextSceneIndex, int loadingSceneIndex, bool loadAsynchronously, bool doOverlay)
+		protected bool LoadLoadingScreen (int nextSceneIndex, int loadingSceneIndex, bool loadAsynchronously, bool doOverlay)
 		{
 			if (preloadSceneIndex >= 0)
 			{
@@ -620,11 +618,16 @@ namespace AC
 			SceneInfo loadingSceneInfo = GetSceneInfo (loadingSceneIndex);
 			SceneInfo nextSceneInfo = GetSceneInfo (nextSceneIndex);
 
-			StartCoroutine (LoadLoadingScreen (loadingSceneInfo, nextSceneInfo, loadAsynchronously, doOverlay));
+			if (loadingSceneInfo != null && nextSceneInfo != null)
+			{
+				StartCoroutine (LoadLoadingScreen (loadingSceneInfo, nextSceneInfo, loadAsynchronously, doOverlay));
+				return true;
+			}
+			return false;
 		}
 
 
-		protected void LoadLoadingScreen (string nextSceneName, string loadingSceneName, bool loadAsynchronously, bool doOverlay)
+		protected bool LoadLoadingScreen (string nextSceneName, string loadingSceneName, bool loadAsynchronously, bool doOverlay)
 		{
 			if (preloadSceneIndex >= 0)
 			{
@@ -639,7 +642,12 @@ namespace AC
 			SceneInfo loadingSceneInfo = GetSceneInfo (loadingSceneName, true);
 			SceneInfo nextSceneInfo = GetSceneInfo (nextSceneName);
 
-			StartCoroutine (LoadLoadingScreen (loadingSceneInfo, nextSceneInfo, loadAsynchronously, doOverlay));
+			if (loadingSceneInfo != null && nextSceneInfo != null)
+			{
+				StartCoroutine (LoadLoadingScreen (loadingSceneInfo, nextSceneInfo, loadAsynchronously, doOverlay));
+				return true;
+			}
+			return false;
 		}
 
 
@@ -827,25 +835,35 @@ namespace AC
 		}
 
 
-		protected void LoadLevelAsync (int nextSceneIndex, bool doOverlay)
+		protected bool LoadLevelAsync (int nextSceneIndex, bool doOverlay)
 		{
 			if (nextSceneIndex >= 0)
 			{
 				bool isPreloadScene = (nextSceneIndex == preloadSceneIndex);
 				SceneInfo nextSceneInfo = GetSceneInfo (nextSceneIndex);
-				StartCoroutine (LoadLevelAsync (isPreloadScene, nextSceneInfo, doOverlay));
+				if (nextSceneInfo != null)
+				{
+					StartCoroutine (LoadLevelAsync (isPreloadScene, nextSceneInfo, doOverlay));
+					return true;
+				}
 			}
+			return false;
 		}
 
 
-		protected void LoadLevelAsync (string nextSceneName, bool doOverlay)
+		protected bool LoadLevelAsync (string nextSceneName, bool doOverlay)
 		{
 			if (!string.IsNullOrEmpty (nextSceneName))
 			{
 				bool isPreloadScene = (nextSceneName == preloadSceneName);
 				SceneInfo nextSceneInfo = GetSceneInfo (nextSceneName);
-				StartCoroutine (LoadLevelAsync (isPreloadScene, nextSceneInfo, doOverlay));
+				if (nextSceneInfo != null)
+				{
+					StartCoroutine (LoadLevelAsync (isPreloadScene, nextSceneInfo, doOverlay));
+					return true;
+				}
 			}
+			return false;
 		}
 
 
@@ -1092,23 +1110,27 @@ namespace AC
 		}
 
 
-		protected void LoadLevelCo (int nextSceneIndex, bool forceReload, bool doOverlay)
+		protected bool LoadLevelCo (int nextSceneIndex, bool forceReload, bool doOverlay)
 		{
 			SceneInfo nextSceneInfo = GetSceneInfo (nextSceneIndex);
 			if (nextSceneInfo != null)
 			{
 				StartCoroutine (LoadLevelCo (nextSceneInfo, forceReload, doOverlay));
+				return true;
 			}
+			return false;
 		}
 
 
-		protected void LoadLevelCo (string nextSceneName, bool forceReload, bool doOverlay)
+		protected bool LoadLevelCo (string nextSceneName, bool forceReload, bool doOverlay)
 		{
 			SceneInfo nextSceneInfo = GetSceneInfo (nextSceneName);
 			if (nextSceneInfo != null)
 			{
 				StartCoroutine (LoadLevelCo (nextSceneInfo, forceReload, doOverlay));
+				return true;
 			}
+			return false;
 		}
 
 

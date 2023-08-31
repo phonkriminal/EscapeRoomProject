@@ -109,7 +109,7 @@ namespace AC
 			{
 				AddSaveScript<RememberTrack> (track);
 			}
-			AssignConstantID <DragTrack> (track, trackConstantID, -1);
+			trackConstantID = AssignConstantID<DragTrack> (track, trackConstantID, -1);
 		}
 
 		#endif

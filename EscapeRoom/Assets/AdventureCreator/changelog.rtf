@@ -5,9 +5,41 @@
 \paperw11900\paperh16840\margl1440\margr1440\vieww23380\viewh15000\viewkind0
 \pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
 
-\f0\fs24 \cf0 Version 1.78.0:\
+\f0\fs24 \cf0 Version 1.78.2:\
+\
+-Added: "Objective" type to ActionList parameters\
+-Added: Option to the PlayerInteraction component to always prevent camera-dragging while a Hotspot is selected\
+-Changed: The PlayerMenus script's MakeUIInteractive and MakeUINonInteractive functions have been replaced with UpdateUIInteractability\
+-Fixed: Save-game timestamps not being recorded if the "Time display" setting is set to "None"\
+-Fixed: InventoryBox elements that list Documents not always updating Unity UI Button colours at the correct time\
+-Fixed: Playback issues with Timers that are not linked to Global Variables\
+-Fixed: Prevented the "Inventory/Add" event from running in reaction to the Player's initial inventory\
+-Fixed: Unity UI-based menu selection issues with v1.78.1\
+-Fixed: Issues with direct-navigation of duplicated UI Menus\
+-Fixed: Certain inputs still being registered even when the Input system has been disabled\
+\
+\
 \pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
-\cf0 \
+\cf0 Version 1.78.1:\
+\
+-Added: The "Physics: Raycast" Action now draws a debug line in the Scene window to represent the generated ray\
+-Added: "Character / Point and click" event to the Events Editor\
+-Added: Function to the Conversation component to manually un-mark a given dialogue option as having been chosen by the Player\
+-Added: Option to the "Sound: Play one-shot" Action to play the audio from the scene's Default Sound\
+-Fixed: Converting scene-based ActionLists to ActionList assets not always generating Constant ID values\
+-Fixed: Graphic elements not displaying Document page textures correctly\
+-Fixed: Unity UI-based Pause menus not always being directly-navigable when turned on using the "Menu: Change state" Action\
+-Fixed: Interaction elements with "For fixed icon?" unchecked not highlighting correctly when using "Cycling Menu And Clicking Hotspot" interaction mode\
+-Fixed: Game being placed in permanent "loading" mode if a save file's scene to load was not found\
+-Fixed: Save-game labels not being correctly displayed in the Save-game file manager\
+-Fixed: "Hide if no save file found?" option for SaveList elements not having an effect in AC-based Menus\
+-Fixed: Remember Transform component not always applying data when "Save assets with Addressables?" is checked\
+-Fixed: DialogueList element's "Already chosen" highlighted colour not always being applied to Unity UI-based menus\
+-Fixed: Saving a new game with the "Save: Save or load" Action not always applying a custom label\
+\
+\
+Version 1.78.0:\
+\
 = Upgrade notes =\
 -The OnOpenDocument and OnCloseDocument custom events have been replaced with OnDocumentOpen and OnDocumentClose, which take a DocumentInstance parameter instead of Document\
 -The OnFinishLoading custom event now takes an integer parameter for the loaded save-file's ID\
@@ -109,8 +141,7 @@
 \
 \
 Version 1.77.4:\
-\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
-\cf0  \
+ \
 = Upgrade notes =\
 -Changed: Software cursor sizes are now based on the width of the playable screen, rather than the entire screen\
  \

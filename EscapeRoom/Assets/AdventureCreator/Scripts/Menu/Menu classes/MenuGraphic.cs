@@ -330,7 +330,7 @@ namespace AC
 							{
 								if (DocumentInstance.IsValid (KickStarter.runtimeDocuments.ActiveDocumentInstance))
 								{
-									int pageNumber = linkedJournal.GetCurrentPageNumber ();
+									int pageNumber = linkedJournal.GetCurrentPageNumber () - 1;
 									pageTexture = KickStarter.runtimeDocuments.ActiveDocumentInstance.GetPageTexture (pageNumber);
 								}
 							}

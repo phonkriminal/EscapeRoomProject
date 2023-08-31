@@ -799,6 +799,16 @@ namespace AC
 
 
 		/**
+		 * <summary>Checks if the input system is enabled.</summary>
+		 * <returns>True if the input system is enabled</returns>
+		 */
+		public bool CanReceiveInput ()
+		{
+			return !inputIsOff;
+		}
+
+
+		/**
 		 * <summary>Checks if the draggables system is enabled.</summary>
 		 * <returns>True if the draggables system is enabled</returns>
 		 */

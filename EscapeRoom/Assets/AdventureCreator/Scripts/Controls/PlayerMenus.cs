@@ -106,6 +106,7 @@ namespace AC
 			EventManager.OnExitGameState += OnExitGameState;
 			EventManager.OnMouseOverMenu += OnMouseOverMenu;
 			EventManager.OnChangeLanguage += OnChangeLanguage;
+			EventManager.OnDocumentOpen += OnDocumentOpen;
 		}
 
 
@@ -116,6 +117,7 @@ namespace AC
 			EventManager.OnExitGameState -= OnExitGameState;
 			EventManager.OnMouseOverMenu -= OnMouseOverMenu;
 			EventManager.OnChangeLanguage -= OnChangeLanguage;
+			EventManager.OnDocumentOpen -= OnDocumentOpen;
 		}
 
 
@@ -338,7 +340,7 @@ namespace AC
 			if (gameState == GameState.Cutscene)
 			{
 				isInCutscene = true;
-				MakeUINonInteractive ();
+				UpdateUIInteractability ();
 			}
 		}
 
@@ -348,7 +350,9 @@ namespace AC
 			if (gameState == GameState.Cutscene)
 			{
 				isInCutscene = false;
-				MakeUIInteractive ();
+				UpdateUIInteractability ();
+
+				KickStarter.playerMenus.FindFirstSelectedElement (null, true);
 			}
 		}
 
@@ -386,6 +390,13 @@ namespace AC
 					}
 				}
 			}
+		}
+		
+
+		private void OnDocumentOpen (DocumentInstance documentInstance)
+		{
+			// Necessary to update UI colours
+			RecalculateAll ();
 		}
 
 
@@ -2768,7 +2779,7 @@ namespace AC
 				}
 				return allMenus;
 			}
-			return null;
+			return new List<Menu> ();
 		}
 		
 
@@ -3250,17 +3261,18 @@ namespace AC
 		 * <summary>Selects the first element GameObject in a Unity UI-based Menu.</summary>
 		 * <param name = "menuToIgnore">If set, this menu will be ignored when searching</param>
 		 */
-		public void FindFirstSelectedElement (Menu menuToIgnore = null)
+		public void FindFirstSelectedElement (Menu menuToIgnore = null, bool ignoreIfAlreadySelectingMenu = false)
 		{
-			if (eventSystem == null || menus.Count == 0)
+			List<Menu> allMenus = GetMenus (true);
+			if (eventSystem == null || allMenus.Count == 0)
 			{
 				return;
 			}
 
 			GameObject objectToSelect = null;
-			for (int i=menus.Count-1; i>=0; i--)
+			for (int i=allMenus.Count-1; i>=0; i--)
 			{
-				Menu menu = menus[i];
+				Menu menu = allMenus[i];
 
 				if (menuToIgnore != null && menu == menuToIgnore)
 				{
@@ -3277,6 +3289,15 @@ namespace AC
 					objectToSelect = menu.GetObjectToSelect ();
 					if (objectToSelect != null)
 					{
+						if (ignoreIfAlreadySelectingMenu)
+						{
+							if (eventSystem.currentSelectedGameObject && eventSystem.currentSelectedGameObject.GetComponentInParent<Canvas> () && eventSystem.currentSelectedGameObject.GetComponentInParent<Canvas> () == menu.RuntimeCanvas)
+							{
+								// Already selecting an element in this menu
+								return;
+							}
+						}
+
 						break;
 					}
 				}
@@ -3394,22 +3415,8 @@ namespace AC
 		}
 
 
-		/** Makes all Menus linked to Unity UI interactive. */
-		public void MakeUIInteractive ()
-		{
-			Menu[] allMenus = GetMenus (true).ToArray ();
-			foreach (Menu menu in allMenus)
-			{
-				if (!menu.IsOff ())
-				{
-					menu.UpdateInteractability ();
-				}
-			}
-		}
-		
-		
-		/** Makes all Menus linked to Unity UI non-interactive. */
-		public void MakeUINonInteractive ()
+		/** Updates the interactability of all Menus linked to Unity UI. */
+		public void UpdateUIInteractability ()
 		{
 			Menu[] allMenus = GetMenus (true).ToArray ();
 			foreach (Menu menu in allMenus)

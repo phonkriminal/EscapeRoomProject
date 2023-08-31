@@ -112,7 +112,7 @@ namespace AC
 
 		public override void AssignConstantIDs (bool saveScriptsToo, bool fromAssetFile)
 		{
-			AssignConstantID (obToAffect, constantID, parameterID);
+			constantID = AssignConstantID (obToAffect, constantID, parameterID);
 		}
 
 		

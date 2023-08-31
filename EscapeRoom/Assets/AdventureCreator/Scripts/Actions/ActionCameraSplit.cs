@@ -183,8 +183,8 @@ namespace AC
 				AddSaveScript <ConstantID> (cam2);
 			}
 
-			AssignConstantID <_Camera> (cam1, constantID1, parameterID1);
-			AssignConstantID <_Camera> (cam2, constantID2, parameterID2);
+			constantID1 = AssignConstantID<_Camera> (cam1, constantID1, parameterID1);
+			constantID2 = AssignConstantID<_Camera> (cam2, constantID2, parameterID2);
 		}
 		
 		

@@ -508,7 +508,7 @@ namespace AC
 					AddSaveScript<RememberVariables> (oldVariables);
 				}
 
-				AssignConstantID <Variables> (oldVariables, oldVariablesConstantID, oldParameterID);
+				oldVariablesConstantID = AssignConstantID<Variables> (oldVariables, oldVariablesConstantID, oldParameterID);
 			}
 
 			if (newLocation == VariableLocation.Component)
@@ -518,7 +518,7 @@ namespace AC
 					AddSaveScript<RememberVariables> (newVariables);
 				}
 
-				AssignConstantID <Variables> (newVariables, newVariablesConstantID, newParameterID);
+				newVariablesConstantID = AssignConstantID<Variables> (newVariables, newVariablesConstantID, newParameterID);
 			}
 		}
 

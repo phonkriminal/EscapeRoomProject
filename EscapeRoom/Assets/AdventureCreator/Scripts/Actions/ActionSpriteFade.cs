@@ -110,7 +110,7 @@ namespace AC
 			{
 				AddSaveScript <RememberVisibility> (spriteFader);
 			}
-			AssignConstantID <SpriteFader> (spriteFader, constantID, parameterID);
+			constantID = AssignConstantID<SpriteFader> (spriteFader, constantID, parameterID);
 		}
 
 		

@@ -97,7 +97,7 @@ namespace AC
 				animator.SetIKPosition (avatarIKGoal, averagePosition);
 				animator.SetIKRotation (avatarIKGoal, averageRotation);				
 			}
-			else
+			else if (targetTransform)
 			{
 				animator.SetIKPositionWeight (avatarIKGoal, actualWeight);
 				animator.SetIKRotationWeight (avatarIKGoal, actualWeight);

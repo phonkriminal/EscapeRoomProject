@@ -95,9 +95,13 @@ namespace AC
 					if (menu != null)
 					{
 						menu.TurnOn (true);
-						if (animateUI && menu.RuntimeCanvas != null && menu.RuntimeCanvas.GetComponent <Animator>())
+						if (animateUI && menu.RuntimeCanvas)
 						{
-							animator = menu.RuntimeCanvas.GetComponent <Animator>();
+							animator = menu.RuntimeCanvas.GetComponent<Animator> ();
+							if (animator == null)
+							{
+								animator = menu.RuntimeCanvas.GetComponentInChildren<Animator> ();
+							}
 						}
 					}
 				}
@@ -298,15 +302,15 @@ namespace AC
 			{
 				if (qteType == QTEType.SingleKeypress || qteType == QTEType.SingleAxis)
 				{
-					EditorGUILayout.HelpBox ("The Menu's Canvas must have an Animator with 2 States: Win, Lose.", MessageType.Info);
+					EditorGUILayout.HelpBox ("The Menu's UI must have an Animator with 2 States: Win, Lose.", MessageType.Info);
 				}
 				else if (qteType == QTEType.ButtonMash)
 				{
-					EditorGUILayout.HelpBox ("The Menu's Canvas must have an Animator with 3 States: Hit, Win, Lose.", MessageType.Info);
+					EditorGUILayout.HelpBox ("The Menu's UI must have an Animator with 3 States: Hit, Win, Lose.", MessageType.Info);
 				}
 				else if (qteType == QTEType.HoldKey)
 				{
-					EditorGUILayout.HelpBox ("The Menu's Canvas must have an Animator with 2 States: Win, Lose, and 1 Trigger: Held.", MessageType.Info);
+					EditorGUILayout.HelpBox ("The Menu's UI must have an Animator with 2 States: Win, Lose, and 1 Trigger: Held.", MessageType.Info);
 				}
 			}
 		}

@@ -143,7 +143,7 @@ namespace AC
 			{
 				AddSaveScript <ConstantID> (linkedCamera);
 			}
-			AssignConstantID <_Camera> (linkedCamera, constantID, parameterID);
+			constantID = AssignConstantID<_Camera> (linkedCamera, constantID, parameterID);
 		}
 
 		

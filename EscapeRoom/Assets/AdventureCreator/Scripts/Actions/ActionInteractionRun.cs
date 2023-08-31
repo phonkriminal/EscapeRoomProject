@@ -229,7 +229,7 @@ namespace AC
 				AddSaveScript<RememberHotspot> (hotspot);
 			}
 
-			AssignConstantID<Hotspot> (hotspot, constantID, parameterID);
+			constantID = AssignConstantID<Hotspot> (hotspot, constantID, parameterID);
 		}
 
 
